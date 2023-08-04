@@ -10,6 +10,15 @@ class AiTestView extends StatefulWidget {
 class _AiTestViewState extends State<AiTestView> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('data')
+          ],
+        ),
+      ),
+    );
   }
 }
