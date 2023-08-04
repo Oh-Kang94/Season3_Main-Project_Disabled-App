@@ -13,20 +13,20 @@ class AiFirstView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
               onTap: () => Get.to(AiTestView()),
               child: SvgPicture.asset(
                 AssetsImage.LOGO,
-                width: 300,
-                height: 300,
+                width: 250,
+                height: 250,
               ),
             ),
             const SizedBox(
               height: 30,
             ),
             const Text('버튼을 눌러서 테스트를 시작'),
-            Icon(Icons.recommend),
           ],
         ),
       ),

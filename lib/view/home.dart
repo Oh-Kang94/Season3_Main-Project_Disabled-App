@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/util/asset_image.dart';
+import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 
 class Home extends StatefulWidget {
@@ -18,7 +19,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 0, vsync: this);
+    controller = TabController(length: 1, vsync: this);
   }
 
   @override
@@ -45,6 +46,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       body: TabBarView(controller: controller, children: const [
         // 각자 페이지 넣기
+        // main 자리
+        AiFirstView(),
+        // map 자리
       ]),
       bottomNavigationBar: Container(
         color: Colors.white,
@@ -58,8 +62,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             indicatorWeight: 10, // 바의 크기 키우기
             tabs: const [
               // 각자 탭바 채워 넣기
-              //  3rd Jty
-              //  4th Oh_Kang94
+              //  1st main
+              Tab(
+                icon: Icon(Icons.recommend),
+                text: "일자리추천",
+              ),
+
+              //  3rd map
             ]),
       ),
       drawer: const Mydrawer(),
