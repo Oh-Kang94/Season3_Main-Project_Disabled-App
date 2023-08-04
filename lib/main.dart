@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/view/splash.dart';
 
 import 'firebase_options.dart';
 import 'view/home.dart';
@@ -43,11 +44,18 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return GetMaterialApp(
           title: 'Flutter Demo',
-          theme: ThemeData(brightness: Brightness.light, useMaterial3: true, colorSchemeSeed: seedcolor),
-          darkTheme: ThemeData(brightness: Brightness.dark, useMaterial3: true, colorSchemeSeed: seedcolor),
+          theme: ThemeData(
+              brightness: Brightness.light,
+              useMaterial3: true,
+              colorSchemeSeed: seedcolor,
+              ),
+          darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              useMaterial3: true,
+              colorSchemeSeed: seedcolor),
           initialRoute: '/',
           routes: {
-            '/': (context) => const Home(),
+            '/': (context) => const SplashScreen(),
           },
         );
       },
