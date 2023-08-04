@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/util/asset_image.dart';
+import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,34 +30,39 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: TabBarView(controller: controller, children: const [
-          // 각자 페이지 넣기
-        ]),
-        bottomNavigationBar: Container(
-          color: Colors.white,
-          child: TabBar(
-              controller: controller,
-              labelColor: const ColorScheme.light().tertiary, // 선택 되어 있는 아이콘의 색깔 보여주기
-              unselectedLabelColor: Colors.red, // 선택 되어있지 않은 아이콘의 색깔 보여주기
-              indicatorColor: Colors.blue, // 아래 선택되어 있는 바 보여주기
-              indicatorWeight: 10, // 바의 크기 키우기
-              tabs: const [
-                // 각자 탭바 채워 넣기
-                //  3rd Jty
-                //  4th Oh_Kang94
-              ]),
-        ),
-        drawer: Drawer(
-          child: Container(
-            color: Theme.of(context).colorScheme.secondary,
-            child: MaterialButton(
-              onPressed: () {
-                Get.changeThemeMode(
-                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-              },
-            ),
-          ),
-        ));
+      appBar: AppBar(
+        title: GestureDetector(
+            onTap: () {
+              Get.to(
+                const Home(),
+              );
+            },
+            child: SvgPicture.asset(
+              AssetsImage.LOGO,
+              height: 50,
+              width: 50,
+            )),
+      ),
+      body: TabBarView(controller: controller, children: const [
+        // 각자 페이지 넣기
+      ]),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: TabBar(
+            controller: controller,
+            labelColor:
+                Theme.of(context).colorScheme.tertiary, // 선택 되어 있는 아이콘의 색깔 보여주기
+            unselectedLabelColor:
+                Theme.of(context).colorScheme.error, // 선택 되어있지 않은 아이콘의 색깔 보여주기
+            indicatorColor: Colors.blue, // 아래 선택되어 있는 바 보여주기
+            indicatorWeight: 10, // 바의 크기 키우기
+            tabs: const [
+              // 각자 탭바 채워 넣기
+              //  3rd Jty
+              //  4th Oh_Kang94
+            ]),
+      ),
+      drawer: const Mydrawer(),
+    );
   }
 }
