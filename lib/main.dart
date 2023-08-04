@@ -45,11 +45,13 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
+              fontFamily: 'NotoSansKR-Regular',
               brightness: Brightness.light,
               useMaterial3: true,
               colorSchemeSeed: seedcolor,
               ),
           darkTheme: ThemeData(
+              fontFamily: 'NotoSansKR-Regular',
               brightness: Brightness.dark,
               useMaterial3: true,
               colorSchemeSeed: seedcolor),

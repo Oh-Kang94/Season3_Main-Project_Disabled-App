@@ -34,8 +34,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         title: GestureDetector(
             onTap: () {
-              Get.to(
+              Get.offAll(
                 const Home(),
+                transition: Transition.noTransition,
               );
             },
             child: SvgPicture.asset(
