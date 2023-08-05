@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginController extends GetxController {
+class AuthController extends GetxController {
   // 로그인 상태를 저장할 변수
   RxBool isLoggedIn = false.obs;
   RxString userId = "".obs; // 사용자의 id를 저장하는 변수

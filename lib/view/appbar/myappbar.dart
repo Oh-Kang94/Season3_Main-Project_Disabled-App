@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 
 import '../../util/asset_image.dart';
-import '../../vm/loginGetx.dart';
+import '../../vm/AuthCtrl.dart';
 import '../home.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.find<LoginController>();
+    AuthController authController = Get.find<AuthController>();
 
     return AppBar(
       title: GestureDetector(
@@ -40,8 +40,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Obx(
-          () => loginController.isLoggedIn.value
-              ? Text('환영합니다, ${loginController.userName.value}님!')
+          () => authController.isLoggedIn.value
+              ? Text('환영합니다, ${authController.userName.value}님!')
               : const Text("로그인이 필요합니다"),
         ),
         Tooltip(

@@ -1,37 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
+import 'package:season3_team1_mainproject/vm/homeCtrl.dart';
 
 import 'appbar/myappbar.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  // Prioperties
-  late TabController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(length: 1, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.put(HomeController());
     return Scaffold(
       appBar: const MyAppBar(),
-      body: TabBarView(controller: controller, children: const [
+      body: TabBarView(controller: homeController.controller, children: const [
         // 각자 페이지 넣기
         // main 자리
         AiFirstView(),
@@ -40,7 +23,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       bottomNavigationBar: Container(
         color: Colors.white,
         child: TabBar(
-            controller: controller,
+            controller: homeController.controller,
             labelColor:
                 Theme.of(context).colorScheme.tertiary, // 선택 되어 있는 아이콘의 색깔 보여주기
             unselectedLabelColor:

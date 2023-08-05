@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/splash.dart';
-import 'package:season3_team1_mainproject/vm/loginGetx.dart';
+import 'package:season3_team1_mainproject/vm/AuthCtrl.dart';
 
 import 'firebase_options.dart';
 
@@ -13,7 +13,7 @@ void main() async {
   await dotenv.load(); // .env 파일 로드
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  Get.put(LoginController());
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 

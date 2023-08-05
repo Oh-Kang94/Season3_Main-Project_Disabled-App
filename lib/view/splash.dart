@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
           const Text("Disabled app")
         ],
       ),
-      splashTransition: SplashTransition.sizeTransition,
+      splashTransition: SplashTransition.fadeTransition,
       splashIconSize : 200,
       nextScreen: const Home(),
     );
