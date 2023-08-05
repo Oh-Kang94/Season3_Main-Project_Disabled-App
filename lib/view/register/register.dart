@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
+import 'package:season3_team1_mainproject/components/logopic.dart';
+import 'package:season3_team1_mainproject/model/genderModel.dart';
+import 'package:kpostal/kpostal.dart';
+import 'package:season3_team1_mainproject/util/regex.dart';
 
 import '../../model/disabledModel.dart';
 import '../../vm/registerCtrl.dart';
@@ -17,11 +22,12 @@ class RegisterUser extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: const MyAppBar(),
-        body: SingleChildScrollView(
-          child: Center(
+        body: Center(
+          child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const LogoPic(isappbar: false),
                 const Text("회원 가입"),
                 Padding(
                   padding: const EdgeInsets.all(25.0),
@@ -31,37 +37,68 @@ class RegisterUser extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: registerationController.idController,
                           keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'ID',
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '내용을 적어주세요.';
+                            }
+                            if (!RegexForm.idpwRegExp.hasMatch(value)) {
+                              return '영어 소문자와 숫자로만 이루어진 10글자 이하로 입력 가능합니다.';
+                            }
+                            return null;
+                          },
                           textInputAction: TextInputAction.next,
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller:
                               registerationController.passwordController,
                           obscureText: true,
                           textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: '비밀번호',
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '내용을 적어주세요.';
+                            }
+                            if (!RegexForm.idpwRegExp.hasMatch(value)) {
+                              return '영어 소문자와 숫자로만 이루어진 10글자 이하로 입력 가능합니다.';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: registerationController.nameController,
                           textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: 'Name',
+                          decoration: const InputDecoration(
+                            labelText: '이름',
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '내용을 적어주세요.';
+                            }
+                            
+                            if (!RegexForm.nameRegExp.hasMatch(value)) {
+                              return '한글로만 이루어진 2글자 이상으로 입력 가능합니다.';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
-                          controller: registerationController.emailController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
+                          decoration: const InputDecoration(
+                            labelText: '이메일',
                           ),
                           textInputAction: TextInputAction.next,
                         ),
@@ -69,43 +106,52 @@ class RegisterUser extends StatelessWidget {
                         TextFormField(
                           controller: registerationController.phoneController,
                           keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            labelText: 'Phone',
+                          decoration: const InputDecoration(
+                              labelText: 'Phone', hintText: "'-'없이 입력하세요!"),
+                        ),
+                        const SizedBox(height: 16),
+                        Obx(
+                          () => TextField(
+                            onTap: () {
+                              showGenderPicker(context);
+                            },
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            decoration: InputDecoration(
+                                labelText: '성별',
+                                hintText: registerationController
+                                    .selectedgender.value?.name),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const Text("성별"),
-                            Obx(
-                              () => Switch(
-                                value: registerationController.isSwitched.value,
-                                onChanged: registerationController.toggleSwitch,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            const Text("장애 유형 선택"),
-                            ElevatedButton(
-                              onPressed: () {
-                                showDisabilityPicker(context);
-                              },
-                              child: Obx(
-                                () => Text(registerationController
-                                        .selectedDisability.value?.name ??
-                                    '장애 유형 선택'),
-                              ),
-                            ),
-                          ],
+                        Obx(
+                          () => TextField(
+                            onTap: () {
+                              showDisabilityPicker(context);
+                            },
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            decoration: InputDecoration(
+                                labelText: '장애유형선택',
+                                hintText: registerationController
+                                    .selectedDisability.value?.name),
+                          ),
                         ),
                         TextFormField(
+                          onTap: () {
+                            Get.to(
+                              KpostalView(
+                                callback: (Kpostal result) {
+                                  print(result.address);
+                                  registerationController
+                                      .setAddress(result.address); // 주소를 설정
+                                },
+                              ),
+                            );
+                          },
+                          readOnly: true,
                           controller: registerationController.addressController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: '주소',
                           ),
                         ),
@@ -127,7 +173,7 @@ class RegisterUser extends StatelessWidget {
   }
 
   Future<void> showDisabilityPicker(BuildContext context) async {
-    DisabledModel? result = await showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       builder: (context) {
         return SizedBox(
@@ -145,8 +191,23 @@ class RegisterUser extends StatelessWidget {
         );
       },
     );
-    if (result != null) {
-      print('선택한 장애 유형: ${result.name}');
-    }
+  }
+
+  Future<void> showGenderPicker(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: 200,
+          child: CupertinoPicker(
+            itemExtent: 50,
+            onSelectedItemChanged: (index) {
+              registerationController.setSelectedGender(genders[index]);
+            },
+            children: genders.map((gender) => Text(gender.name)).toList(),
+          ),
+        );
+      },
+    );
   }
 }

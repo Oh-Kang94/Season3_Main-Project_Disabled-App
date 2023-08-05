@@ -21,15 +21,17 @@ class LoginForm extends StatelessWidget {
         : controller.idController;
 
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: textController,
       decoration: InputDecoration(labelText: labelText),
       obscureText: isPassword,
       validator: (String? value) {
         if (value == null || value.isEmpty) {
-          return 'Please fill in this field';
+          return '내용을 적어주세요.';
         }
         return null;
       },
+      textInputAction: TextInputAction.next,
     );
   }
 }

@@ -47,7 +47,14 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
 	<key>NSPhotoLibraryUsageDescriptionM</key>
 	<string>프로필 업로드를 위한 갤러리 권한을 허가해주세요.</string>
+
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>
