@@ -1,31 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
-import '../../util/asset_image.dart';
+import '../../components/loginForm.dart';
+import '../../vm/loginCtrl.dart';
 
 class LoginUser extends StatelessWidget {
-  const LoginUser({super.key});
+  const LoginUser({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MyAppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              AssetsImage.LOGO,
-              width: 300,
-              height: 300,
+    final controller = Get.find<LoginController>();
+
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: const MyAppBar(),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset('assets/lottie/lottieLogin.json'),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Form(
+                    key: controller.loginFormKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LoginForm(controller: controller, labelText: 'E-mail',isPassword: false,),
+                        LoginForm(controller: controller, labelText: 'Password', isPassword: true,),
+                        ElevatedButton(
+                          onPressed: controller.login,
+                          child: const Text('Login'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            TextFormField(
-              
-            )
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
+

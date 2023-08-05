@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 
+import '../../binding/loginBinding.dart';
 import '../../util/asset_image.dart';
 import '../../vm/AuthCtrl.dart';
 import '../home.dart';
@@ -48,10 +49,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           message: "로그인",
           child: IconButton(
             onPressed: () {
-              Get.to(const LoginUser());
+              Get.to(
+                const LoginUser(),
+                binding: LoginBinding(),
+              );
             },
-            icon:
-                Icon(Icons.login, color: Theme.of(context).colorScheme.secondary),
+            icon: Icon(Icons.login,
+                color: Theme.of(context).colorScheme.secondary),
           ),
         ),
       ],

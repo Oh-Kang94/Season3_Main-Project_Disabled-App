@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 
+import '../../binding/loginBinding.dart';
 import '../../vm/AuthCtrl.dart';
 import '../register/register.dart';
 
@@ -53,6 +54,7 @@ class Mydrawer extends StatelessWidget {
             onTap: () {
               Get.to(
                 const LoginUser(),
+                binding: LoginBinding(),
               );
             },
             leading: Icon(Icons.login,
