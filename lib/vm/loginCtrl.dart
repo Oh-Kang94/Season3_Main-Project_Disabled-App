@@ -3,8 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:season3_team1_mainproject/view/home.dart';
 
 class LoginController extends GetxController {
+  RxBool isLogged = false.obs;
+  RxString userId = "".obs; // 사용자의 id를 저장하는 변수
+  RxString userName = "".obs;
+
   final loginFormKey = GlobalKey<FormState>();
   final idController = TextEditingController();
   final passwordController = TextEditingController();
@@ -34,6 +39,8 @@ class LoginController extends GetxController {
       checkUser(idController.text, passwordController.text).then((bool auth) {
         if (auth) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
+          isLogged.value = true;
+          Get.to(const Home());
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
         }
@@ -55,25 +62,39 @@ class LoginController extends GetxController {
       // 응답 데이터를 확인합니다.
       if (response.isOk) {
         // 응답이 성공적으로 받아졌을 경우
-        print("코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");
+        print(
+            "코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");
+
         String token = response.body['token'];
 
         Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
 
-        String type = decodedToken['type'];
         String id = decodedToken['id'];
         String password = decodedToken['password'];
+        String name = decodedToken['name'];
+        print("id=${id},name:${name},password: ${password}");
+        userId.value = id;
+        userName.value = name;
 
-        // 토큰이 유효하면 true를 반환합니다.
         return true;
       } else {
-        // 응답이 실패하거나 오류가 발생한 경우 false를 반환합니다.
         return false;
       }
     } catch (e) {
-      // 오류가 발생한 경우 false를 반환합니다.
-      print(e);
       return false;
     }
   }
+  /* 로그아웃 추가해야함!!!!
+  class LoginController extends GetxController {
+  // ... (이전 코드들)
+
+  // 사용자 로그인 정보를 초기화하고 로그아웃 상태로 변경합니다.
+  void logout() {
+    isLogged.value = false;
+    userId.value = "";
+    userName.value = "";
+    removeToken(); // Token을 저장하는 CacheCtrl의 removeToken() 메서드를 호출하여 로그인 정보 삭제
+  }
+}
+  */
 }
