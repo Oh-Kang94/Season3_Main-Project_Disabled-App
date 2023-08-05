@@ -5,6 +5,8 @@ import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 
+import 'appbar/myappbar.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -31,20 +33,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GestureDetector(
-            onTap: () {
-              Get.offAll(
-                const Home(),
-                transition: Transition.noTransition,
-              );
-            },
-            child: SvgPicture.asset(
-              AssetsImage.LOGO,
-              height: 50,
-              width: 50,
-            )),
-      ),
+      appBar: const MyAppBar(),
       body: TabBarView(controller: controller, children: const [
         // 각자 페이지 넣기
         // main 자리
@@ -76,3 +65,5 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 }
+
+
