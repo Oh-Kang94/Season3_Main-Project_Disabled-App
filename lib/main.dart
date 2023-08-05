@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/splash.dart';
+import 'package:season3_team1_mainproject/vm/loginGetx.dart';
 
 import 'firebase_options.dart';
 
@@ -11,6 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(); // .env 파일 로드
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  Get.put(LoginController());
   runApp(const MyApp());
 }
 
@@ -45,11 +48,11 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-              fontFamily: 'NotoSansKR-Regular',
-              brightness: Brightness.light,
-              useMaterial3: true,
-              colorSchemeSeed: seedcolor,
-              ),
+            fontFamily: 'NotoSansKR-Regular',
+            brightness: Brightness.light,
+            useMaterial3: true,
+            colorSchemeSeed: seedcolor,
+          ),
           darkTheme: ThemeData(
               fontFamily: 'NotoSansKR-Regular',
               brightness: Brightness.dark,

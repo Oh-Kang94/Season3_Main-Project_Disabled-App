@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 
@@ -65,5 +62,3 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 }
-
-

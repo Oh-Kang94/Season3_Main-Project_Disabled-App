@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../vm/loginGetx.dart';
 import '../home.dart';
 import '../register/register.dart';
 
@@ -11,6 +12,7 @@ class Mydrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Get.find<LoginController>();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -19,9 +21,17 @@ class Mydrawer extends StatelessWidget {
             currentAccountPicture: const CircleAvatar(
               backgroundImage: AssetImage("assets/images/working.png"),
             ),
-            accountName: const Text('Dummy Id'),
-            accountEmail: const Text('Dummy Email'),
-            decoration:  BoxDecoration(
+            accountName: Obx(
+              () => loginController.isLoggedIn.value
+                  ? Text('환영합니다, ${loginController.userName.value}님!')
+                  : const Text("로그인이 필요합니다"),
+            ),
+            accountEmail: Obx(
+              () => loginController.isLoggedIn.value
+                  ? Text('환영합니다, ${loginController.userName.value}님!')
+                  : const Text("로그인이 필요합니다"),
+            ),
+            decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(40),
