@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthController extends GetxController {
+class AuthController extends GetxController with CacheCtrl{
   // 로그인 상태를 저장할 변수
-  RxBool isLoggedIn = false.obs;
+  RxBool isLogged = false.obs;
   RxString userId = "".obs; // 사용자의 id를 저장하는 변수
   RxString userName = "".obs;
 
@@ -14,19 +15,41 @@ class AuthController extends GetxController {
     checkLoginStatus();
   }
 
-  void setLoggedIn(bool value, String userId, String userName) async {
-    isLoggedIn.value = value;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', value);
-    await prefs.setString('userId', userId);
-    await prefs.setString('userName', userName);
+  void logOut() {
+    isLogged.value = false;
+    removeToken();
   }
 
-  // 저장된 로그인 상태를 불러오는 메서드
-  void checkLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLoggedIn.value = prefs.getBool('isLoggedIn') ?? false;
-    userId.value = prefs.getString('userId') ?? "dummyId";
-    userName.value = prefs.getString('userName') ?? "홍길동";
+  void login(String? token) async {
+    isLogged.value = true;
+    //Token is cached
+    await saveToken(token);
+  }
+
+  void checkLoginStatus() {
+    final token = getToken();
+    if (token != null) {
+      isLogged.value = true;
+    }
   }
 }
+
+mixin CacheCtrl {
+  Future<bool> saveToken(String? token) async {
+    final box = GetStorage();
+    await box.write(CacheCtrlKey.TOKEN.toString(), token);
+    return true;
+  }
+
+  String? getToken() {
+    final box = GetStorage();
+    return box.read(CacheCtrlKey.TOKEN.toString());
+  }
+
+  Future<void> removeToken() async {
+    final box = GetStorage();
+    await box.remove(CacheCtrlKey.TOKEN.toString());
+  }
+}
+
+enum CacheCtrlKey { TOKEN }

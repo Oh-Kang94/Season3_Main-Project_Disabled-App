@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 
-import '../../binding/loginBinding.dart';
+import '../../binding/Binding.dart';
 import '../../vm/AuthCtrl.dart';
 import '../register/register.dart';
 
@@ -23,12 +23,12 @@ class Mydrawer extends StatelessWidget {
               backgroundImage: AssetImage("assets/images/working.png"),
             ),
             accountName: Obx(
-              () => authController.isLoggedIn.value
+              () => authController.isLogged.value
                   ? Text('환영합니다, ${authController.userName.value}님!')
                   : const Text("로그인이 필요합니다"),
             ),
             accountEmail: Obx(
-              () => authController.isLoggedIn.value
+              () => authController.isLogged.value
                   ? Text(authController.userId.value)
                   : const Text(""),
             ),

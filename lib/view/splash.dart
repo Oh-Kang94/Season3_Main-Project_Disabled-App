@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,8 +22,10 @@ class SplashScreen extends StatelessWidget {
         ],
       ),
       splashTransition: SplashTransition.fadeTransition,
-      splashIconSize : 200,
-      nextScreen: const Home(),
+      splashIconSize: 200,
+      nextScreen: const Home(), // Home 페이지로 이동
+      backgroundColor: Colors.white,
     );
   }
 }
+
