@@ -40,7 +40,7 @@ class LoginController extends GetxController {
         if (auth) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           isLogged.value = true;
-          Get.to(const Home());
+          Get.offAll(const Home());
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
         }
@@ -84,17 +84,10 @@ class LoginController extends GetxController {
       return false;
     }
   }
-  /* 로그아웃 추가해야함!!!!
-  class LoginController extends GetxController {
-  // ... (이전 코드들)
 
-  // 사용자 로그인 정보를 초기화하고 로그아웃 상태로 변경합니다.
   void logout() {
     isLogged.value = false;
     userId.value = "";
     userName.value = "";
-    removeToken(); // Token을 저장하는 CacheCtrl의 removeToken() 메서드를 호출하여 로그인 정보 삭제
   }
-}
-  */
 }
