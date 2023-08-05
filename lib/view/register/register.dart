@@ -86,7 +86,7 @@ class RegisterUser extends StatelessWidget {
                             if (value == null || value.isEmpty) {
                               return '내용을 적어주세요.';
                             }
-                            
+
                             if (!RegexForm.nameRegExp.hasMatch(value)) {
                               return '한글로만 이루어진 2글자 이상으로 입력 가능합니다.';
                             }
@@ -101,13 +101,32 @@ class RegisterUser extends StatelessWidget {
                             labelText: '이메일',
                           ),
                           textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '내용을 적어주세요.';
+                            }
+                            if (!RegexForm.emailRegExp.hasMatch(value)) {
+                              return '올바른 이메일 주소를 입력해주세요.';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: registerationController.phoneController,
                           keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
-                              labelText: 'Phone', hintText: "'-'없이 입력하세요!"),
+                              labelText: '핸드폰', hintText: "'-'없이 입력하세요!"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '내용을 적어주세요.';
+                            }
+                            if (!RegexForm.phoneRegExp.hasMatch(value)) {
+                              return '11자리의 숫자로만 이루어진 핸드폰 번호를 입력해주세요.';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 16),
                         Obx(
