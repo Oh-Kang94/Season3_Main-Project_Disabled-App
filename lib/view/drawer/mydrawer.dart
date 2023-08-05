@@ -43,7 +43,7 @@ class Mydrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Get.to(
-                const RegisterUser(),
+                RegisterUser(),
               );
             },
             leading: Icon(Icons.emoji_people_sharp,

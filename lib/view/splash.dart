@@ -15,14 +15,14 @@ class SplashScreen extends StatelessWidget {
         children: [
           SvgPicture.asset(
             AssetsImage.LOGO,
-            width: 86,
-            height: 86,
+            width: 250,
+            height: 250,
           ),
           const Text("Disabled app")
         ],
       ),
       splashTransition: SplashTransition.fadeTransition,
-      splashIconSize: 200,
+      splashIconSize: 400,
       nextScreen: const Home(), // Home 페이지로 이동
       backgroundColor: Colors.white,
     );

@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   RxBool isLogged = false.obs;
@@ -16,7 +15,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    idController.text = '';
+    getSharedPreferences();
     super.onInit();
   }
 
@@ -49,11 +48,20 @@ class LoginController extends GetxController {
     }
   }
 
-  // Api Simulation
+  void logout() {
+    isLogged.value = false;
+    userId.value = "";
+    userName.value = "";
+    removeSharedPreferences();
+  }
+
+  // Api
   Future<bool> checkUser(String user, String password) async {
     String baseUrl = "http://localhost:3000/login";
+    // String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid
 
     String requestUrl = "$baseUrl/?id=$user&password=$password";
+
 
     try {
       // GetConnect를 사용하여 GET 요청을 보냅니다.
@@ -75,6 +83,7 @@ class LoginController extends GetxController {
         print("id=${id},name:${name},password: ${password}");
         userId.value = id;
         userName.value = name;
+        saveSharedPreferences();
 
         return true;
       } else {
@@ -85,9 +94,37 @@ class LoginController extends GetxController {
     }
   }
 
-  void logout() {
-    isLogged.value = false;
-    userId.value = "";
-    userName.value = "";
+  saveSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userId', userId.value);
+      prefs.setString('userName', userName.value);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  getSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? savedUserId = prefs.getString('userId');
+      String? savedUserName = prefs.getString('userName');
+      if (savedUserId != null && savedUserName != null) {
+        userId.value = savedUserId;
+        userName.value = savedUserName;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  removeSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.remove('userId');
+      prefs.remove('userName');
+    } catch (e) {
+      print(e);
+    }
   }
 }
