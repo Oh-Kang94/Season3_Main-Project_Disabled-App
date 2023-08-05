@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/disabledModel.dart';
 import '../model/genderModel.dart';
+import '../model/userdata.dart';
+import '../view/home.dart';
 
 class RegisterationController extends GetxController {
   TextEditingController idController = TextEditingController();
@@ -18,7 +20,6 @@ class RegisterationController extends GetxController {
   Rx<GenderModel?> selectedgender = Rx<GenderModel?>(null);
 
   TextEditingController addressController = TextEditingController();
-
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final registerFormKey = GlobalKey<FormState>();
@@ -47,4 +48,56 @@ class RegisterationController extends GetxController {
     addressController.text = address;
   }
 
+  void onSaved() {
+    if (registerFormKey.currentState!.validate()) {
+      UserData userData = UserData(
+        id: idController.text,
+        password: passwordController.text,
+        name: nameController.text,
+        email: emailController.text,
+        phone: phoneController.text,
+        gender: genderController.text,
+        disability: disabledController.text,
+        address: addressController.text,
+      );
+
+      saveUser(userData).then((bool auth) {
+        if (auth) {
+          Get.snackbar('회원 가입 성공', '성공적으로 회원가입 되었습니다.');
+          Get.offAll(const Home());
+        } else {
+          Get.snackbar('회원가입 실패', '아이디가 중복되었습니다.');
+        }
+        passwordController.clear();
+      });
+    }
+  }
+
+  Future<bool> saveUser(UserData userData) async {
+    String baseUrl = "http://localhost:3000/authaccount/registration";
+    try {
+      var response = await GetConnect().post(
+          baseUrl,
+          {
+            "id": userData.id,
+            "password": userData.password,
+            "name": userData.name,
+            "email": userData.email,
+            "phone": userData.phone,
+            "gender": userData.gender,
+            "disability": userData.disability,
+            "address": userData.address
+          },
+          );
+      if (response.isOk) {
+        print(
+            "코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 }

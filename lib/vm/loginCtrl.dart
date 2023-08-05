@@ -57,7 +57,7 @@ class LoginController extends GetxController {
 
   // Api
   Future<bool> checkUser(String user, String password) async {
-    String baseUrl = "http://localhost:3000/login";
+    String baseUrl = "http://localhost:3000/authaccount/login";
     // String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid
 
     String requestUrl = "$baseUrl/?id=$user&password=$password";
