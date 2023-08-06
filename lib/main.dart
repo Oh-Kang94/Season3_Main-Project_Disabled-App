@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/splash.dart';
@@ -58,6 +59,16 @@ class _MyAppState extends State<MyApp> {
               brightness: Brightness.dark,
               useMaterial3: true,
               colorSchemeSeed: seedcolor),
+          // 언어 지원 
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('ko', ''),
+            Locale('en', ''),
+          ],
+          // 초기 시작 값
           initialRoute: '/',
           routes: {
             '/': (context) => const SplashScreen(),
