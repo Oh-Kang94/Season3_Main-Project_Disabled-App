@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:flutter_svg/flutter_svg.dart';

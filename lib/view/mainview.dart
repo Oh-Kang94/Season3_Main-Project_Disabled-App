@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:season3_team1_mainproject/view/webclass.dart';
 
-
 class Mainview extends StatefulWidget {
   const Mainview({Key? key}) : super(key: key);
 
@@ -19,6 +18,7 @@ class _MainviewState extends State<Mainview> {
   late List imagesFile;
   late int currentPage;
   late List<IconData> iconList;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -52,9 +52,23 @@ class _MainviewState extends State<Mainview> {
     currentPage = 0;
 
     //Timer구동 : Timer가 쓰는 시간과 build가 쓰는 시간을 동일화 시킨다 (async)
-    Timer.periodic(const Duration(seconds: 2), (timer) {
+    /* private으로 선언해서,
+      timer를 수정 가능하기 편한 형태로 바꾼다.
+    */
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
       changeImage();
     });
+  }
+
+  /*
+    _timer가 영원히 안꺼지는 상태이고, 우리가 multiview이기 때문에,
+    view가 사라지면 꺼지게 만듬.
+  */
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
