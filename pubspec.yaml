@@ -71,7 +71,8 @@ dependencies:
   image_picker: ^1.0.2
   # markdown 쓰기 위해
   flutter_markdown: ^0.6.17
-  
+  # web view 보기 위해
+  webview_flutter: ^4.2.2
 
 dev_dependencies:
   flutter_test:
