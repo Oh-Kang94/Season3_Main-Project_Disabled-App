@@ -70,7 +70,7 @@ class _MainviewState extends State<Mainview> {
               height: 300,
             ),
             Divider(
-              color: Colors.grey,
+              // color: Colors.grey,
               thickness: 1,
             ),
             GridView.builder(
@@ -87,9 +87,9 @@ class _MainviewState extends State<Mainview> {
                     Get.to(WebClass(site: siteList[index]));
                   },
                   child: Container(
-                    color: Colors.white,
+                    // color: Colors.white,
                     child: Card(
-                      color: Colors.blue,
+                      // color: Colors.blue,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
