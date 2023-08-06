@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:season3_team1_mainproject/view/webclass.dart';
 
 class Mainview extends StatefulWidget {
@@ -74,36 +74,34 @@ class _MainviewState extends State<Mainview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/${imagesFile[currentPage]}',
-              width: 400,
-              height: 300,
-            ),
-            Divider(
-              // color: Colors.grey,
-              thickness: 1,
-            ),
-            GridView.builder(
-              physics: NeverScrollableScrollPhysics(), // GridView의 스크롤 동작 비활성화
-              shrinkWrap: true, // 필요한 크기만큼만 공간을 차지하도록 설정
-              itemCount: siteTextList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 4.0, // 각 항목의 가로:세로 비율을 2:1로 지정 (직사각형 모양)
-                crossAxisCount: 1,
-              ),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Get.to(WebClass(site: siteList[index]));
-                  },
-                  child: Container(
-                    // color: Colors.white,
+      body: Column(
+        children: [
+          Image.asset(
+            'assets/images/${imagesFile[currentPage]}',
+            width: 400,
+            height: 300,
+          ),
+          const Divider(
+            // color: Colors.grey,
+            thickness: 1,
+          ),
+          SingleChildScrollView(
+            child: SizedBox(
+              height: 300.h,
+              child: GridView.builder(
+                physics: const BouncingScrollPhysics(), // GridView의 스크롤 동작 비활성화
+                shrinkWrap: true, // 필요한 크기만큼만 공간을 차지하도록 설정
+                itemCount: siteTextList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 4.0, // 각 항목의 가로:세로 비율을 2:1로 지정 (직사각형 모양)
+                  crossAxisCount: 1,
+                ),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(WebClass(site: siteList[index]));
+                    },
                     child: Card(
-                      // color: Colors.blue,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -112,12 +110,12 @@ class _MainviewState extends State<Mainview> {
                         ],
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
