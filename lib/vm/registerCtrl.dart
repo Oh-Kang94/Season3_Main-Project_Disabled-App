@@ -10,17 +10,28 @@ import '../view/home.dart';
 
 class RegisterationController extends GetxController {
   TextEditingController idController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
+
+  TextEditingController birthController = TextEditingController();
+  Rx<DateTime?> selectedBirth = Rx<DateTime?>(null);
 
   TextEditingController disabledController = TextEditingController();
   Rx<DisabledModel?> selectedDisability = Rx<DisabledModel?>(null);
+
   TextEditingController genderController = TextEditingController();
   Rx<GenderModel?> selectedgender = Rx<GenderModel?>(null);
 
   TextEditingController addressController = TextEditingController();
+
+  var consentCollectInfo = false.obs;
+  var consentProcessInfo = false.obs;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final registerFormKey = GlobalKey<FormState>();
@@ -28,8 +39,9 @@ class RegisterationController extends GetxController {
 
   @override
   void onInit() {
-    disabledController.text = selectedDisability.value?.name ?? '장애 유형 선택';
-    genderController.text = selectedgender.value?.name ?? '성별 선택';
+    disabledController.text = '장애 유형 선택';
+    genderController.text = '성별 선택';
+    birthController.text = '누르시면 생년월일이 검색됩니다.';
     addressController.text = '누르시면 주소가 검색됩니다.';
     super.onInit();
   }
@@ -49,18 +61,39 @@ class RegisterationController extends GetxController {
     addressController.text = address;
   }
 
+  // 생년월일 설정
+  void setBirthDate(DateTime? date) {
+    birthController.text = date.toString().substring(0, 11);
+  }
+
+  void toggleConsentCollect(bool newValue) {
+    consentCollectInfo.value = newValue;
+  }
+
+  void toggleConsentProcess(bool newValue) {
+    consentProcessInfo.value = newValue;
+  }
+
+  bool get isConsentCollect => consentCollectInfo.value;
+  bool get isConsentProcess => consentProcessInfo.value;
+
   void onSaved() {
-    if (registerFormKey.currentState!.validate()) {
+    print(birthController.text);
+    if (registerFormKey.currentState!.validate() &&
+        consentCollectInfo.value == true &&
+        consentProcessInfo.value == true) {
       UserData userData = UserData(
         id: idController.text,
         password: passwordController.text,
         name: nameController.text,
-        avatar: "",
+        avatar: " ",
         email: emailController.text,
-        phone: phoneController.text,
-        gender: genderController.text,
-        disability: disabledController.text,
+        phone:
+            "${phoneController.text.substring(0, 3)}-${phoneController.text.substring(3, 7)}-${phoneController.text.substring(7, 11)}",
+        gender: selectedgender.value!.name,
+        disability: selectedDisability.value!.name,
         address: addressController.text,
+        birth: birthController.text,
       );
 
       saveUser(userData).then((bool auth) {
@@ -76,24 +109,12 @@ class RegisterationController extends GetxController {
   }
 
   Future<bool> saveUser(UserData userData) async {
-    String baseUrl = ApiEndPoints.baseurl+ApiEndPoints.apiEndPoints.registerid;
-    var body = {
-            "id": userData.id,
-            "password": userData.password,
-            "name": userData.name,
-            "avatar" : userData.avatar,
-            "email": userData.email,
-            "phone": userData.phone,
-            "gender": userData.gender,
-            "disability": userData.disability,
-            "address": userData.address
-          };
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.registerid;
+    var body = userData.toJson();
     try {
-      var response = await GetConnect().post(
-          baseUrl,
-          body
-          );
-          print(body);
+      var response = await GetConnect().post(baseUrl, body);
+      print(body);
       if (response.isOk) {
         print(
             "코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");

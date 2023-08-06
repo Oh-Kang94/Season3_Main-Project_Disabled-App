@@ -8,7 +8,7 @@ import '../util/api_endpoint.dart';
 
 class LoginController extends GetxController {
   RxBool isLogged = false.obs;
-  RxString userId = "".obs; // 사용자의 id를 저장하는 변수
+  RxString userId = "".obs;
   RxString userName = "".obs;
 
   final loginFormKey = GlobalKey<FormState>();

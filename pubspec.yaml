@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # 플러터 현지화 및 한글화 패치
   flutter_localizations:
     sdk: flutter
 
@@ -38,23 +39,38 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.5
+  # 주소 검색 기능
   kpostal: ^0.5.1
   fl_chart: ^0.63.0
+  # firebase
   firebase_storage: ^11.2.5
   cloud_firestore: ^4.8.4
   firebase_core: ^2.15.0
+  # gesture 기능 풍부하게
   simple_gesture_detector: ^0.2.0
+  # modal 기능
   fluttertoast: ^8.2.2
+  # 기기 내 쿠키사용위해
   shared_preferences: ^2.2.0
+  # 기기 화면 조절
   flutter_screenutil: ^5.8.4
   flutter_svg: ^2.0.7
+  # splash 간단하게
   animated_splash_screen: ^1.3.0
+  # .env 쓰기위해
   flutter_dotenv: ^5.1.0
+  # 아직 안씀
   flutter_secure_storage: ^8.0.0
+  # animation image 사용
   lottie: ^2.5.0
+  # get 방식의 쿠키사용 (아직 사용 X)
   get_storage: ^2.1.1
+  # jwt decode
   jwt_decode: ^0.3.1
+  # 이미지 파일 저장 접근을 위해
   image_picker: ^1.0.2
+  # markdown 쓰기 위해
+  flutter_markdown: ^0.6.17
   
 
 dev_dependencies:

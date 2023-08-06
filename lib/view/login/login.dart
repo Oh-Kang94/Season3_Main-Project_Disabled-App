@@ -19,51 +19,55 @@ class LoginUser extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const LogoPic(isappbar: false,),
-                Lottie.asset('assets/lottie/lottieLogin.json'),
-                Container(
-                  padding: const EdgeInsets.all(50.0),
-                  child: Form(
-                    key: controller.loginFormKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        LoginForm(
-                          controller: controller,
-                          labelText: '아이디',
-                          isPassword: false,
-                        ),
-                        LoginForm(
-                          controller: controller,
-                          labelText: '비밀번호',
-                          isPassword: true,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                onPressed: controller.login,
-                                child: const Text('로그인'),
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const LogoPic(isappbar: false,),
+                    Lottie.asset('assets/lottie/lottieLogin.json'),
+                    Container(
+                      padding: const EdgeInsets.all(50.0),
+                      child: Form(
+                        key: controller.loginFormKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LoginForm(
+                              controller: controller,
+                              labelText: '아이디',
+                              isPassword: false,
+                            ),
+                            LoginForm(
+                              controller: controller,
+                              labelText: '비밀번호',
+                              isPassword: true,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: controller.login,
+                                    child: const Text('로그인'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Get.to(RegisterUser());
+                                    },
+                                    child: const Text('회원가입'),
+                                  ),
+                                ],
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Get.to(RegisterUser());
-                                },
-                                child: const Text('회원가입'),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

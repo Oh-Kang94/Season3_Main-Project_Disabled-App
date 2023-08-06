@@ -18,7 +18,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     LoginController loginController = Get.find<LoginController>();
     return AppBar(
-      title: const LogoPic(isappbar: true,),
+      title: const LogoPic(
+        isappbar: true,
+      ),
       actions: [
         SafeArea(
           child: Obx(
@@ -33,8 +35,26 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               () => loginController.isLogged.value
                   ? IconButton(
                       onPressed: () {
-                        Get.snackbar("logout", "logout 되었습니다.");
-                        loginController.logout();
+                        Get.defaultDialog(
+                          title: "로그아웃 하시겠습니까?",
+                          middleText: "로그아웃 하시겠습니까?",
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                                Get.snackbar("logout", "logout 되었습니다.");
+                                loginController.logout();
+                              },
+                              child: const Text('네'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text('아니오'),
+                            ),
+                          ],
+                        );
                       },
                       icon: Icon(Icons.logout,
                           color: Theme.of(context).colorScheme.error),
