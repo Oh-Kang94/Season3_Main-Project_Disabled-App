@@ -19,7 +19,6 @@ class _WebClassState extends State<WebClass> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isLoading = true;
     siteName = widget.site;
@@ -67,10 +66,10 @@ class _WebClassState extends State<WebClass> {
       body: Stack( 
       children: [
         isLoading
-        ? Center( 
+        ? const Center( 
         child: CircularProgressIndicator(),
         ) 
-    :const Stack(),
+    :const SizedBox(),
     WebViewWidget(
       controller: controller)
       ],
