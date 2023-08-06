@@ -2,6 +2,7 @@ class UserData {
   String id;
   String password;
   String name;
+  String avatar;
   String email;
   String phone;
   String gender;
@@ -12,6 +13,7 @@ class UserData {
     required this.id,
     required this.password,
     required this.name,
+    required this.avatar,
     required this.email,
     required this.phone,
     required this.gender,

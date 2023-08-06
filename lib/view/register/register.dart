@@ -95,6 +95,7 @@ class RegisterUser extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
+                          controller: registerationController.emailController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
@@ -194,19 +195,31 @@ class RegisterUser extends StatelessWidget {
   }
 
   Future<void> showDisabilityPicker(BuildContext context) async {
+    double pickerItemHeight = 40.0; 
+    int itemCount = 10; 
+
+    double pickerHeight = pickerItemHeight * itemCount+200;
+    if (pickerHeight > MediaQuery.of(context).size.height * 0.5) {
+      pickerHeight = MediaQuery.of(context).size.height * 0.5;
+    }
     await showModalBottomSheet(
       context: context,
       builder: (context) {
         return SizedBox(
-          height: 200,
+          height: pickerHeight,
           child: CupertinoPicker(
-            itemExtent: 50,
+            itemExtent: pickerItemHeight,
             onSelectedItemChanged: (index) {
               registerationController
                   .setSelectedDisability(disabilities[index]);
             },
             children: disabilities
-                .map((disability) => Text(disability.name))
+                .map((disability) => Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(disability.name),
+                  ],
+                ))
                 .toList(),
           ),
         );
@@ -215,17 +228,30 @@ class RegisterUser extends StatelessWidget {
   }
 
   Future<void> showGenderPicker(BuildContext context) async {
+    double pickerItemHeight = 40.0; 
+    int itemCount = 2; 
+
+    double pickerHeight = pickerItemHeight * itemCount+200;
+    if (pickerHeight > MediaQuery.of(context).size.height * 0.5) {
+      pickerHeight = MediaQuery.of(context).size.height * 0.5;
+    }
+
     await showModalBottomSheet(
       context: context,
       builder: (context) {
         return SizedBox(
-          height: 200,
+          height: pickerHeight,
           child: CupertinoPicker(
-            itemExtent: 50,
+            itemExtent: pickerItemHeight,
             onSelectedItemChanged: (index) {
               registerationController.setSelectedGender(genders[index]);
             },
-            children: genders.map((gender) => Text(gender.name)).toList(),
+            children: genders.map((gender) => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(gender.name),
+              ],
+            )).toList(),
           ),
         );
       },

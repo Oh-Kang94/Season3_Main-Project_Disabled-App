@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/disabledModel.dart';
 import '../model/genderModel.dart';
 import '../model/userdata.dart';
+import '../util/api_endpoint.dart';
 import '../view/home.dart';
 
 class RegisterationController extends GetxController {
@@ -54,6 +55,7 @@ class RegisterationController extends GetxController {
         id: idController.text,
         password: passwordController.text,
         name: nameController.text,
+        avatar: "",
         email: emailController.text,
         phone: phoneController.text,
         gender: genderController.text,
@@ -74,21 +76,24 @@ class RegisterationController extends GetxController {
   }
 
   Future<bool> saveUser(UserData userData) async {
-    String baseUrl = "http://localhost:3000/authaccount/registration";
-    try {
-      var response = await GetConnect().post(
-          baseUrl,
-          {
+    String baseUrl = ApiEndPoints.baseurl+ApiEndPoints.apiEndPoints.registerid;
+    var body = {
             "id": userData.id,
             "password": userData.password,
             "name": userData.name,
+            "avatar" : userData.avatar,
             "email": userData.email,
             "phone": userData.phone,
             "gender": userData.gender,
             "disability": userData.disability,
             "address": userData.address
-          },
+          };
+    try {
+      var response = await GetConnect().post(
+          baseUrl,
+          body
           );
+          print(body);
       if (response.isOk) {
         print(
             "코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");
@@ -97,6 +102,7 @@ class RegisterationController extends GetxController {
         return false;
       }
     } catch (e) {
+      print(e);
       return false;
     }
   }

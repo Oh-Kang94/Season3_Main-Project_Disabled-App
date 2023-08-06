@@ -4,6 +4,8 @@ import 'package:jwt_decode/jwt_decode.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../util/api_endpoint.dart';
+
 class LoginController extends GetxController {
   RxBool isLogged = false.obs;
   RxString userId = "".obs; // 사용자의 id를 저장하는 변수
@@ -57,8 +59,8 @@ class LoginController extends GetxController {
 
   // Api
   Future<bool> checkUser(String user, String password) async {
-    String baseUrl = "http://localhost:3000/authaccount/login";
-    // String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid
+    // String baseUrl = "http://localhost:3000/authaccount/login";
+    String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid;
 
     String requestUrl = "$baseUrl/?id=$user&password=$password";
 
