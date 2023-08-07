@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../util/api_endpoint.dart';
 
-class LoginController extends GetxController {
+class LoginController extends GetxService {
   RxBool isLogged = false.obs;
   RxString userId = "".obs;
   RxString userName = "".obs;
@@ -96,6 +96,8 @@ class LoginController extends GetxController {
     } catch (e) {
       print(e);
     }
+    print(
+        "LOGIN SHAREDPREFERENCE: userid${userId.value} username${userName.value}");
   }
 
   getSharedPreferences() async {
@@ -119,6 +121,8 @@ class LoginController extends GetxController {
       prefs.remove('userName');
     } catch (e) {
       print(e);
+      print(
+          "remove SHAREDPREFERENCE: userid${userId.value} username${userName.value}");
     }
   }
 }

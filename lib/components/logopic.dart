@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -27,8 +28,8 @@ class LogoPic extends StatelessWidget {
         children: [
           SvgPicture.asset(
             AssetsImage.LOGO,
-            height: 50,
-            width: 50,
+            height: 40.h,
+            width: 40.h,
           ),
         ],
       ),

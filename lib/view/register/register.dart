@@ -34,7 +34,12 @@ class RegisterUser extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const LogoPic(isappbar: false),
-                  const Text("회원 가입"),
+                  SizedBox(height: 30.h),
+                  const Text(
+                    "회원 가입",
+                    style:
+                        TextStyle(fontFamily: "NotoSansKR-Bold", fontSize: 30),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: Form(
