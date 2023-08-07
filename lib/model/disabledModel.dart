@@ -2,6 +2,11 @@ class DisabledModel {
   final String name;
 
   DisabledModel(this.name);
+
+  @override
+  String toString() {
+    return name;
+  }
 }
 
 List<DisabledModel> disabilities = [

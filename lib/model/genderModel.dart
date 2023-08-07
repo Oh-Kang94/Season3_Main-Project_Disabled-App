@@ -2,6 +2,11 @@ class GenderModel {
   String name;
 
   GenderModel(this.name);
+
+  @override
+  String toString() {
+    return name;
+  }
 }
 
 List<GenderModel> genders = [

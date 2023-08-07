@@ -49,12 +49,13 @@ class RegisterationController extends GetxController {
   @override
   void onInit() {
     disabledController.text = '장애 유형 선택';
-    genderController.text = '성별 선택';
+    genderController.text = '남자';
     birthController.text = '누르시면 생년월일이 검색됩니다.';
     addressController.text = '누르시면 주소가 검색됩니다.';
     super.onInit();
   }
 
+  // 장애 설정
   Future<void> showDisabilityPicker(BuildContext context) async {
     double pickerItemHeight = 40.0;
     int itemCount = 10;
@@ -71,7 +72,8 @@ class RegisterationController extends GetxController {
           child: CupertinoPicker(
             itemExtent: pickerItemHeight,
             onSelectedItemChanged: (index) {
-              setSelectedDisability(disabilities[index]);
+              selectedDisability.value = disabilities[index];
+              disabledController.text = selectedDisability.value.toString();
             },
             children: disabilities
                 .map((disability) => Column(
@@ -87,14 +89,39 @@ class RegisterationController extends GetxController {
     );
   }
 
-  // 장애 선택
-  void setSelectedDisability(DisabledModel? disability) {
-    selectedDisability.value = disability;
-  }
+  // 성별 선택
+  Future<void> showGenderPicker(BuildContext context) async {
+    double pickerItemHeight = 100.0;
+    int itemCount = 2;
 
-  // 장애 선택
-  void setSelectedGender(GenderModel? gender) {
-    selectedgender.value = gender;
+    double pickerHeight = pickerItemHeight * itemCount + 200;
+    if (pickerHeight > MediaQuery.of(context).size.height * 0.3) {
+      pickerHeight = MediaQuery.of(context).size.height * 0.3;
+    }
+
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: pickerHeight,
+          child: CupertinoPicker(
+            itemExtent: pickerItemHeight,
+            onSelectedItemChanged: (index) {
+              selectedgender.value = genders[index];
+              genderController.text = selectedgender.value.toString();
+            },
+            children: genders
+                .map((gender) => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(gender.name),
+                      ],
+                    ))
+                .toList(),
+          ),
+        );
+      },
+    );
   }
 
   // 주소 설정
@@ -128,7 +155,7 @@ class RegisterationController extends GetxController {
   }
 
   void onSavedPic(XFile? pick) {
-    path.value = "/profile/${idController.text}profile";
+    path.value = "/profile/${idController.text}_profile";
     if (pick != null) {
       File file = File(pick.path);
       FirebaseStorage.instance.ref(path.value).putFile(file);
@@ -142,6 +169,7 @@ class RegisterationController extends GetxController {
     if (registerFormKey.currentState!.validate() &&
         consentCollectInfo.value == true &&
         consentProcessInfo.value == true) {
+      onSavedPic(pick.value);
       UserData userData = UserData(
         id: idController.text,
         password: passwordController.text,
@@ -157,8 +185,6 @@ class RegisterationController extends GetxController {
         longitude: _longitude.value,
         birth: birthController.text,
       );
-
-      onSavedPic(pick.value);
 
       saveUser(userData).then((bool auth) {
         if (auth) {

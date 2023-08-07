@@ -8,13 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:season3_team1_mainproject/components/logopic.dart';
-import 'package:season3_team1_mainproject/model/genderModel.dart';
 import 'package:kpostal/kpostal.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/util/regex.dart';
 
 import '../../components/agreementViewWidget.dart';
-import '../../model/disabledModel.dart';
 import '../../vm/registerCtrl.dart';
 
 class RegisterUser extends StatelessWidget {
@@ -144,8 +142,11 @@ class RegisterUser extends StatelessWidget {
                           SizedBox(height: 10.h),
                           Obx(
                             () => TextField(
+                              controller:
+                                  registerationController.genderController,
                               onTap: () async {
-                                showGenderPicker(context);
+                                registerationController
+                                    .showGenderPicker(context);
                               },
                               readOnly: true,
                               keyboardType: TextInputType.none,
@@ -182,8 +183,11 @@ class RegisterUser extends StatelessWidget {
                           SizedBox(height: 10.h),
                           Obx(
                             () => TextField(
+                              controller:
+                                  registerationController.disabledController,
                               onTap: () async {
-                                showDisabilityPicker(context);
+                                registerationController
+                                    .showDisabilityPicker(context);
                               },
                               readOnly: true,
                               keyboardType: TextInputType.none,
@@ -221,35 +225,32 @@ class RegisterUser extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const Text("프로필 사진 설정"),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    registerationController.imagePicker();
-                                  },
-                                  child: const Text("사진 선택"))
-                            ],
-                          ),
-                          Obx(
-                            () => registerationController.pick.value == null
-                                ? SizedBox(
-                                    height: 200.h,
-                                    child: CircleAvatar(
+                          const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text("프로필 사진 설정"),
+                              ]),
+                          GestureDetector(
+                            onTap: () => registerationController.imagePicker(),
+                            child: Obx(
+                              () => registerationController.pick.value == null
+                                  ? SizedBox(
+                                      height: 200.h,
+                                      child: CircleAvatar(
+                                          radius: 100.h,
+                                          backgroundImage: const AssetImage(
+                                              "assets/images/uploadbutton.png")),
+                                    )
+                                  : SizedBox(
+                                      height: 200.h,
+                                      child: CircleAvatar(
                                         radius: 100.h,
-                                        backgroundImage: const AssetImage(
-                                            "assets/images/user.png")),
-                                  )
-                                : SizedBox(
-                                    height: 200.h,
-                                    child: CircleAvatar(
-                                      radius: 100.h,
-                                      backgroundImage: FileImage(File(
-                                          registerationController
-                                              .pick.value!.path)),
+                                        backgroundImage: FileImage(File(
+                                            registerationController
+                                                .pick.value!.path)),
+                                      ),
                                     ),
-                                  ),
+                            ),
                           ),
                           SizedBox(height: 10.h),
                           Row(
@@ -315,74 +316,6 @@ class RegisterUser extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  // 사진 업로드 하기 선택하면
-
-  Future<void> showDisabilityPicker(BuildContext context) async {
-    double pickerItemHeight = 40.0;
-    int itemCount = 10;
-
-    double pickerHeight = pickerItemHeight * itemCount + 200;
-    if (pickerHeight > MediaQuery.of(context).size.height * 0.3) {
-      pickerHeight = MediaQuery.of(context).size.height * 0.3;
-    }
-    await showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: pickerHeight,
-          child: CupertinoPicker(
-            itemExtent: pickerItemHeight,
-            onSelectedItemChanged: (index) {
-              registerationController
-                  .setSelectedDisability(disabilities[index]);
-            },
-            children: disabilities
-                .map((disability) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(disability.name),
-                      ],
-                    ))
-                .toList(),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> showGenderPicker(BuildContext context) async {
-    double pickerItemHeight = 40.0;
-    int itemCount = 2;
-
-    double pickerHeight = pickerItemHeight * itemCount + 200;
-    if (pickerHeight > MediaQuery.of(context).size.height * 0.3) {
-      pickerHeight = MediaQuery.of(context).size.height * 0.3;
-    }
-
-    await showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: pickerHeight,
-          child: CupertinoPicker(
-            itemExtent: pickerItemHeight,
-            onSelectedItemChanged: (index) {
-              registerationController.setSelectedGender(genders[index]);
-            },
-            children: genders
-                .map((gender) => Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(gender.name),
-                      ],
-                    ))
-                .toList(),
-          ),
-        );
-      },
     );
   }
 
