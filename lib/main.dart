@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/util/theme.dart';
 import 'package:season3_team1_mainproject/view/splash.dart';
 import 'package:season3_team1_mainproject/vm/loginCtrl.dart';
 
@@ -37,8 +38,6 @@ class _MyAppState extends State<MyApp> {
   //   });
   // }
 
-  static const Color seedcolor = Color(0xFF01479D);
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -48,17 +47,9 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return GetMaterialApp(
           title: 'Flutter Demo',
-          theme: ThemeData(
-            fontFamily: 'NotoSansKR-Regular',
-            brightness: Brightness.light,
-            useMaterial3: true,
-            colorSchemeSeed: seedcolor,
-          ),
-          darkTheme: ThemeData(
-              fontFamily: 'NotoSansKR-Regular',
-              brightness: Brightness.dark,
-              useMaterial3: true,
-              colorSchemeSeed: seedcolor),
+          themeMode: ThemeMode.light,
+          theme: CustomTheme.lighttheme,
+          darkTheme: CustomTheme.darktheme,
           // 언어 지원
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,

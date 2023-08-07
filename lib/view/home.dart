@@ -23,24 +23,27 @@ class Home extends StatelessWidget {
         // map 자리
       ]),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.secondary,
         child: TabBar(
             controller: homeController.controller,
-            labelColor:
-            Theme.of(context).colorScheme.error, 
-            unselectedLabelColor:
-                Theme.of(context).colorScheme.tertiary, 
-            indicatorColor: Colors.blue, // 아래 선택되어 있는 바 보여주기
-            indicatorWeight: 10, // 바의 크기 키우기
+            labelColor: Theme.of(context).colorScheme.onSurface,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSecondary,
+            indicatorColor:
+                Theme.of(context).colorScheme.onSurface, // 아래 선택되어 있는 바 보여주기
+            indicatorWeight: 2, // 바의 크기 키우기
             tabs: const [
               // 각자 탭바 채워 넣기
               Tab(
-                icon: Icon(Icons.home),
+                icon: Icon(
+                  Icons.home,
+                ),
                 text: "메인뷰",
               ),
               //  1st main
               Tab(
-                icon: Icon(Icons.recommend),
+                icon: Icon(
+                  Icons.recommend,
+                ),
                 text: "일자리추천",
               ),
 

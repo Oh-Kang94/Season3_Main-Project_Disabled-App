@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 
 import '../../binding/Binding.dart';
+import '../../util/theme.dart';
 import '../../vm/loginCtrl.dart';
 import '../register/register.dart';
 
@@ -67,13 +68,17 @@ class Mydrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary),
             title: const Text('로그인 하기'),
           ),
-          OutlinedButton(
-            onPressed: () {
+          ListTile(
+            onTap: () {
               Get.changeTheme(
-                Get.isDarkMode ? ThemeData.light() : ThemeData.dark(),
+                Get.isDarkMode ? CustomTheme.lighttheme : CustomTheme.darktheme,
               );
             },
-            child: const Text('테마변경'),
+            leading: Icon(Icons.dark_mode,
+                color: Theme.of(context).colorScheme.secondary),
+            title: Get.isDarkMode
+                ? const Text('라이트 테마 변경')
+                : const Text('다크 테마 변경'),
           ),
         ],
       ),
