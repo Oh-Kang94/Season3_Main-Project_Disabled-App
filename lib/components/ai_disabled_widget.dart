@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+
+import '../model/aiTestModel.dart';
 
 typedef OnAgeSelectedCallback = void Function(
     String selectedDropdown, int selected);
@@ -39,73 +42,83 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return GetBuilder<AiTestController>(
+      builder: (controller) {
+        return Center(
+          child: Column(
             children: [
-              SizedBox(
-                width: 90,
-                height: 50,
-                child: DropdownButton(
-                  value: selectedDropdown,
-                  items: disabled.map((String item) {
-                    return DropdownMenuItem<String>(
-                      child: Text('$item'),
-                      value: item,
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedDropdown = value!;
-                      widget.onDisabledSelected(selectedDropdown, selected);
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    const Text('경증장애'),
-                    Radio(
-                      value: 1,
-                      groupValue: selected,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 90,
+                    height: 50,
+                    child: DropdownButton(
+                      value: selectedDropdown,
+                      items: disabled.map((String item) {
+                        return DropdownMenuItem<String>(
+                          child: Text('$item'),
+                          value: item,
+                        );
+                      }).toList(),
                       onChanged: (value) {
-                        selected = value!;
                         setState(() {});
+                        selectedDropdown = value!;
+                        controller.disabledSelect = selectedDropdown;
+                        // controller.selectedDisabled(selectedDropdown);
+                        // aiTestController.onDropdownSelected(value!);
                         widget.onDisabledSelected(selectedDropdown, selected);
                       },
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    const Text('중증장애'),
-                    Radio(
-                      value: 2,
-                      groupValue: selected,
-                      onChanged: (value) {
-                        selected = value!;
-                        setState(() {});
-                        widget.onDisabledSelected(selectedDropdown, selected);
-                      },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const Text('경증장애'),
+                        Radio(
+                          value: 1,
+                          groupValue: selected,
+                          onChanged: (value) {
+                            selected = value!;
+                            setState(() {});
+                            controller.radioDisabledSelect = selected;
+                            widget.onDisabledSelected(
+                                selectedDropdown, selected);
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const Text('중증장애'),
+                        Radio(
+                          value: 2,
+                          groupValue: selected,
+                          onChanged: (value) {
+                            selected = value!;
+                            setState(() {});
+                            controller.radioDisabledSelect = selected;
+                            widget.onDisabledSelected(
+                                selectedDropdown, selected);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(
+                color: Colors.grey,
+                thickness: 2.0,
               ),
             ],
           ),
-          const Divider(
-            color: Colors.grey,
-            thickness: 2.0,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

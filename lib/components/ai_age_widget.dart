@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../model/aiTestModel.dart';
 
 typedef OnAgeSelectedCallback = void Function(
     int selectedYear, int selectedMonth, int selectedDay);
@@ -17,6 +21,7 @@ class AiAgeWidget extends StatefulWidget {
 }
 
 class _AiAgeWidgetState extends State<AiAgeWidget> {
+  final AiTestController aiTestController = Get.put(AiTestController());
   // Property
   late List<int> age_year;
   late List<int> age_month;
@@ -46,77 +51,85 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return GetBuilder<AiTestController>(
+      builder: (controller) {
+        return Center(
+          child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton<int>(
-                  value: selectedYear,
-                  items: age_year
-                      .map((year) => DropdownMenuItem(
-                            value: year,
-                            child: Text("${year.toString()}년"),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedYear = value!;
-                      _updateDayRange(selectedYear, selectedMonth);
-                      realAdult();
-                    });
-                  },
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton<int>(
+                      value: selectedYear,
+                      items: age_year
+                          .map((year) => DropdownMenuItem(
+                                value: year,
+                                child: Text("${year.toString()}년"),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedYear = value!;
+                          aiTestController.onYearSelected(value);
+                          _updateDayRange(selectedYear, selectedMonth);
+                          realAdult();
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton<int>(
+                      value: selectedMonth,
+                      items: age_month
+                          .map((month) => DropdownMenuItem(
+                                value: month,
+                                child: Text("${month.toString()}월"),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedMonth = value!;
+                          aiTestController.onMonthSelected(value);
+                          _updateDayRange(selectedYear, selectedMonth);
+                          realAdult();
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButton<int>(
+                      value: selectedDay,
+                      items: age_day
+                          .map((day) => DropdownMenuItem(
+                                value: day,
+                                child: Text("${day.toString()}일"),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedDay = value!;
+                          realAdult();
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton<int>(
-                  value: selectedMonth,
-                  items: age_month
-                      .map((month) => DropdownMenuItem(
-                            value: month,
-                            child: Text("${month.toString()}월"),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedMonth = value!;
-                      _updateDayRange(selectedYear, selectedMonth);
-                      realAdult();
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownButton<int>(
-                  value: selectedDay,
-                  items: age_day
-                      .map((day) => DropdownMenuItem(
-                            value: day,
-                            child: Text("${day.toString()}일"),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedDay = value!;
-                      realAdult();
-                    });
-                  },
-                ),
+              // Text("만 ${aiTestController.age}세"),
+              
+                Text("나이: ${aiTestController.age}세"),
+              const Divider(
+                color: Colors.grey,
+                thickness: 2.0,
               ),
             ],
           ),
-          Text("만 ${age()}세"),
-          const Divider(
-            color: Colors.grey,
-            thickness: 2.0,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -156,10 +169,9 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
       selectedYear = DateTime.now().year;
       selectedMonth = DateTime.now().month;
       selectedDay = DateTime.now().day;
+    } else {
       widget.onAgeSelected(selectedYear, selectedMonth, selectedDay);
     }
     setState(() {});
   }
-
-
 } // End

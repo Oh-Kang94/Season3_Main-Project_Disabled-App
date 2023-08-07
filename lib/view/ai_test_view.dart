@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/components/agreementViewWidget.dart';
 import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_disabled_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_sex_widget.dart';
+import 'package:season3_team1_mainproject/util/agreement.dart';
+import 'package:season3_team1_mainproject/view/ai_result_view.dart';
+import 'package:season3_team1_mainproject/view/ai_start_view.dart';
+import 'package:season3_team1_mainproject/view/ai_test_next_view.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
+
+import '../components/ai_job_select_widget.dart';
+import '../components/loding_widget.dart';
 
 class AiTestView extends StatefulWidget {
   const AiTestView({Key? key}) : super(key: key);
@@ -85,51 +94,68 @@ class _AiTestViewState extends State<AiTestView> {
               const SizedBox(
                 height: 60,
               ),
-              Column(
+              // AgreementViewWidget(
+              //   agreement:
+              //       agreement.personalCollection + agreement.personalUseage,
+              // ),
+              AiJobSelectWidget(),
+              const Text('개인정보 수집에 동의하십니까? '),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const Text('개인정보 수집에 동의하십니까? '),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: okChecked,
-                            onChanged: (value) => _checkboxGroup(value!),
-                          ),
-                          const Text('동의'),
-                        ],
+                      Checkbox(
+                        value: okChecked,
+                        onChanged: (value) => _checkboxGroup(value!),
                       ),
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: noChecked,
-                            onChanged: (value) {
-                              // 두 번째 체크박스를 선택하면 첫 번째 체크박스와 반대로 설정
-                              _checkboxGroup(!value!);
-                            },
-                          ),
-                          const Text('비동의'),
-                        ],
-                      ),
+                      const Text('동의'),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      
-                    },
-                    child: const Text(
-                      '이용약관',
-                    ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: noChecked,
+                        onChanged: (value) {
+                          // 두 번째 체크박스를 선택하면 첫 번째 체크박스와 반대로 설정
+                          _checkboxGroup(!value!);
+                        },
+                      ),
+                      const Text('비동의'),
+                    ],
                   ),
                 ],
               ),
+              const Text(
+                '이용약관',
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // 다이얼로그를 표시합니다.
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // 사용자가 다이얼로그 바깥을 터치해도 닫히지 않도록 설정합니다.
+                      builder: (context) => LoadingDialog(),
+                    );
+
+                    // 일부 로딩 시간을 시뮬레이션하기 위해 Future.delayed() 메서드를 사용합니다.
+                    // 실제 코드에서는 이 부분을 로딩 로직으로 대체하시면 됩니다.
+                    Future.delayed(Duration(seconds: 1), () {
+                      // 로딩 다이얼로그를 닫습니다.
+                      Navigator.pop(context);
+
+                      // 다음 화면으로 이동합니다.
+                      Get.to(AiResultView());
+                    });
+                  },
+                  child: const Text('검사시작'),
+                ),
+              ),
               const SizedBox(
                 height: 60,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('검사시작'),
               ),
             ],
           ),
