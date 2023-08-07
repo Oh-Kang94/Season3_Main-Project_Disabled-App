@@ -20,7 +20,7 @@ class Mydrawer extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             currentAccountPicture: const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/working.png"),
+              backgroundImage: AssetImage("assets/images/user.png"),
             ),
             accountName: Obx(
               () => loginController.isLogged.value

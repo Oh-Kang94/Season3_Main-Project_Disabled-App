@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../model/disabledModel.dart';
 import '../model/genderModel.dart';
@@ -29,8 +33,14 @@ class RegisterationController extends GetxController {
 
   TextEditingController addressController = TextEditingController();
 
-  var consentCollectInfo = false.obs;
-  var consentProcessInfo = false.obs;
+  final RxDouble _latitude = 0.0.obs;
+  final RxDouble _longitude = 0.0.obs;
+
+  Rx<XFile?> pick = Rx<XFile?>(null);
+  RxString path = "basic".obs;
+
+  RxBool consentCollectInfo = false.obs;
+  RxBool consentProcessInfo = false.obs;
 
   final registerFormKey = GlobalKey<FormState>();
   final httpClient = GetConnect();
@@ -55,8 +65,10 @@ class RegisterationController extends GetxController {
   }
 
   // 주소 설정
-  void setAddress(String address) {
+  void setAddress(String address, double latitude, double longitude) {
     addressController.text = address;
+    _latitude.value = latitude;
+    _longitude.value = longitude;
   }
 
   // 생년월일 설정
@@ -72,11 +84,18 @@ class RegisterationController extends GetxController {
     consentProcessInfo.value = newValue;
   }
 
+  void onSavedPic(XFile? pick) {
+    path.value = "/profile/${idController.text}profile";
+    if (pick != null) {
+      File file = File(pick.path);
+      FirebaseStorage.instance.ref(path.value).putFile(file);
+    }
+  }
+
   bool get isConsentCollect => consentCollectInfo.value;
   bool get isConsentProcess => consentProcessInfo.value;
 
   void onSaved() {
-    print(birthController.text);
     if (registerFormKey.currentState!.validate() &&
         consentCollectInfo.value == true &&
         consentProcessInfo.value == true) {
@@ -84,15 +103,19 @@ class RegisterationController extends GetxController {
         id: idController.text,
         password: passwordController.text,
         name: nameController.text,
-        avatar: " ",
+        avatar: path.value,
         email: emailController.text,
         phone:
             "${phoneController.text.substring(0, 3)}-${phoneController.text.substring(3, 7)}-${phoneController.text.substring(7, 11)}",
         gender: selectedgender.value!.name,
         disability: selectedDisability.value!.name,
         address: addressController.text,
+        latitude: _latitude.value,
+        longitude: _longitude.value,
         birth: birthController.text,
       );
+
+      onSavedPic(pick.value);
 
       saveUser(userData).then((bool auth) {
         if (auth) {

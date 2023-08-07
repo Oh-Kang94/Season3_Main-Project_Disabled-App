@@ -8,6 +8,8 @@ class UserData {
   String gender;
   String disability;
   String address;
+  double latitude;
+  double longitude;
   String birth;
 
   UserData({
@@ -20,6 +22,8 @@ class UserData {
     required this.gender,
     required this.disability,
     required this.address,
+    required this.latitude,
+    required this.longitude,
     required this.birth,
   });
   Map<String, dynamic> toJson() {
@@ -33,6 +37,8 @@ class UserData {
       'gender': gender,
       'disability': disability,
       'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
       'birth': birth,
     };
   }

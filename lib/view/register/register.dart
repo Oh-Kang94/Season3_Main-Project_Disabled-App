@@ -1,9 +1,12 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:season3_team1_mainproject/components/logopic.dart';
 import 'package:season3_team1_mainproject/model/genderModel.dart';
 import 'package:kpostal/kpostal.dart';
@@ -20,6 +23,7 @@ class RegisterUser extends StatelessWidget {
       Get.put(RegisterationController());
 
   DateTime selectedDate = DateTime.now();
+  XFile? pick;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -199,8 +203,12 @@ class RegisterUser extends StatelessWidget {
                                 KpostalView(
                                   callback: (Kpostal result) {
                                     print(result.address);
-                                    registerationController
-                                        .setAddress(result.address); // 주소를 설정
+                                    print(
+                                        "경도: ${result.latitude} 위도: ${result.longitude}");
+                                    registerationController.setAddress(
+                                        result.address,
+                                        result.latitude!,
+                                        result.longitude!); // 주소를 설정
                                   },
                                 ),
                               );
@@ -212,6 +220,36 @@ class RegisterUser extends StatelessWidget {
                               labelText: '주소',
                             ),
                           ),
+                          SizedBox(height: 10.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              const Text("프로필 사진 설정"),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    registerationController.pick.value =
+                                        imagePicker();
+                                  },
+                                  child: const Text("사진 선택"))
+                            ],
+                          ),
+                          registerationController.pick.value == null
+                              ? SizedBox(
+                                  height: 200.h,
+                                  child: CircleAvatar(
+                                      radius: 100.h,
+                                      backgroundImage: const AssetImage(
+                                          "assets/images/user.png")),
+                                )
+                              : SizedBox(
+                                  height: 200.h,
+                                  child: CircleAvatar(
+                                    radius: 100.h,
+                                    backgroundImage: FileImage(File(
+                                        registerationController
+                                            .pick.value!.path)),
+                                  ),
+                                ),
                           SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -279,13 +317,20 @@ class RegisterUser extends StatelessWidget {
     );
   }
 
+  // 사진 업로드 하기 선택하면
+  imagePicker() async {
+    pick = await ImagePicker().pickImage(source: ImageSource.gallery);
+    print(pick);
+    return pick;
+  }
+
   Future<void> showDisabilityPicker(BuildContext context) async {
     double pickerItemHeight = 40.0;
     int itemCount = 10;
 
     double pickerHeight = pickerItemHeight * itemCount + 200;
-    if (pickerHeight > MediaQuery.of(context).size.height * 0.5) {
-      pickerHeight = MediaQuery.of(context).size.height * 0.5;
+    if (pickerHeight > MediaQuery.of(context).size.height * 0.3) {
+      pickerHeight = MediaQuery.of(context).size.height * 0.3;
     }
     await showModalBottomSheet(
       context: context,
@@ -317,8 +362,8 @@ class RegisterUser extends StatelessWidget {
     int itemCount = 2;
 
     double pickerHeight = pickerItemHeight * itemCount + 200;
-    if (pickerHeight > MediaQuery.of(context).size.height * 0.5) {
-      pickerHeight = MediaQuery.of(context).size.height * 0.5;
+    if (pickerHeight > MediaQuery.of(context).size.height * 0.3) {
+      pickerHeight = MediaQuery.of(context).size.height * 0.3;
     }
 
     await showModalBottomSheet(
