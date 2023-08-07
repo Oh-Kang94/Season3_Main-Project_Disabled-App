@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/logopic.dart';
 import 'package:season3_team1_mainproject/model/genderModel.dart';
@@ -10,6 +10,7 @@ import 'package:kpostal/kpostal.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/util/regex.dart';
 
+import '../../components/agreementViewWidget.dart';
 import '../../model/disabledModel.dart';
 import '../../vm/registerCtrl.dart';
 
@@ -58,7 +59,7 @@ class RegisterUser extends StatelessWidget {
                             },
                             textInputAction: TextInputAction.next,
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -79,7 +80,7 @@ class RegisterUser extends StatelessWidget {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -98,7 +99,7 @@ class RegisterUser extends StatelessWidget {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           TextFormField(
                             controller: registerationController.emailController,
                             autovalidateMode:
@@ -118,7 +119,7 @@ class RegisterUser extends StatelessWidget {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -136,7 +137,7 @@ class RegisterUser extends StatelessWidget {
                               return null;
                             },
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           Obx(
                             () => TextField(
                               onTap: () async {
@@ -155,7 +156,7 @@ class RegisterUser extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           Obx(
                             () => TextFormField(
                               onTap: () async {
@@ -174,7 +175,7 @@ class RegisterUser extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           Obx(
                             () => TextField(
                               onTap: () async {
@@ -211,7 +212,7 @@ class RegisterUser extends StatelessWidget {
                               labelText: '주소',
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -232,18 +233,9 @@ class RegisterUser extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 100,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  MarkdownBody(
-                                    data: agreement.personalCollection)
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
+                          AgreementViewWidget(
+                              agreement: agreement.personalCollection),
+                          SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -264,17 +256,10 @@ class RegisterUser extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 100,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  MarkdownBody(
-                                    data: agreement.personalUseage)
-                                ],
-                              ),
-                            ),
-                          ),
+                          SizedBox(height: 10.h),
+                          AgreementViewWidget(
+                              agreement: agreement.personalUseage),
+                          SizedBox(height: 20.h),
                           ElevatedButton(
                             onPressed: () {
                               registerationController.onSaved();

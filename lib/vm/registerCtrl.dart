@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/disabledModel.dart';
 import '../model/genderModel.dart';
@@ -33,7 +32,6 @@ class RegisterationController extends GetxController {
   var consentCollectInfo = false.obs;
   var consentProcessInfo = false.obs;
 
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final registerFormKey = GlobalKey<FormState>();
   final httpClient = GetConnect();
 

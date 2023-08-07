@@ -28,13 +28,6 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  String? validator(String? value) {
-    if (value == null || value.isEmpty) {
-      return '아이디와 패스워드를 채워주세요.';
-    }
-    return null;
-  }
-
   void login() {
     if (loginFormKey.currentState!.validate()) {
       checkUser(idController.text, passwordController.text).then((bool auth) {
@@ -64,7 +57,6 @@ class LoginController extends GetxController {
 
     String requestUrl = "$baseUrl/?id=$user&password=$password";
 
-
     try {
       // GetConnect를 사용하여 GET 요청을 보냅니다.
       var response = await GetConnect().get(requestUrl);
@@ -82,7 +74,7 @@ class LoginController extends GetxController {
         String id = decodedToken['id'];
         String password = decodedToken['password'];
         String name = decodedToken['name'];
-        print("id=${id},name:${name},password: ${password}");
+        print("id=$id,name:$name,password: $password");
         userId.value = id;
         userName.value = name;
         saveSharedPreferences();
