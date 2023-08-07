@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
               brightness: Brightness.dark,
               useMaterial3: true,
               colorSchemeSeed: seedcolor),
-          // 언어 지원 
+          // 언어 지원
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,

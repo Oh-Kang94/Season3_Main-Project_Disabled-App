@@ -23,10 +23,18 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         SafeArea(
-          child: Obx(
-            () => loginController.isLogged.value
-                ? Text('환영합니다, ${loginController.userName.value}님!')
-                : const Text("로그인이 필요합니다"),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(
+                () => loginController.isLogged.value
+                    ? Text('환영합니다, ${loginController.userName.value}님!')
+                    : const Text(
+                        "로그인이 필요합니다",
+                        style: TextStyle(fontFamily: "NotoSansKR-Light"),
+                      ),
+              ),
+            ],
           ),
         ),
         Tooltip(
@@ -66,8 +74,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                           binding: LoginBinding(),
                         );
                       },
-                      icon: Icon(Icons.login,
-                          color: Theme.of(context).colorScheme.secondary),
+                      icon: const Icon(Icons.login),
                     ),
             )),
       ],

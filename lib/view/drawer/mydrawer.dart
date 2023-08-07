@@ -24,12 +24,18 @@ class Mydrawer extends StatelessWidget {
             ),
             accountName: Obx(
               () => loginController.isLogged.value
-                  ? Text('환영합니다, ${loginController.userName.value}님!')
-                  : const Text("로그인이 필요합니다"),
+                  ? Text('환영합니다, ${loginController.userName.value}님!',
+                      style: const TextStyle(
+                          fontFamily: "NotoSansKR-Bold", color: Colors.black))
+                  : const Text("로그인이 필요합니다",
+                      style: TextStyle(
+                          fontFamily: "NotoSansKR-Bold", color: Colors.black)),
             ),
             accountEmail: Obx(
               () => loginController.isLogged.value
-                  ? Text(loginController.userId.value)
+                  ? Text(loginController.userId.value,
+                      style: const TextStyle(
+                          fontFamily: "NotoSansKR-Bold", color: Colors.black))
                   : const Text(""),
             ),
             decoration: BoxDecoration(
@@ -60,6 +66,14 @@ class Mydrawer extends StatelessWidget {
             leading: Icon(Icons.login,
                 color: Theme.of(context).colorScheme.secondary),
             title: const Text('로그인 하기'),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              Get.changeTheme(
+                Get.isDarkMode ? ThemeData.light() : ThemeData.dark(),
+              );
+            },
+            child: const Text('테마변경'),
           ),
         ],
       ),
