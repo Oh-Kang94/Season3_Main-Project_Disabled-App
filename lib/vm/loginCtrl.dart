@@ -10,6 +10,7 @@ class LoginController extends GetxService {
   RxBool isLogged = false.obs;
   RxString userId = "".obs;
   RxString userName = "".obs;
+  RxString picPath = "default".obs;
 
   final loginFormKey = GlobalKey<FormState>();
   final idController = TextEditingController();
@@ -35,6 +36,7 @@ class LoginController extends GetxService {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           isLogged.value = true;
           Get.offAll(const Home());
+          getPic(idController.text);
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
         }
@@ -52,7 +54,6 @@ class LoginController extends GetxService {
 
   // Api
   Future<bool> checkUser(String user, String password) async {
-    // String baseUrl = "http://localhost:3000/authaccount/login";
     String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid;
 
     String requestUrl = "$baseUrl/?id=$user&password=$password";
@@ -123,6 +124,34 @@ class LoginController extends GetxService {
       print(e);
       print(
           "remove SHAREDPREFERENCE: userid${userId.value} username${userName.value}");
+    }
+  }
+
+  // profile 사진 가져오기
+  Future<bool> getPic(String userid) async {
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
+
+    String requestUrl = "$baseUrl/?id=$userid";
+
+    try {
+      // GetConnect를 사용하여 GET 요청을 보냅니다.
+      var response = await GetConnect().get(requestUrl);
+
+      // 응답 데이터를 확인합니다.
+      if (response.isOk) {
+        // 응답이 성공적으로 받아졌을 경우
+        print(
+            "코드는 ${response.body['code'].toString()},결과는 ${response.body['message'].toString()}");
+
+        picPath.value = response.body['message'].toString();
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 }

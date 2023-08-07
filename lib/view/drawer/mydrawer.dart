@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 
 import '../../binding/Binding.dart';
-import '../../components/imageFirestorage.dart';
+import '../../components/imageProfile.dart';
 import '../../util/theme.dart';
 import '../../vm/loginCtrl.dart';
 import '../register/register.dart';
@@ -21,7 +21,8 @@ class Mydrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            currentAccountPicture: const FirebaseImageWidget(),
+            currentAccountPicture:
+                FirebaseImageWidget(imagePath: loginController.picPath.value),
             accountName: Obx(
               () => loginController.isLogged.value
                   ? Text('환영합니다, ${loginController.userName.value}님!',

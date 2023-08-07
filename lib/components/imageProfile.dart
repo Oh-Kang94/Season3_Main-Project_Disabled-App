@@ -8,7 +8,7 @@ class FirebaseImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return imagePath != null
+    return imagePath != "default"
         ? FutureBuilder(
             future: firebase_storage.FirebaseStorage.instance
                 .ref(imagePath)

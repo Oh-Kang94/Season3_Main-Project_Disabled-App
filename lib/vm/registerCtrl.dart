@@ -38,7 +38,7 @@ class RegisterationController extends GetxController {
   final RxDouble _longitude = 0.0.obs;
 
   Rx<XFile?> pick = Rx<XFile?>(null);
-  RxString path = "basic".obs;
+  RxString path = "default".obs;
 
   RxBool consentCollectInfo = false.obs;
   RxBool consentProcessInfo = false.obs;
