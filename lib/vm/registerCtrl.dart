@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -54,6 +55,38 @@ class RegisterationController extends GetxController {
     super.onInit();
   }
 
+  Future<void> showDisabilityPicker(BuildContext context) async {
+    double pickerItemHeight = 40.0;
+    int itemCount = 10;
+
+    double pickerHeight = pickerItemHeight * itemCount + 200;
+    if (pickerHeight > MediaQuery.of(context).size.height * 0.3) {
+      pickerHeight = MediaQuery.of(context).size.height * 0.3;
+    }
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: pickerHeight,
+          child: CupertinoPicker(
+            itemExtent: pickerItemHeight,
+            onSelectedItemChanged: (index) {
+              setSelectedDisability(disabilities[index]);
+            },
+            children: disabilities
+                .map((disability) => Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(disability.name),
+                      ],
+                    ))
+                .toList(),
+          ),
+        );
+      },
+    );
+  }
+
   // 장애 선택
   void setSelectedDisability(DisabledModel? disability) {
     selectedDisability.value = disability;
@@ -76,12 +109,22 @@ class RegisterationController extends GetxController {
     birthController.text = date.toString().substring(0, 11);
   }
 
+  // 개인정보 동의 설정
   void toggleConsentCollect(bool newValue) {
     consentCollectInfo.value = newValue;
   }
 
   void toggleConsentProcess(bool newValue) {
     consentProcessInfo.value = newValue;
+  }
+
+  // ImagePicker
+  imagePicker() async {
+    ImagePicker picker = ImagePicker();
+    XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      pick.value = pickedImage;
+    }
   }
 
   void onSavedPic(XFile? pick) {

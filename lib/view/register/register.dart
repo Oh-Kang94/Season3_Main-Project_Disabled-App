@@ -227,29 +227,30 @@ class RegisterUser extends StatelessWidget {
                               const Text("프로필 사진 설정"),
                               ElevatedButton(
                                   onPressed: () {
-                                    registerationController.pick.value =
-                                        imagePicker();
+                                    registerationController.imagePicker();
                                   },
                                   child: const Text("사진 선택"))
                             ],
                           ),
-                          registerationController.pick.value == null
-                              ? SizedBox(
-                                  height: 200.h,
-                                  child: CircleAvatar(
+                          Obx(
+                            () => registerationController.pick.value == null
+                                ? SizedBox(
+                                    height: 200.h,
+                                    child: CircleAvatar(
+                                        radius: 100.h,
+                                        backgroundImage: const AssetImage(
+                                            "assets/images/user.png")),
+                                  )
+                                : SizedBox(
+                                    height: 200.h,
+                                    child: CircleAvatar(
                                       radius: 100.h,
-                                      backgroundImage: const AssetImage(
-                                          "assets/images/user.png")),
-                                )
-                              : SizedBox(
-                                  height: 200.h,
-                                  child: CircleAvatar(
-                                    radius: 100.h,
-                                    backgroundImage: FileImage(File(
-                                        registerationController
-                                            .pick.value!.path)),
+                                      backgroundImage: FileImage(File(
+                                          registerationController
+                                              .pick.value!.path)),
+                                    ),
                                   ),
-                                ),
+                          ),
                           SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -318,11 +319,6 @@ class RegisterUser extends StatelessWidget {
   }
 
   // 사진 업로드 하기 선택하면
-  imagePicker() async {
-    pick = await ImagePicker().pickImage(source: ImageSource.gallery);
-    print(pick);
-    return pick;
-  }
 
   Future<void> showDisabilityPicker(BuildContext context) async {
     double pickerItemHeight = 40.0;
