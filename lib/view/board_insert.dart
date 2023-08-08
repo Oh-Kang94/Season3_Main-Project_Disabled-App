@@ -126,6 +126,8 @@ class _BoardInsertState extends State<BoardInsert> {
             ),
             ElevatedButton.icon(
               onPressed: () {
+
+                
                 // 현재 시간 얻기
                 DateTime now = DateTime.now();
 
