@@ -10,7 +10,7 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
   void onInit() {
     super.onInit();
     getSharedPreferences();
-    controller = TabController(length: 2, vsync: this);
+    controller = TabController(length: 3, vsync: this);
   }
 
   @override
