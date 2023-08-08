@@ -70,7 +70,7 @@ dependencies:
   image_picker: ^1.0.2
   # markdown 쓰기 위해
   flutter_markdown: ^0.6.17
-  # web view 보기 위해
+  # web view 쓰기 위해
   webview_flutter: ^4.2.2
   # 권한 허락 도움
   permission_handler: ^10.4.3
@@ -85,6 +85,9 @@ dependencies:
   geocoding: ^2.1.0
   #현재위치
   location: ^5.0.2+1
+  #date 변환 하기 위해
+  intl: ^0.18.1
+
 
 dev_dependencies:
   flutter_test:
