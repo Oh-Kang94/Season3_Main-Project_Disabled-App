@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -148,7 +149,8 @@ class RegisterationController extends GetxController {
   // ImagePicker
   imagePicker() async {
     ImagePicker picker = ImagePicker();
-    XFile? pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    XFile? pickedImage = await picker.pickImage(
+        source: ImageSource.gallery, imageQuality: 70, maxHeight: 200.h);
     if (pickedImage != null) {
       pick.value = pickedImage;
     }
