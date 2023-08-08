@@ -117,7 +117,6 @@ class BoardDetail extends StatelessWidget {
                     Get.defaultDialog(
                         title: '삭제',
                         middleText: '게시글을 삭제하시겠습니까?',
-                        backgroundColor: Color.fromARGB(255, 145, 199, 167),
                         barrierDismissible: false,
                         actions: [
                           Row(
@@ -125,21 +124,23 @@ class BoardDetail extends StatelessWidget {
                             children: [
                               TextButton(
                                   onPressed: () {
-                                    Get.back();
+                                      Get.back();
                                   },
-                                  child: Text('NO')),
+                                  child: Text('EXIT')),
                               TextButton(
                                   onPressed: () {
+                                    
                                     board.ref.delete();
                                     Get.off(const Community());
+                                    
                                   },
-                                  child: Text('OK')),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red
+                                  ),
+                                  child: Text('DELETE')),
                             ],
                           )
                         ]);
-                    // // 게시글 삭제 기능
-                    // board.ref.delete();
-                    // Get.off(const Community());
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(50, 50),
