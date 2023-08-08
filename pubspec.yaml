@@ -76,6 +76,15 @@ dependencies:
   permission_handler: ^10.4.3
   # 로딩 애니메이션
   flutter_spinkit: ^5.2.0
+  # Flutter용 Google 지도 위젯을 제공하는 Flutter 플러그인
+  google_maps_flutter: ^2.4.0
+  #구글 맵 api를 직접 사용하기위해 사용하는 패키지
+  google_maps_flutter_web: ^0.5.3
+  http: ^1.1.0
+  #주소값 좌표로 좌표값 주소로
+  geocoding: ^2.1.0
+  #현재위치
+  location: ^5.0.2+1
 
 dev_dependencies:
   flutter_test:
