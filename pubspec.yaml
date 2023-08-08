@@ -87,7 +87,8 @@ dependencies:
   #gps를 사용하기 위한 패키지
   geolocator: ^9.0.2
   intl: ^0.18.0
-
+  # KAKAO 로그인
+  kakao_flutter_sdk_user: ^1.4.1
 
 dev_dependencies:
   flutter_test:

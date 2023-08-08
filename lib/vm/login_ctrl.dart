@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,7 @@ class LoginController extends GetxService {
   RxString userId = "".obs;
   RxString userName = "".obs;
   RxString picPath = "default".obs;
+  User? user;
 
   final loginFormKey = GlobalKey<FormState>();
   final idController = TextEditingController();
@@ -51,6 +53,8 @@ class LoginController extends GetxService {
     userId.value = "";
     userName.value = "";
     picPath.value = "default";
+    user = null;
+    tryKaokaologout();
     removeSharedPreferences();
   }
 
@@ -87,6 +91,46 @@ class LoginController extends GetxService {
         return false;
       }
     } catch (e) {
+      return false;
+    }
+  }
+
+  kakaologin() async {
+    isLogged.value = await tryKakaologin();
+
+    if (isLogged.value) {
+      user = await UserApi.instance.me();
+    }
+  }
+
+  tryKakaologin() async {
+    try {
+      bool isInstalled = await isKakaoTalkInstalled();
+      if (isInstalled) {
+        try {
+          await UserApi.instance.loginWithKakaoTalk();
+          return true;
+        } catch (e) {
+          return false;
+        }
+      } else {
+        try {
+          await UserApi.instance.loginWithKakaoAccount();
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
+  tryKaokaologout() async {
+    try {
+      await UserApi.instance.unlink();
+      return true;
+    } catch (error) {
       return false;
     }
   }

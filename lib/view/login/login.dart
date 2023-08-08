@@ -26,7 +26,7 @@ class LoginUser extends StatelessWidget {
                 const LogoPic(
                   isappbar: false,
                 ),
-                Lottie.asset('assets/lottie/lottieLogin.json'),
+                Lottie.asset('assets/lottie/lottieLogin.json', height: 260.h),
                 Container(
                   padding: const EdgeInsets.all(50.0),
                   child: Form(
@@ -59,6 +59,23 @@ class LoginUser extends StatelessWidget {
                                   Get.to(RegisterUser());
                                 },
                                 child: const Text('회원가입'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  controller.kakaologin();
+                                },
+                                child: Image.asset(
+                                  "assets/images/kakao_login_medium_narrow.png",
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ],
                           ),
