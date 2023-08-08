@@ -52,6 +52,10 @@
 		<string>프로필 업로드를 위한 갤러리 권한을 허가해주세요.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>프로필 업로드를 위한 갤러리 권한을 허가해주세요.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>위치정보가 필요합니다.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>서비스 이용을 위한 위치정보가 필요합니다.</string>
 
 		<key>NSAppTransportSecurity</key>
 		<dict>
