@@ -1,0 +1,175 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/view/community.dart';
+
+import '../model/boardModel.dart';
+
+class BoardUpdate extends StatefulWidget {
+  const BoardUpdate({super.key});
+
+  @override
+  State<BoardUpdate> createState() => _BoardUpdateState();
+}
+
+class _BoardUpdateState extends State<BoardUpdate> {
+  late TextEditingController titleController;
+  late TextEditingController contentController;
+  // late Board? board;
+
+  @override
+  void initState() {
+    super.initState();
+    titleController = TextEditingController(); // 빈 컨트롤러 생성
+    contentController = TextEditingController(); // 빈 컨트롤러 생성
+
+    var board = Get.arguments as Board?;
+    if (board != null) {
+      titleController.text = board.title;
+      contentController.text = board.content;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var board = Get.arguments ?? "_";
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 50,
+              width: 400,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+              child: const Center(
+                child: Text(
+                  '커뮤니티',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Divider(
+              thickness: 1.0,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+                  child: Text(
+                    ' 원하는 내용을 \n 작성해주세요',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
+                  child: Icon(
+                    Icons.sentiment_satisfied,
+                    size: 27,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: TextField(
+                controller: titleController,
+                decoration: const InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15.0),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15.0),
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.text,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: TextField(
+                controller: contentController,
+                decoration: const InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15.0),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10.0),
+                    ),
+                  ),
+                ),
+                keyboardType: TextInputType.text,
+                style: TextStyle(
+                  fontSize: 17,
+                ),
+                maxLines: 15,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                if (board != null) {
+                  board?.ref.update({
+                    'title': titleController.text,
+                    'content': contentController.text
+                  }).then((_) {
+                    _showDialog(context);
+                  });
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(300, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              icon: Icon(Icons.edit_outlined),
+              label: Text(
+                '수정',
+                style: TextStyle(fontSize: 20),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  //Function----------------
+  _showDialog(BuildContext context) {
+    Get.defaultDialog(
+        title: '수정 결과',
+        middleText: '수정이 완료 되었습니다.',
+        backgroundColor: Color.fromARGB(255, 145, 199, 167),
+        barrierDismissible: false,
+        actions: [
+          TextButton(
+              onPressed: () {
+                Get.to(Community());
+              },
+              child: Text('OK'))
+        ]);
+  }
+}
