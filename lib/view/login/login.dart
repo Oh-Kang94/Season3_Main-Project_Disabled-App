@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:season3_team1_mainproject/view/register/register.dart';
 
-import '../../components/loginForm.dart';
-import '../../components/logopic.dart';
-import '../../vm/loginCtrl.dart';
+import '../../components/login_form.dart';
+import '../../components/logo_pic.dart';
+import '../../vm/login_ctrl.dart';
 
 class LoginUser extends StatelessWidget {
   const LoginUser({Key? key}) : super(key: key);

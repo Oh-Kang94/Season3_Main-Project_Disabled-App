@@ -5,7 +5,8 @@ import 'package:season3_team1_mainproject/view/login/login.dart';
 import '../../binding/Binding.dart';
 import '../../components/imageProfile.dart';
 import '../../util/theme.dart';
-import '../../vm/loginCtrl.dart';
+import '../../vm/login_ctrl.dart';
+import '../register/change_user.dart';
 import '../register/register.dart';
 
 class Mydrawer extends StatelessWidget {
@@ -51,12 +52,12 @@ class Mydrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Get.to(
-                RegisterUser(),
+                const ChangeUser(),
               );
             },
             leading: Icon(Icons.emoji_people_sharp,
                 color: Theme.of(context).colorScheme.secondary),
-            title: const Text('회원가입 하기'),
+            title: const Text('계정 설정'),
           ),
           ListTile(
             onTap: () {

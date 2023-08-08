@@ -50,6 +50,7 @@ class LoginController extends GetxService {
     isLogged.value = false;
     userId.value = "";
     userName.value = "";
+    picPath.value = "default";
     removeSharedPreferences();
   }
 

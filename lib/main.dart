@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/util/theme.dart';
 import 'package:season3_team1_mainproject/view/splash.dart';
-import 'package:season3_team1_mainproject/vm/loginCtrl.dart';
+import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
 import 'firebase_options.dart';
 

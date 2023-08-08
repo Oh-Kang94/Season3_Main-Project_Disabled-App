@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/logopic.dart';
+import 'package:season3_team1_mainproject/components/logo_pic.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
-import 'package:season3_team1_mainproject/vm/loginCtrl.dart';
+import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
 import '../../binding/Binding.dart';
 

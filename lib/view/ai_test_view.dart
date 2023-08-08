@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/agreementViewWidget.dart';
+import 'package:season3_team1_mainproject/components/agreement_view.dart';
 import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_disabled_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
@@ -37,7 +37,7 @@ class _AiTestViewState extends State<AiTestView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -98,7 +98,7 @@ class _AiTestViewState extends State<AiTestView> {
               //   agreement:
               //       agreement.personalCollection + agreement.personalUseage,
               // ),
-              AiJobSelectWidget(),
+              const AiJobSelectWidget(),
               const Text('개인정보 수집에 동의하십니까? '),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -143,12 +143,12 @@ class _AiTestViewState extends State<AiTestView> {
 
                     // 일부 로딩 시간을 시뮬레이션하기 위해 Future.delayed() 메서드를 사용합니다.
                     // 실제 코드에서는 이 부분을 로딩 로직으로 대체하시면 됩니다.
-                    Future.delayed(Duration(seconds: 1), () {
+                    Future.delayed(const Duration(seconds: 1), () {
                       // 로딩 다이얼로그를 닫습니다.
                       Navigator.pop(context);
 
                       // 다음 화면으로 이동합니다.
-                      Get.to(AiResultView());
+                      Get.to(const AiResultView());
                     });
                   },
                   child: const Text('검사시작'),

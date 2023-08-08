@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:season3_team1_mainproject/components/logopic.dart';
+import 'package:season3_team1_mainproject/components/logo_pic.dart';
 import 'package:kpostal/kpostal.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/util/regex.dart';
 
-import '../../components/agreementViewWidget.dart';
-import '../../vm/registerCtrl.dart';
+import '../../components/agreement_view.dart';
+import '../../vm/register_ctrl.dart';
 
 class RegisterUser extends StatelessWidget {
   RegisterUser({super.key});

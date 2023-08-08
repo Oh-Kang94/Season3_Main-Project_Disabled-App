@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 import 'package:season3_team1_mainproject/view/mainview.dart';
-import 'package:season3_team1_mainproject/vm/homeCtrl.dart';
+import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
 
 import 'appbar/myappbar.dart';
 
