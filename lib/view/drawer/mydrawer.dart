@@ -76,8 +76,11 @@ class Mydrawer extends StatelessWidget {
                 Get.isDarkMode ? CustomTheme.lighttheme : CustomTheme.darktheme,
               );
             },
-            leading: Icon(Icons.dark_mode,
-                color: Theme.of(context).colorScheme.secondary),
+            leading: Get.isDarkMode
+                ? Icon(Icons.sunny,
+                    color: Theme.of(context).colorScheme.secondary)
+                : Icon(Icons.dark_mode,
+                    color: Theme.of(context).colorScheme.secondary),
             title: Get.isDarkMode
                 ? const Text('라이트 테마 변경')
                 : const Text('다크 테마 변경'),
