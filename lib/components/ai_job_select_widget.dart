@@ -31,71 +31,69 @@ class _AiJobSelectWidgetState extends State<AiJobSelectWidget> {
         return Center(
           child: Column(
             children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {});
-                          buttonStatus1 = true;
-                          buttonStatus2 = false;
-                          buttonStatus3 = false;
-                          controller.selectJob = '경영·행정·사무직';
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonStatus1 == true
-                              ? Colors.grey
-                              : Colors.white,
-                          shape: BeveledRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+              Container(
+                color: Theme.of(context).colorScheme.secondary,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                            buttonStatus1 = true;
+                            buttonStatus2 = false;
+                            buttonStatus3 = false;
+                            controller.selectJob = '경영·행정·사무직';
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: buttonStatus1 == true
+                                ? Colors.grey
+                                : Theme.of(context).cardColor,
+                          ),
+                          child: const Text('경영·행정·사무직'),
                         ),
-                        child: const Text('경영·행정·사무직'),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {});
-                          buttonStatus1 = false;
-                          buttonStatus2 = true;
-                          buttonStatus3 = false;
-                          controller.selectJob = '청소 및 기타 개인서비스직';
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonStatus2 == true
-                              ? Colors.grey
-                              : Colors.white,
-                          shape: BeveledRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                            buttonStatus1 = false;
+                            buttonStatus2 = true;
+                            buttonStatus3 = false;
+                            controller.selectJob = '청소 및 기타 개인서비스직';
+                          },
+                          style: ElevatedButton.styleFrom(
+                            // 
+                            backgroundColor: buttonStatus2 == true
+                                ? Colors.grey
+                                : Theme.of(context).cardColor,
+                          ),
+                          child: const Text('청소 및 기타 개인서비스직'),
                         ),
-                        child: const Text('청소 및 기타 개인서비스직'),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {});
-                          buttonStatus1 = false;
-                          buttonStatus2 = false;
-                          buttonStatus3 = true;
-                          // controller.selectJob = '경영·행정·사무직';
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttonStatus3 == true
-                              ? Colors.grey
-                              : Colors.white,
-                          shape: BeveledRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                            buttonStatus1 = false;
+                            buttonStatus2 = false;
+                            buttonStatus3 = true;
+                            // controller.selectJob = '경영·행정·사무직';
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: buttonStatus3 == true
+                                ? Colors.grey
+                                : Theme.of(context).cardColor,
+                          ),
+                          child: const Text('기타직종'),
                         ),
-                        child: const Text('기타직종'),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Visibility(

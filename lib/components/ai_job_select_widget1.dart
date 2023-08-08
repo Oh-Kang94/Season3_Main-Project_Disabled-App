@@ -59,7 +59,7 @@ class _AiJobSelectWidget1State extends State<AiJobSelectWidget1> {
                           child: Card(
                             color: index == listCount
                                 ? Colors.grey // 선택된 항목의 색상
-                                : Colors.white, // 선택되지 않은 항목의 색상
+                                : Theme.of(context).cardColor, // 선택되지 않은 항목의 색상
                             child: Column(
                               children: [
                                 Text(jobList[index]),
