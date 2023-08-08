@@ -83,10 +83,10 @@ dependencies:
   http: ^1.1.0
   #주소값 좌표로 좌표값 주소로
   geocoding: ^2.1.0
-  #현재위치
-  location: ^5.0.2+1
   #date 변환 하기 위해
-  intl: ^0.18.1
+  #gps를 사용하기 위한 패키지
+  geolocator: ^9.0.2
+  intl: ^0.18.0
 
 
 dev_dependencies:
