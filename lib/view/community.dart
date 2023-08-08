@@ -46,7 +46,7 @@ class _CommunityState extends State<Community> {
             child: const Center(
               child: Text(
                 '커뮤니티',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -149,10 +149,10 @@ class _CommunityState extends State<Community> {
           height: 100,
           child: Row(children: [
             SizedBox(width: 10),
-            // CircleAvatar(
-            //   backgroundImage: NetworkImage(board.avata),
-            //   radius: 25,
-            // ),
+            CircleAvatar(
+              backgroundImage: AssetImage('assets/images/user.png',),
+              radius: 25,
+            ),
             SizedBox(width: 10), // 원하는 간격 설정
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -170,7 +170,7 @@ class _CommunityState extends State<Community> {
                   child: Text(
                     "${board.title}",
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                     maxLines: 2,

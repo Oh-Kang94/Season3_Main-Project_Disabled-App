@@ -48,7 +48,7 @@ class BoardDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  board.title,
+                    board.title,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -58,7 +58,7 @@ class BoardDetail extends StatelessWidget {
                   thickness: 1.0,
                 ),
                 Text(
-                  board.content,
+                    board.content,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(

@@ -162,7 +162,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
     Get.defaultDialog(
         title: '수정 결과',
         middleText: '수정이 완료 되었습니다.',
-        backgroundColor: Color.fromARGB(255, 145, 199, 167),
+        backgroundColor: Color.fromARGB(255, 180, 245, 207),
         barrierDismissible: false,
         actions: [
           TextButton(
