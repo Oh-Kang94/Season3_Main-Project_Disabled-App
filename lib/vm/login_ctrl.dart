@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -49,6 +50,7 @@ class LoginController extends GetxService {
     isLogged.value = false;
     userId.value = "";
     userName.value = "";
+    picPath.value = "default";
     removeSharedPreferences();
   }
 
@@ -140,12 +142,10 @@ class LoginController extends GetxService {
 
       // 응답 데이터를 확인합니다.
       if (response.isOk) {
-        // 응답이 성공적으로 받아졌을 경우
-        print(
-            "코드는 ${response.body['code'].toString()},결과는 ${response.body['message'].toString()}");
-
-        picPath.value = response.body['message'].toString();
-
+        // send로 보내서, 그냥 하나만 보내게 됨
+        picPath.value = response.body;
+        var ref = FirebaseStorage.instance.ref(picPath.value.trim());
+        picPath.value = await ref.getDownloadURL();
         return true;
       } else {
         return false;

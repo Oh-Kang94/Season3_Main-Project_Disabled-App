@@ -70,12 +70,24 @@ dependencies:
   image_picker: ^1.0.2
   # markdown 쓰기 위해
   flutter_markdown: ^0.6.17
-  # web view 보기 위해
+  # web view 쓰기 위해
   webview_flutter: ^4.2.2
   # 권한 허락 도움
   permission_handler: ^10.4.3
   # 로딩 애니메이션
   flutter_spinkit: ^5.2.0
+  # Flutter용 Google 지도 위젯을 제공하는 Flutter 플러그인
+  google_maps_flutter: ^2.4.0
+  #구글 맵 api를 직접 사용하기위해 사용하는 패키지
+  google_maps_flutter_web: ^0.5.3
+  http: ^1.1.0
+  #주소값 좌표로 좌표값 주소로
+  geocoding: ^2.1.0
+  #date 변환 하기 위해
+  #gps를 사용하기 위한 패키지
+  geolocator: ^9.0.2
+  intl: ^0.18.0
+
 
 dev_dependencies:
   flutter_test:

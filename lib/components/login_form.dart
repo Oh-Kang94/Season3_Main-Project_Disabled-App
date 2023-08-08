@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../vm/loginCtrl.dart';
+import '../vm/login_ctrl.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -16,9 +16,8 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController textController = isPassword
-        ? controller.passwordController
-        : controller.idController;
+    final TextEditingController textController =
+        isPassword ? controller.passwordController : controller.idController;
 
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
