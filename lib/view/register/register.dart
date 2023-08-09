@@ -146,12 +146,18 @@ class RegisterUser extends StatelessWidget {
                           ),
                           SizedBox(height: 10.h),
                           Obx(
-                            () => TextField(
+                            () => TextFormField(
                               controller:
                                   registerationController.genderController,
                               onTap: () async {
                                 registerationController
                                     .showGenderPicker(context);
+                              },
+                              validator: (value) {
+                                if (value == "누르시면 성별이 검색됩니다.") {
+                                  return '버튼을 눌러주세요.';
+                                }
+                                return null;
                               },
                               readOnly: true,
                               keyboardType: TextInputType.none,
@@ -175,6 +181,12 @@ class RegisterUser extends StatelessWidget {
                               controller:
                                   registerationController.birthController,
                               readOnly: true,
+                              validator: (value) {
+                                if (value == "누르시면 생년월일이 검색됩니다.") {
+                                  return '버튼을 눌러주세요.';
+                                }
+                                return null;
+                              },
                               decoration: InputDecoration(
                                 labelText: '생년월일',
                                 hintText: registerationController
@@ -187,12 +199,18 @@ class RegisterUser extends StatelessWidget {
                           ),
                           SizedBox(height: 10.h),
                           Obx(
-                            () => TextField(
+                            () => TextFormField(
                               controller:
                                   registerationController.disabledController,
                               onTap: () async {
                                 registerationController
                                     .showDisabilityPicker(context);
+                              },
+                              validator: (value) {
+                                if (value == "장애 유형 선택") {
+                                  return '버튼을 눌러주세요.';
+                                }
+                                return null;
                               },
                               readOnly: true,
                               keyboardType: TextInputType.none,
@@ -221,6 +239,12 @@ class RegisterUser extends StatelessWidget {
                                   },
                                 ),
                               );
+                            },
+                            validator: (value) {
+                              if (value == "누르시면 주소가 검색됩니다.") {
+                                return '버튼을 눌러주세요.';
+                              }
+                              return null;
                             },
                             readOnly: true,
                             controller:
@@ -279,7 +303,7 @@ class RegisterUser extends StatelessWidget {
                             ],
                           ),
                           AgreementViewWidget(
-                              agreement: agreement.personalCollection),
+                              agreement: Agreement.personalCollection),
                           SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -303,7 +327,7 @@ class RegisterUser extends StatelessWidget {
                           ),
                           SizedBox(height: 10.h),
                           AgreementViewWidget(
-                              agreement: agreement.personalUseage),
+                              agreement: Agreement.personalUseage),
                           SizedBox(height: 20.h),
                           ElevatedButton(
                             onPressed: () {
@@ -324,6 +348,7 @@ class RegisterUser extends StatelessWidget {
     );
   }
 
+  /// 생년월일 나타내는 widget
   Future<void> showBirthPicker(BuildContext context) async {
     showModalBottomSheet(
       context: context,
@@ -332,6 +357,7 @@ class RegisterUser extends StatelessWidget {
           height: 200,
           child: CupertinoDatePicker(
             mode: CupertinoDatePickerMode.date,
+            maximumDate: DateTime.now(),
             initialDateTime: selectedDate,
             onDateTimeChanged: (DateTime newDate) {
               selectedDate = newDate; // Update the selected date

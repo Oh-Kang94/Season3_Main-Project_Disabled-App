@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeController extends GetxController with GetSingleTickerProviderStateMixin {
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController controller;
-  RxString? userId;
+  RxString userId = "".obs;
 
   @override
   void onInit() {
@@ -13,18 +14,12 @@ class HomeController extends GetxController with GetSingleTickerProviderStateMix
     controller = TabController(length: 3, vsync: this);
   }
 
-  @override
-  void onClose() {
-    controller.dispose();
-    super.onClose();
-  }
-
   getSharedPreferences() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? savedUserId = prefs.getString('userId');
       if (savedUserId != null) {
-        userId!.value = savedUserId;
+        userId.value = savedUserId;
       }
     } catch (e) {
       print(e);

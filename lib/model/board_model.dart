@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Board {
@@ -17,7 +15,6 @@ class Board {
     // required this.avata,
   });
 
-  
   factory Board.fromJson(Map<String, dynamic> data) {
     return Board(
       ref: data['ref'],

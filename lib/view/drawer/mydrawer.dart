@@ -7,7 +7,6 @@ import '../../components/imageProfile.dart';
 import '../../util/theme.dart';
 import '../../vm/login_ctrl.dart';
 import '../register/change_user.dart';
-import '../register/register.dart';
 
 class Mydrawer extends StatelessWidget {
   const Mydrawer({

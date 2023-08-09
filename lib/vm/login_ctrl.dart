@@ -4,20 +4,25 @@ import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
+import 'package:season3_team1_mainproject/view/register/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../util/api_endpoint.dart';
 
 class LoginController extends GetxService {
+  //PROPERTIES
   RxBool isLogged = false.obs;
   RxString userId = "".obs;
   RxString userName = "".obs;
   RxString picPath = "default".obs;
+  Rx<String> kakaoid = "".obs;
   User? user;
 
   final loginFormKey = GlobalKey<FormState>();
   final idController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // STATEMANAGEMENT
 
   @override
   void onInit() {
@@ -32,13 +37,16 @@ class LoginController extends GetxService {
     super.onClose();
   }
 
+  // FUCTION
+  // LOGIN
+
   void login() {
     if (loginFormKey.currentState!.validate()) {
       checkUser(idController.text, passwordController.text).then((bool auth) {
         if (auth) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           isLogged.value = true;
-          Get.offAll(const Home());
+          Get.off(const Home());
           getPic(idController.text);
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
@@ -47,6 +55,46 @@ class LoginController extends GetxService {
       });
     }
   }
+
+  // KAKAO LOGIN
+  kakaologin() async {
+    isLogged.value = await tryKakaologin();
+    User user = await UserApi.instance.me();
+
+    kakaoid.value = user.kakaoAccount?.email ?? "";
+
+    if (isLogged.value) {
+      checkKaKaoEnrolled(user.kakaoAccount?.email).then((isEnrolled) {
+        if (isEnrolled) {
+          Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
+          isLogged.value = true;
+          Get.offAll(const Home());
+        } else {
+          Get.defaultDialog(
+            title: "회원가입 필요",
+            middleText: "더 나은 일자리 추천 및 커뮤니티 서비스를 위해서, 회원가입이 필요합니다.",
+            onConfirm: () {
+              Get.offAll(RegisterUser());
+              kakaoid.value = user.kakaoAccount?.email ?? "";
+              isLogged.value = false;
+            },
+            textConfirm: "네",
+            onCancel: () async {
+              isLogged.value = false;
+              tryKaokaologout();
+            },
+            textCancel: "아니오",
+          );
+        }
+      });
+    }
+
+    if (isLogged.value) {
+      user = await UserApi.instance.me();
+    }
+  }
+
+  // LOGOUT
 
   void logout() {
     isLogged.value = false;
@@ -59,6 +107,7 @@ class LoginController extends GetxService {
   }
 
   // Api
+  // USER DB CHECK
   Future<bool> checkUser(String user, String password) async {
     String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid;
 
@@ -71,20 +120,15 @@ class LoginController extends GetxService {
       // 응답 데이터를 확인합니다.
       if (response.isOk) {
         // 응답이 성공적으로 받아졌을 경우
-        print(
-            "코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");
-
         String token = response.body['token'];
 
         Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
 
         String id = decodedToken['id'];
-        String password = decodedToken['password'];
         String name = decodedToken['name'];
-        print("id=$id,name:$name,password: $password");
         userId.value = id;
         userName.value = name;
-        saveSharedPreferences();
+        await saveSharedPreferences();
 
         return true;
       } else {
@@ -95,11 +139,52 @@ class LoginController extends GetxService {
     }
   }
 
-  kakaologin() async {
-    isLogged.value = await tryKakaologin();
+  /// KAKAO 로그인이 처음인가 확인하고, 회원가입까지 가게 하기.
+  Future<bool> checkKaKaoEnrolled(String? id) async {
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.checkkakao;
 
-    if (isLogged.value) {
-      user = await UserApi.instance.me();
+    String requestUrl = "$baseUrl/?id=$id";
+    try {
+      // GetConnect를 사용하여 GET 요청을 보냅니다.
+      var response = await GetConnect().get(requestUrl);
+      // 응답 데이터를 확인합니다.
+      if (response.isOk) {
+        userId.value = response.body['id'];
+        userName.value = response.body['name'];
+        picPath.value = response.body['avatar'];
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // profile 사진 가져오기
+  Future<bool> getPic(String userid) async {
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
+
+    String requestUrl = "$baseUrl/?id=$userid";
+
+    try {
+      // GetConnect를 사용하여 GET 요청을 보냅니다.
+      var response = await GetConnect().get(requestUrl);
+
+      // 응답 데이터를 확인합니다.
+      if (response.isOk) {
+        // send로 보내서, 그냥 하나만 보내게 됨
+        picPath.value = response.body;
+        var ref = FirebaseStorage.instance.ref(picPath.value.trim());
+        picPath.value = await ref.getDownloadURL();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 
@@ -128,12 +213,15 @@ class LoginController extends GetxService {
 
   tryKaokaologout() async {
     try {
-      await UserApi.instance.unlink();
+      await UserApi.instance.logout(); // 로그아웃이다.
+      // await UserApi.instance.unlink(); // 회원 탈퇴이다.
       return true;
     } catch (error) {
       return false;
     }
   }
+
+  /// Shared Prefernces
 
   saveSharedPreferences() async {
     try {
@@ -170,32 +258,6 @@ class LoginController extends GetxService {
       print(e);
       print(
           "remove SHAREDPREFERENCE: userid${userId.value} username${userName.value}");
-    }
-  }
-
-  // profile 사진 가져오기
-  Future<bool> getPic(String userid) async {
-    String baseUrl =
-        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
-
-    String requestUrl = "$baseUrl/?id=$userid";
-
-    try {
-      // GetConnect를 사용하여 GET 요청을 보냅니다.
-      var response = await GetConnect().get(requestUrl);
-
-      // 응답 데이터를 확인합니다.
-      if (response.isOk) {
-        // send로 보내서, 그냥 하나만 보내게 됨
-        picPath.value = response.body;
-        var ref = FirebaseStorage.instance.ref(picPath.value.trim());
-        picPath.value = await ref.getDownloadURL();
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return false;
     }
   }
 }

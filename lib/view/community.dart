@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../model/boardModel.dart';
+import '../model/board_model.dart';
 import 'board_detail.dart';
 import 'board_insert.dart';
 
@@ -77,7 +77,7 @@ class _CommunityState extends State<Community> {
               ),
             ),
           ),
-          Divider(thickness: 1.0),
+          const Divider(thickness: 1.0),
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('community')
@@ -125,7 +125,7 @@ class _CommunityState extends State<Community> {
           Get.to(const BoardInsert());
         },
         style: ElevatedButton.styleFrom(
-          minimumSize: Size(200, 50),
+          minimumSize: const Size(200, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -145,15 +145,17 @@ class _CommunityState extends State<Community> {
         Get.to(const BoardDetail(), arguments: board);
       },
       child: Card(
-        child: Container(
+        child: SizedBox(
           height: 100,
           child: Row(children: [
-            SizedBox(width: 10),
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/user.png',),
+            const SizedBox(width: 10),
+            const CircleAvatar(
+              backgroundImage: AssetImage(
+                'assets/images/user.png',
+              ),
               radius: 25,
             ),
-            SizedBox(width: 10), // 원하는 간격 설정
+            const SizedBox(width: 10), // 원하는 간격 설정
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,14 +163,14 @@ class _CommunityState extends State<Community> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(240, 0, 0, 0),
                   child: Text(
-                    "${board.date}",
+                    board.date,
                     style: const TextStyle(fontSize: 15),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
                   child: Text(
-                    "${board.title}",
+                    board.title,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

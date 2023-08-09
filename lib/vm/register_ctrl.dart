@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:season3_team1_mainproject/view/home.dart';
+import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
-import '../model/disabledModel.dart';
-import '../model/genderModel.dart';
-import '../model/userdata.dart';
+import '../model/disabled_model.dart';
+import '../model/gender_model.dart';
+import '../model/user_model.dart';
 import '../util/api_endpoint.dart';
-import '../view/home.dart';
 
 class RegisterationController extends GetxController {
   TextEditingController idController = TextEditingController();
@@ -38,6 +39,8 @@ class RegisterationController extends GetxController {
   final RxDouble _latitude = 0.0.obs;
   final RxDouble _longitude = 0.0.obs;
 
+  final LoginController loginController = Get.find();
+
   Rx<XFile?> pick = Rx<XFile?>(null);
   RxString path = "default".obs;
 
@@ -50,7 +53,7 @@ class RegisterationController extends GetxController {
   @override
   void onInit() {
     disabledController.text = '장애 유형 선택';
-    genderController.text = '남자';
+    genderController.text = '누르시면 성별이 검색됩니다.';
     birthController.text = '누르시면 생년월일이 검색됩니다.';
     addressController.text = '누르시면 주소가 검색됩니다.';
     super.onInit();
@@ -186,12 +189,14 @@ class RegisterationController extends GetxController {
         latitude: _latitude.value,
         longitude: _longitude.value,
         birth: birthController.text,
+        kakaoid: loginController.kakaoid.value,
       );
-
-      saveUser(userData).then((bool auth) {
+      saveUser(userData).then((auth) {
         if (auth) {
           Get.snackbar('회원 가입 성공', '성공적으로 회원가입 되었습니다.');
-          Get.offAll(const Home());
+          Get.offAll(
+            const Home(),
+          );
         } else {
           Get.snackbar('회원가입 실패', '아이디가 중복되었습니다.');
         }
@@ -206,10 +211,7 @@ class RegisterationController extends GetxController {
     var body = userData.toJson();
     try {
       var response = await GetConnect().post(baseUrl, body);
-      print(body);
       if (response.isOk) {
-        print(
-            "코드는 ${response.body['code'].toString()},결과는 ${response.body['message']}");
         return true;
       } else {
         return false;

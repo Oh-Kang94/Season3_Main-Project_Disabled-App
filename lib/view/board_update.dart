@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/community.dart';
 
-import '../model/boardModel.dart';
+import '../model/board_model.dart';
 
 class BoardUpdate extends StatefulWidget {
   const BoardUpdate({super.key});
@@ -51,7 +51,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 1.0,
             ),
             const SizedBox(
@@ -97,7 +97,8 @@ class _BoardUpdateState extends State<BoardUpdate> {
                   ),
                 ),
                 keyboardType: TextInputType.text,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -119,13 +120,13 @@ class _BoardUpdateState extends State<BoardUpdate> {
                   ),
                 ),
                 keyboardType: TextInputType.text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 17,
                 ),
                 maxLines: 15,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton.icon(
@@ -140,13 +141,13 @@ class _BoardUpdateState extends State<BoardUpdate> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(300, 50),
+                minimumSize: const Size(300, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              icon: Icon(Icons.edit_outlined),
-              label: Text(
+              icon: const Icon(Icons.edit_outlined),
+              label: const Text(
                 '수정',
                 style: TextStyle(fontSize: 20),
               ),
@@ -162,14 +163,14 @@ class _BoardUpdateState extends State<BoardUpdate> {
     Get.defaultDialog(
         title: '수정 결과',
         middleText: '수정이 완료 되었습니다.',
-        backgroundColor: Color.fromARGB(255, 180, 245, 207),
+        backgroundColor: const Color.fromARGB(255, 180, 245, 207),
         barrierDismissible: false,
         actions: [
           TextButton(
               onPressed: () {
-                Get.to(Community());
+                Get.to(const Community());
               },
-              child: Text('OK'))
+              child: const Text('OK'))
         ]);
   }
 }

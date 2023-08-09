@@ -1,4 +1,4 @@
-class agreement {
+class Agreement {
   static String personalCollection = """
   # 개인정보 수집 및 이용 목적
 - 회원 가입 및 관리: 회원 가입을 위한 본인 식별, 본인 확인, 회원자격 유지, 관리 및 부정 이용 방지

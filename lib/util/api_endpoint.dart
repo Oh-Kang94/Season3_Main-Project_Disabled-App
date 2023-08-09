@@ -5,6 +5,7 @@ class ApiEndPoints {
 
 class _ApiEndPoints {
   final String loginid = 'authaccount/login';
+  final String checkkakao = 'authaccount/login/checkKaKaoEnrolled';
   final String registerid = 'authaccount/registration';
   final String getpicPath = 'authaccount/getpic';
 }
