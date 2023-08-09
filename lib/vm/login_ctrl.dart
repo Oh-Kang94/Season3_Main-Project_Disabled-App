@@ -67,6 +67,7 @@ class LoginController extends GetxService {
       checkKaKaoEnrolled(user.kakaoAccount?.email).then((isEnrolled) {
         if (isEnrolled) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
+          getPic(userId.value);
           isLogged.value = true;
           Get.offAll(const Home());
         } else {
@@ -152,7 +153,6 @@ class LoginController extends GetxService {
       if (response.isOk) {
         userId.value = response.body['id'];
         userName.value = response.body['name'];
-        picPath.value = response.body['avatar'];
         return true;
       } else {
         return false;
@@ -179,6 +179,7 @@ class LoginController extends GetxService {
         picPath.value = response.body;
         var ref = FirebaseStorage.instance.ref(picPath.value.trim());
         picPath.value = await ref.getDownloadURL();
+        print("pic경로는 ${picPath.value}");
         return true;
       } else {
         return false;

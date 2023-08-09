@@ -22,8 +22,9 @@ class Mydrawer extends StatelessWidget {
         children: [
           Obx(
             () => UserAccountsDrawerHeader(
-              currentAccountPicture:
-                  FirebaseImageWidget(imagePath: loginController.picPath.value),
+              currentAccountPicture: FirebaseImageWidget(
+                imagePath: loginController.picPath.value,
+              ),
               accountName: Obx(
                 () => loginController.isLogged.value
                     ? Text('환영합니다, ${loginController.userName.value}님!',
