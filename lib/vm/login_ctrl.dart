@@ -1,6 +1,7 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
@@ -21,6 +22,14 @@ class LoginController extends GetxService {
   final loginFormKey = GlobalKey<FormState>();
   final idController = TextEditingController();
   final passwordController = TextEditingController();
+
+  GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId:
+          "503199664571-l99if8osp5573i5pv74qn2fk3qldbkls.apps.googleusercontent.com",
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ]);
 
   // STATEMANAGEMENT
 
@@ -53,45 +62,6 @@ class LoginController extends GetxService {
         }
         passwordController.clear();
       });
-    }
-  }
-
-  // KAKAO LOGIN
-  kakaologin() async {
-    isLogged.value = await tryKakaologin();
-    User user = await UserApi.instance.me();
-
-    kakaoid.value = user.kakaoAccount?.email ?? "";
-
-    if (isLogged.value) {
-      checkKaKaoEnrolled(user.kakaoAccount?.email).then((isEnrolled) {
-        if (isEnrolled) {
-          Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
-          getPic(userId.value);
-          isLogged.value = true;
-          Get.offAll(const Home());
-        } else {
-          Get.defaultDialog(
-            title: "회원가입 필요",
-            middleText: "더 나은 일자리 추천 및 커뮤니티 서비스를 위해서, 회원가입이 필요합니다.",
-            onConfirm: () {
-              Get.offAll(RegisterUser());
-              kakaoid.value = user.kakaoAccount?.email ?? "";
-              isLogged.value = false;
-            },
-            textConfirm: "네",
-            onCancel: () async {
-              isLogged.value = false;
-              tryKaokaologout();
-            },
-            textCancel: "아니오",
-          );
-        }
-      });
-    }
-
-    if (isLogged.value) {
-      user = await UserApi.instance.me();
     }
   }
 
@@ -137,6 +107,45 @@ class LoginController extends GetxService {
       }
     } catch (e) {
       return false;
+    }
+  }
+
+  /// KAKAO LOGIN
+  kakaologin() async {
+    isLogged.value = await tryKakaologin();
+    User user = await UserApi.instance.me();
+
+    kakaoid.value = user.kakaoAccount?.email ?? "";
+
+    if (isLogged.value) {
+      checkKaKaoEnrolled(user.kakaoAccount?.email).then((isEnrolled) {
+        if (isEnrolled) {
+          Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
+          getPic(userId.value);
+          isLogged.value = true;
+          Get.offAll(const Home());
+        } else {
+          Get.defaultDialog(
+            title: "회원가입 필요",
+            middleText: "더 나은 일자리 추천 및 커뮤니티 서비스를 위해서, 회원가입이 필요합니다.",
+            onConfirm: () {
+              Get.offAll(RegisterUser());
+              kakaoid.value = user.kakaoAccount?.email ?? "";
+              isLogged.value = false;
+            },
+            textConfirm: "네",
+            onCancel: () async {
+              isLogged.value = false;
+              tryKaokaologout();
+            },
+            textCancel: "아니오",
+          );
+        }
+      });
+    }
+
+    if (isLogged.value) {
+      user = await UserApi.instance.me();
     }
   }
 
@@ -221,6 +230,9 @@ class LoginController extends GetxService {
       return false;
     }
   }
+
+  /// Google Login
+  Future<GoogleSignInAccount?> googleLogin() => googleSignIn.signIn();
 
   /// Shared Prefernces
 

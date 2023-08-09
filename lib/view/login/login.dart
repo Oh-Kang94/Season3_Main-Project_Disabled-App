@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:season3_team1_mainproject/view/register/register.dart';
 
@@ -11,6 +12,10 @@ import '../../vm/login_ctrl.dart';
 class LoginUser extends StatelessWidget {
   const LoginUser({Key? key}) : super(key: key);
 
+  // final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     scopes: ['email'],
+  //     clientId:
+  //         "503199664571-3nm7ef16g7uo6p3n2or3ckuhiv737ici.apps.googleusercontent.com");
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<LoginController>();
@@ -72,9 +77,26 @@ class LoginUser extends StatelessWidget {
                                 onTap: () {
                                   controller.kakaologin();
                                 },
-                                child: Image.asset(
-                                  "assets/images/kakao_login_medium_narrow.png",
-                                  fit: BoxFit.fill,
+                                child: SizedBox(
+                                  width: 110.w,
+                                  height: 30.h,
+                                  child: Image.asset(
+                                    "assets/images/kakao_login_medium_narrow.png",
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // _handleSignIn();
+                                },
+                                child: SizedBox(
+                                  width: 110.w,
+                                  height: 30.h,
+                                  child: Image.asset(
+                                    "assets/images/googleLogin.png",
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
                             ],
@@ -91,4 +113,16 @@ class LoginUser extends StatelessWidget {
       ),
     );
   }
+
+  // Future<void> _handleSignIn() async {
+  //   try {
+  //     final GoogleSignInAccount? googleSignInAccount =
+  //         await googleSignIn.signIn();
+  //     if (googleSignInAccount != null) {
+  //       print("Signed in as ${googleSignInAccount.displayName}");
+  //     }
+  //   } catch (error) {
+  //     print("Sign-in error: $error");
+  // }
+  // }
 }

@@ -70,7 +70,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : IconButton(
                       onPressed: () {
                         Get.to(
-                          const LoginUser(),
+                          LoginUser(),
                           binding: LoginBinding(),
                         );
                       },

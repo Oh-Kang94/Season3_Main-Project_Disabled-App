@@ -56,13 +56,19 @@
 		<string>위치정보가 필요합니다.</string>
 		<key>NSLocationAlwaysUsageDescription</key>
 		<string>서비스 이용을 위한 위치정보가 필요합니다.</string>
+		<!-- Google login -->
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>com.googleusercontent.apps.503199664571-3nm7ef16g7uo6p3n2or3ckuhiv737ici</string>
+		</array>
+
 
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
 			<true/>
 		</dict>
-		<!-- KAKAO OAUTH -->
+		<!-- KAKAO login -->
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>

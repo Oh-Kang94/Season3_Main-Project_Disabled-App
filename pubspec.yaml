@@ -89,6 +89,8 @@ dependencies:
   intl: ^0.18.0
   # KAKAO 로그인
   kakao_flutter_sdk_user: ^1.4.1
+  # GOOGLE 로그인
+  google_sign_in: ^6.1.4
 
 dev_dependencies:
   flutter_test:
