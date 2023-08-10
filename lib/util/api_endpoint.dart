@@ -1,5 +1,5 @@
 class ApiEndPoints {
-  static const String baseurl = 'http://www.oh-kang.kro.kr:3000/';
+  static const String baseurl = 'http://www.oh-kang.kro.kr:7288/';
   static _ApiEndPoints apiEndPoints = _ApiEndPoints();
 }
 
