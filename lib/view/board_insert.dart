@@ -6,6 +6,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:season3_team1_mainproject/view/community.dart';
 
+import 'appbar/myappbar.dart';
+
 class BoardInsert extends StatefulWidget {
   const BoardInsert({Key? key}) : super(key: key);
 
@@ -27,6 +29,7 @@ class _BoardInsertState extends State<BoardInsert> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -40,7 +43,7 @@ class _BoardInsertState extends State<BoardInsert> {
               child: const Center(
                 child: Text(
                   '커뮤니티',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -140,7 +143,7 @@ class _BoardInsertState extends State<BoardInsert> {
                 _showDialog(context);
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(300, 50),
+                minimumSize: const Size(200, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

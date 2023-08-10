@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:season3_team1_mainproject/view/community.dart';
 
+import 'appbar/myappbar.dart';
 import 'board_update.dart';
 
 class BoardDetail extends StatefulWidget {
@@ -32,6 +33,7 @@ class _BoardDetailState extends State<BoardDetail> {
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
     return Scaffold(
+     appBar: MyAppBar(),
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -46,7 +48,7 @@ class _BoardDetailState extends State<BoardDetail> {
                 child: const Center(
                   child: Text(
                     '커뮤니티',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

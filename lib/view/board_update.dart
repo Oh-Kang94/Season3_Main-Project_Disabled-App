@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 import 'package:season3_team1_mainproject/view/community.dart';
 
 import '../model/board_model.dart';
@@ -32,6 +33,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
     return Scaffold(
+      appBar: MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -44,7 +46,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
               child: const Center(
                 child: Text(
                   '커뮤니티',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -138,7 +140,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(300, 50),
+                minimumSize: const Size(200, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
