@@ -33,13 +33,13 @@ class _AiEmployDayWidgetState extends State<AiEmployDayWidget> {
               TextButton(
                 onPressed: () {
                   DateTime initialTime =
-                      DateTime.now().add(Duration(minutes: 1));
+                      DateTime.now().add(const Duration(minutes: 1));
 
                   showDialog(
                     context: context,
                     builder: (context) => Dialog(
                       backgroundColor:
-                          Colors.white.withOpacity(0.8), // 배경색 및 불투명도 조절
+                          Colors.white.withOpacity(1.0), // 배경색 및 불투명도 조절
                       child: SizedBox(
                         height: 250,
                         child: Column(

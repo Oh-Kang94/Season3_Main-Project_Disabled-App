@@ -11,6 +11,7 @@ class AiTestController extends GetxController {
   String disabledData1 = "";
   String employMonth = "";
   String selectJob = "";
+  bool jobSelectStatus = false;
 
   void onSexSelected(int value) {
     sexSelected.value = value;

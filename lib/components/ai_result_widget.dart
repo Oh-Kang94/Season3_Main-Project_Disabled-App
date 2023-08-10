@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:season3_team1_mainproject/model/ai_address_model.dart';
 
 import '../model/aiTestModel.dart';
 
@@ -64,8 +65,11 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   bool nov = false; // 11월
   bool dec = false; // 12월
 
-  final AiTestController aiController = Get.find();
 
+  final AiTestController aiController = Get.find();
+  final AddressController addressController = Get.find();
+
+  
   @override
   void initState() {
     super.initState();
@@ -76,8 +80,69 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   @override
   Widget build(BuildContext context) {
     int selectedSex = aiController.sexSelected.value;
+    String address = "${addressController.address_result} ${addressController.subAddress_result} ${addressController.subAddresses1_result}";
 
-  
+
+  // if(aiController.age.value >= 20 && aiController.age.value < 30){
+  //   age_20 = true;
+  // }else if(aiController.age.value >= 30 && aiController.age.value < 40){
+  //   age_30 = true;
+  // }else if(aiController.age.value >= 40 && aiController.age.value < 50){
+  //   age_40 = true;
+  // }else if(aiController.age.value >= 50 && aiController.age.value < 60){
+  //   age_50 = true;
+  // }else if(aiController.age.value >= 30 && aiController.age.value < 40){
+  //   age_60 = true;
+  // }else{
+  //   age_70 = true;
+  // }
+
+  switch (aiController.age.value) {
+  case >= 20 && < 30:
+    age_20 = true;
+    break;
+  case >= 30 && < 40:
+    age_30 = true;
+    break;
+  case >= 40 && < 50:
+    age_40 = true;
+    break;
+  case >= 50 && < 60:
+    age_50 = true;
+    break;
+  case >= 60 && < 70:
+    age_60 = true;
+    break;
+  default:
+    age_70 = true;
+}
+
+  if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "시각장애"){
+    visual_impairmen_mild = true;
+  }else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "시각장애"){
+    visual_impairmen_severe = true;
+  }else if (aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "지체장애"){
+    physical_disability_mild = true;
+  } else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "지체장애"){
+    physical_disability_severe = true;
+  } else if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "지적장애"){
+    intellectual_disability_mild = true;
+  } else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "지적장애"){
+    intellectual_disability_severe = true;
+  }else if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "청각장애"){
+    auditory_disorder_mild = true;
+  }else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "청각장애"){
+    auditory_disorder_severe = true;
+  } else if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "정신장애"){
+    intellectual_disability_mild = true;
+  } else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "정신장애"){
+    intellectual_disability_severe = true;
+  }
+
+
+
+
+
     return GetBuilder<AiTestController>(
       builder: (controller) {
         return Center(
@@ -89,6 +154,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
               Text('${aiController.radioDisabledSelect == 1 ? '경증' : '중증'}'),
               Text('${aiController.employMonth}'),
               Text('${aiController.selectJob}'),
+              Text('당신이 선택한 주소는$address'),
             ],
           ),
         );
@@ -97,17 +163,21 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   }
 
   getJSONData() async {
+
+    // if(aiController.age.value =)
+
+
     var url = Uri.parse(
         "http://localhost:8080/Rserve/response_phase1.jsp?age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
-        "시각장애_중증=$visual_impairmen_mild&시각장애_경증=$visual_impairmen_severe&"
-        "지체장애_경증=$physical_disability_mild&지체장애_중증=$physical_disability_severe&"
-        "지적장애_경증=$intellectual_disability_mild&지적장애_중증=$intellectual_disability_severe&"
-        "청각장애_경증=$auditory_disorder_mild&청각장애_중증=$auditory_disorder_severe&"
-        "정신장애_경증=$mental_disorder_mild&정신장애_중증=$mental_disorder_severe&"
-        "경북=$gyeongbuk&강원=$gangwon&전남=$jeonnam&충북=$chungbuk&"
-        "경기=$gyenggi&인천=$incheon&서울=$seoul&울산=$ulsan&대전=$daejeon&"
-        "부산=$busan&전북=$jeonbuk&광주=$gwangju&충남=$chungnam&"
-        "대구=$daegu&경남=$gyengnam&제주=$jeju&세종=$sejong&"
+        "visualImpairment_Severe=$visual_impairmen_severe&visualImpairment_Mild=$visual_impairmen_mild&"
+        "physicalImpairment_Mild=$physical_disability_mild&physicalImpairment_Severe=$physical_disability_severe&"
+        "intellectualImpairment_Mild=$intellectual_disability_mild&intellectualImpairment_Severe=$intellectual_disability_severe&"
+        "hearingImpairment_Mild=$auditory_disorder_mild&hearingImpairment_Severe=$auditory_disorder_severe&"
+        "mentalDisorder_Mild=$mental_disorder_mild&mentalDisorder_Severe=$mental_disorder_severe&"
+        "Gyeongbuk=$gyeongbuk&Gangwon=$gangwon&Jeonnam=$jeonnam&Chungbuk=$chungbuk&"
+        "Gyeonggi=$gyenggi&Incheon=$incheon&Seoul=$seoul&Ulsan=$ulsan&Daejeon=$daejeon&"
+        "Busan=$busan&Jeonbuk=$jeonbuk&Gwangju=$gwangju&Chungnam=$chungnam&"
+        "Daegu=$daegu&Gyeongnam=$gyengnam&Jeju=$jeju&Sejong=$sejong&"
         "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec");
     var response = await http.get(url);
     print(response);
