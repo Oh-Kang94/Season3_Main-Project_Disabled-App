@@ -27,7 +27,6 @@ class _BoardInsertState extends State<BoardInsert> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

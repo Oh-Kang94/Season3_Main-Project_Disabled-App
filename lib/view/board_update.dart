@@ -32,7 +32,6 @@ class _BoardUpdateState extends State<BoardUpdate> {
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

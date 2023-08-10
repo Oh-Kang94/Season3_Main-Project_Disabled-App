@@ -32,7 +32,6 @@ class _BoardDetailState extends State<BoardDetail> {
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
