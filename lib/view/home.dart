@@ -18,14 +18,17 @@ class Home extends StatelessWidget {
     final HomeController homeController = Get.put(HomeController());
     return Scaffold(
       appBar: const MyAppBar(),
-      body: TabBarView(controller: homeController.controller, children: const [
-        // 각자 페이지 넣기
-        Mainview(),
-        // main 자리
-        AiFirstView(),
-        // map 자리
-        mapView(),
-      ]),
+      body: TabBarView(
+          controller: homeController.controller,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            // 각자 페이지 넣기
+            Mainview(),
+            // main 자리
+            AiFirstView(),
+            // map 자리
+            mapView(),
+          ]),
       bottomNavigationBar: Container(
         color: Theme.of(context).colorScheme.secondary,
         child: TabBar(
