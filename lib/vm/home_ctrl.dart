@@ -11,7 +11,7 @@ class HomeController extends GetxController
   void onInit() {
     super.onInit();
     getSharedPreferences();
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 4, vsync: this);
   }
 
   getSharedPreferences() async {

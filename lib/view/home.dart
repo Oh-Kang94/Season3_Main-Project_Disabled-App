@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
+import 'package:season3_team1_mainproject/view/community.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 import 'package:season3_team1_mainproject/view/mainview.dart';
 import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
@@ -28,6 +29,9 @@ class Home extends StatelessWidget {
             AiFirstView(),
             // map 자리
             mapView(),
+            // community 자리
+            Community()
+           
           ]),
       bottomNavigationBar: Container(
         color: Theme.of(context).colorScheme.secondary,
@@ -60,6 +64,12 @@ class Home extends StatelessWidget {
                 Icons.map,
               ),
               text: "일자리지도",
+            ),
+            Tab(
+              icon: Icon(
+                Icons.group,
+              ),
+              text: "커뮤니티",
             ),
           ],
         ),

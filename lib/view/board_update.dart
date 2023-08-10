@@ -15,15 +15,13 @@ class BoardUpdate extends StatefulWidget {
 class _BoardUpdateState extends State<BoardUpdate> {
   late TextEditingController titleController;
   late TextEditingController contentController;
-  // late Board? board;
 
   @override
   void initState() {
     super.initState();
-    titleController = TextEditingController(); // 빈 컨트롤러 생성
-    contentController = TextEditingController(); // 빈 컨트롤러 생성
-
-    var board = Get.arguments as Board?;
+    titleController = TextEditingController(); 
+    contentController = TextEditingController(); 
+    var board = Get.arguments as Board?; 
     if (board != null) {
       titleController.text = board.title;
       contentController.text = board.content;
@@ -170,7 +168,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
               onPressed: () {
                 Get.to(const Community());
               },
-              child: const Text('OK'))
+              child: const Text('OK',style: TextStyle(fontWeight: FontWeight.bold),)),
         ]);
   }
 }

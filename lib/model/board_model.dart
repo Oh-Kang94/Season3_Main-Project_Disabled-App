@@ -4,7 +4,8 @@ class Board {
   DocumentReference ref;
   String title;
   String content;
-  String date; // date를 DateTime 타입으로 변경
+  String date; 
+  // String comment;// date를 DateTime 타입으로 변경
   // String avata;
 
   Board({
@@ -12,6 +13,7 @@ class Board {
     required this.title,
     required this.content,
     required this.date,
+    // required this.comment,
     // required this.avata,
   });
 
@@ -21,6 +23,7 @@ class Board {
       title: data['title'],
       content: data['content'],
       date: data['date'], // String 형태의 날짜를 그대로 저장
+      // comment: data['comment'],
       // avata: data['avata'],
     );
   }

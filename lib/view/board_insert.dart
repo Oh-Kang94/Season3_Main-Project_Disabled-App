@@ -126,8 +126,6 @@ class _BoardInsertState extends State<BoardInsert> {
             ),
             ElevatedButton.icon(
               onPressed: () {
-
-                
                 // 현재 시간 얻기
                 DateTime now = DateTime.now();
 
@@ -172,7 +170,7 @@ class _BoardInsertState extends State<BoardInsert> {
               onPressed: () {
                 Get.to(Community());
               },
-              child: Text('OK'))
+              child: Text('OK',style: TextStyle(fontWeight: FontWeight.bold),)),
         ]);
 
     // showDialog(

@@ -95,6 +95,7 @@ class _CommunityState extends State<Community> {
                         title: doc['title'],
                         content: doc['content'],
                         date: doc['date'],
+                        // comment: doc['comment'],
                         // avata: doc['avata'],
                       ))
                   .toList();
