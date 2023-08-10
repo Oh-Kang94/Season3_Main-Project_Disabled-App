@@ -12,10 +12,6 @@ import '../../vm/login_ctrl.dart';
 class LoginUser extends StatelessWidget {
   const LoginUser({Key? key}) : super(key: key);
 
-  // final GoogleSignIn googleSignIn = GoogleSignIn(
-  //     scopes: ['email'],
-  //     clientId:
-  //         "503199664571-3nm7ef16g7uo6p3n2or3ckuhiv737ici.apps.googleusercontent.com");
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<LoginController>();
@@ -88,7 +84,7 @@ class LoginUser extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // _handleSignIn();
+                                  controller.googlelogin();
                                 },
                                 child: SizedBox(
                                   width: 110.w,
@@ -113,16 +109,4 @@ class LoginUser extends StatelessWidget {
       ),
     );
   }
-
-  // Future<void> _handleSignIn() async {
-  //   try {
-  //     final GoogleSignInAccount? googleSignInAccount =
-  //         await googleSignIn.signIn();
-  //     if (googleSignInAccount != null) {
-  //       print("Signed in as ${googleSignInAccount.displayName}");
-  //     }
-  //   } catch (error) {
-  //     print("Sign-in error: $error");
-  // }
-  // }
 }

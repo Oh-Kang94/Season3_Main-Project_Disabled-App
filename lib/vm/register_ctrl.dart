@@ -190,6 +190,7 @@ class RegisterationController extends GetxController {
         longitude: _longitude.value,
         birth: birthController.text,
         kakaoid: loginController.kakaoid.value,
+        googleid: loginController.googleid.value,
       );
       saveUser(userData).then((auth) {
         if (auth) {

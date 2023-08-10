@@ -57,11 +57,6 @@
 		<key>NSLocationAlwaysUsageDescription</key>
 		<string>서비스 이용을 위한 위치정보가 필요합니다.</string>
 		<!-- Google login -->
-		<key>CFBundleURLSchemes</key>
-		<array>
-			<string>com.googleusercontent.apps.503199664571-3nm7ef16g7uo6p3n2or3ckuhiv737ici</string>
-		</array>
-
 
 		<key>NSAppTransportSecurity</key>
 		<dict>
@@ -76,6 +71,8 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
+					<!-- Google login -->
+					<string>com.googleusercontent.apps.503199664571-3nm7ef16g7uo6p3n2or3ckuhiv737ici</string>
 					<string>kakao</string>
 					<string>ed16c081b1f69896d2515509b53e6118</string>
 				</array>

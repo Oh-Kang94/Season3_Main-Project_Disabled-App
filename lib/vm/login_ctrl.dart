@@ -17,19 +17,18 @@ class LoginController extends GetxService {
   RxString userName = "".obs;
   RxString picPath = "default".obs;
   Rx<String> kakaoid = "".obs;
+  Rx<String> googleid = "".obs;
   User? user;
+  GoogleSignInAccount? googleSignInAccount;
 
   final loginFormKey = GlobalKey<FormState>();
   final idController = TextEditingController();
   final passwordController = TextEditingController();
 
-  GoogleSignIn googleSignIn = GoogleSignIn(
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: ['email'],
       clientId:
-          "503199664571-l99if8osp5573i5pv74qn2fk3qldbkls.apps.googleusercontent.com",
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
-      ]);
+          "503199664571-3nm7ef16g7uo6p3n2or3ckuhiv737ici.apps.googleusercontent.com");
 
   // STATEMANAGEMENT
 
@@ -130,7 +129,6 @@ class LoginController extends GetxService {
             middleText: "더 나은 일자리 추천 및 커뮤니티 서비스를 위해서, 회원가입이 필요합니다.",
             onConfirm: () {
               Get.offAll(RegisterUser());
-              kakaoid.value = user.kakaoAccount?.email ?? "";
               isLogged.value = false;
             },
             textConfirm: "네",
@@ -162,33 +160,6 @@ class LoginController extends GetxService {
       if (response.isOk) {
         userId.value = response.body['id'];
         userName.value = response.body['name'];
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      return false;
-    }
-  }
-
-  // profile 사진 가져오기
-  Future<bool> getPic(String userid) async {
-    String baseUrl =
-        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
-
-    String requestUrl = "$baseUrl/?id=$userid";
-
-    try {
-      // GetConnect를 사용하여 GET 요청을 보냅니다.
-      var response = await GetConnect().get(requestUrl);
-
-      // 응답 데이터를 확인합니다.
-      if (response.isOk) {
-        // send로 보내서, 그냥 하나만 보내게 됨
-        picPath.value = response.body;
-        var ref = FirebaseStorage.instance.ref(picPath.value.trim());
-        picPath.value = await ref.getDownloadURL();
-        print("pic경로는 ${picPath.value}");
         return true;
       } else {
         return false;
@@ -231,8 +202,91 @@ class LoginController extends GetxService {
     }
   }
 
-  /// Google Login
-  Future<GoogleSignInAccount?> googleLogin() => googleSignIn.signIn();
+  // Google Login
+
+  googlelogin() async {
+    googleSignInAccount = await googleSignIn.signIn();
+    isLogged.value = true;
+    googleid.value = googleSignInAccount?.email ?? "";
+    if (isLogged.value) {
+      print(googleid.value);
+      checkGoogleEnrolled(googleid.value).then((isEnrolled) {
+        if (isEnrolled) {
+          Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
+          getPic(userId.value);
+          Get.offAll(const Home());
+        } else {
+          print("확인2");
+          Get.defaultDialog(
+            title: "회원가입 필요",
+            middleText: "더 나은 일자리 추천 및 커뮤니티 서비스를 위해서, 회원가입이 필요합니다.",
+            onConfirm: () {
+              Get.offAll(RegisterUser());
+              isLogged.value = false;
+            },
+            textConfirm: "네",
+            onCancel: () async {
+              isLogged.value = false;
+              googleSignIn.disconnect();
+            },
+            textCancel: "아니오",
+          );
+        }
+      });
+    }
+  }
+
+  /// Google Login check
+  Future<bool> checkGoogleEnrolled(String? id) async {
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.checkgoogle;
+
+    String requestUrl = "$baseUrl/?id=$id";
+    try {
+      // GetConnect를 사용하여 GET 요청을 보냅니다.
+      var response = await GetConnect().get(requestUrl);
+      // 응답 데이터를 확인합니다.
+      if (response.isOk) {
+        userId.value = response.body['id'];
+        userName.value = response.body['name'];
+        print("구글 로그인 확인${userId.value}");
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  //
+  //
+  /// profile 사진 가져오기
+  Future<bool> getPic(String userid) async {
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
+
+    String requestUrl = "$baseUrl/?id=$userid";
+    print(requestUrl);
+    try {
+      // GetConnect를 사용하여 GET 요청을 보냅니다.
+      var response = await GetConnect().get(requestUrl);
+
+      // 응답 데이터를 확인합니다.
+      if (response.isOk) {
+        // send로 보내서, 그냥 하나만 보내게 됨
+        picPath.value = response.body;
+        var ref = FirebaseStorage.instance.ref(picPath.value.trim());
+        print("pic경로는 ${picPath.value}");
+        picPath.value = await ref.getDownloadURL();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
 
   /// Shared Prefernces
 

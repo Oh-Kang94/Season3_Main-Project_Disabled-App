@@ -12,6 +12,7 @@ class UserData {
   double longitude;
   String birth;
   String? kakaoid;
+  String? googleid;
 
   UserData({
     required this.id,
@@ -27,6 +28,7 @@ class UserData {
     required this.longitude,
     required this.birth,
     this.kakaoid,
+    this.googleid,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -43,6 +45,7 @@ class UserData {
       'longitude': longitude,
       'birth': birth,
       'kakaoid': kakaoid,
+      'googleid': googleid,
     };
   }
 }

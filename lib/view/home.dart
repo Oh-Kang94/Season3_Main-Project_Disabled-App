@@ -21,8 +21,8 @@ class Home extends StatelessWidget {
       appBar: const MyAppBar(),
       body: TabBarView(
           controller: homeController.controller,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
+          physics: const NeverScrollableScrollPhysics(),
+          children: const [
             // 각자 페이지 넣기
             Mainview(),
             // main 자리
@@ -31,7 +31,6 @@ class Home extends StatelessWidget {
             mapView(),
             // community 자리
             Community()
-           
           ]),
       bottomNavigationBar: Container(
         color: Theme.of(context).colorScheme.secondary,
