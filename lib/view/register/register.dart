@@ -303,7 +303,8 @@ class RegisterUser extends StatelessWidget {
                             ],
                           ),
                           AgreementViewWidget(
-                              agreement: Agreement.personalCollection),
+                              agreement: Agreement.personalCollection,
+                              height: 100.h),
                           SizedBox(height: 10.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -327,7 +328,9 @@ class RegisterUser extends StatelessWidget {
                           ),
                           SizedBox(height: 10.h),
                           AgreementViewWidget(
-                              agreement: Agreement.personalUseage),
+                            agreement: Agreement.personalUseage,
+                            height: 100.h,
+                          ),
                           SizedBox(height: 20.h),
                           ElevatedButton(
                             onPressed: () {

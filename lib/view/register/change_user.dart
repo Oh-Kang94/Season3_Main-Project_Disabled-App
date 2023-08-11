@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
-List<String> tilelist = [
-  "회원 정보 수정",
-  "회원 약관 읽기",
-  "회원탈퇴",
-];
-List<IconData> iconList = [
-  Icons.settings,
-  Icons.book,
-  Icons.run_circle,
-];
+import '../drawer/agreement.dart';
 
 class ChangeUser extends StatelessWidget {
   const ChangeUser({super.key});
@@ -21,21 +13,48 @@ class ChangeUser extends StatelessWidget {
     return Scaffold(
       appBar: const MyAppBar(),
       body: Center(
-        child: ListView.builder(
-            itemCount: tilelist.length,
-            itemExtent: 40.h,
-            itemBuilder: (context, index) {
-              return ListTile(
-                onTap: () {},
-                minVerticalPadding: 10.h,
-                leading: Icon(iconList[index]),
-                title: Text(
-                  tilelist[index],
-                  style: const TextStyle(fontFamily: "NotoSansKR-Bold"),
-                ),
-              );
-            }),
-      ),
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            ListTile(
+              onTap: () {},
+              minVerticalPadding: 10.h,
+              leading: const Icon(Icons.settings),
+              title: const Text(
+                "회원 정보 수정",
+                style: TextStyle(fontFamily: "NotoSansKR-Bold"),
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Get.to(
+                  const AgreementView(),
+                );
+              },
+              minVerticalPadding: 10.h,
+              leading: const Icon(
+                Icons.book,
+              ),
+              title: const Text(
+                "회원 약관 읽기",
+                style: TextStyle(fontFamily: "NotoSansKR-Bold"),
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              minVerticalPadding: 10.h,
+              leading: const Icon(
+                Icons.run_circle,
+              ),
+              title: const Text(
+                "회원탈퇴",
+                style: TextStyle(fontFamily: "NotoSansKR-Bold"),
+              ),
+            ),
+          ],
+        ),
+      )),
     );
   }
 }

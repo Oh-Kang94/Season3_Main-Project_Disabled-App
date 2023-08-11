@@ -34,7 +34,7 @@ class LoginController extends GetxService {
 
   @override
   void onInit() {
-    getSharedPreferences();
+    getSharedPreferences(userId.value);
     super.onInit();
   }
 
@@ -56,7 +56,7 @@ class LoginController extends GetxService {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           isLogged.value = true;
           saveSharedPreferences();
-          getSharedPreferences();
+          getSharedPreferences(userId.value);
           getPic(idController.text);
           Get.off(const Home());
         } else {
@@ -150,7 +150,7 @@ class LoginController extends GetxService {
           getPic(userId.value);
           isLogged.value = true;
           saveSharedPreferences();
-          getSharedPreferences();
+          getSharedPreferences(userId.value);
           Get.offAll(const Home());
         } else {
           Get.defaultDialog(
@@ -246,7 +246,7 @@ class LoginController extends GetxService {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           getPic(userId.value);
           saveSharedPreferences();
-          getSharedPreferences();
+          getSharedPreferences(userId.value);
           Get.offAll(const Home());
         } else {
           print("확인2");
@@ -343,13 +343,13 @@ class LoginController extends GetxService {
       print(e);
     }
     print(
-        "LOGIN SHAREDPREFERENCE: userid${userId.value} username${userName.value}");
+        "LOGIN SAVE SHAREDPREFERENCE: userid: ${userId.value} username: ${userName.value}");
   }
 
-  getSharedPreferences() async {
+  getSharedPreferences(String? savedUserId) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? savedUserId = prefs.getString('userId');
+      savedUserId = prefs.getString('userId');
       String? savedUserName = prefs.getString('userName');
       if (savedUserId != null && savedUserName != null) {
         userId.value = savedUserId;
@@ -358,6 +358,8 @@ class LoginController extends GetxService {
     } catch (e) {
       print(e);
     }
+    print(
+        "LOAD SHAREDPREFERENCE: userid: ${userId.value} username: ${userName.value}");
   }
 
   removeSharedPreferences() async {
