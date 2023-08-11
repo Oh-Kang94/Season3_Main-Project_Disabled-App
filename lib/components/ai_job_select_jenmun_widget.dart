@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/model/aiTestModel.dart';
+import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
 
 class AiJobSelectJenmunWidget extends StatefulWidget {
   const AiJobSelectJenmunWidget({super.key});
@@ -10,6 +10,9 @@ class AiJobSelectJenmunWidget extends StatefulWidget {
 }
 
 class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
+
+  final AiTestController controller = Get.put(AiTestController());  // 액션 없으면 어사인 부분만 안해주면됨
+
   List<String> jobList = [
     "관리직(임원·부서장)",
     "교육직",
@@ -43,7 +46,7 @@ class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
                       child: GestureDetector(
                         onTap: () {
                           listCount = index; // 선택된 항목의 인덱스 저장
-                          controller.selectJob = jobList[index];
+                          controller.selectJob = jobList[index!];
                           setState(() {});
                         },
                         child: SizedBox(

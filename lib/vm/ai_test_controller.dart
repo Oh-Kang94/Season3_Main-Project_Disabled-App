@@ -6,8 +6,8 @@ class AiTestController extends GetxController {
   RxInt selectedMonth = 0.obs;
   RxInt selectedDay = 0.obs;
   RxInt age = 0.obs;
-  String disabledSelect = "";
-  int radioDisabledSelect = 0;
+  String disabledSelect = "지적장애";
+  int radioDisabledSelect = 1;
   String disabledData1 = "";
   String employMonth = "";
   String selectJob = "";

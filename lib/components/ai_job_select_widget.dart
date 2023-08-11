@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/ai_job_select_ganho_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_job_select_service_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_job_select_jenmun_widget.dart';
-import 'package:season3_team1_mainproject/model/aiTestModel.dart';
+import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
 
 class AiJobSelectWidget extends StatefulWidget {
   const AiJobSelectWidget({super.key});
@@ -14,6 +14,9 @@ class AiJobSelectWidget extends StatefulWidget {
 
 class _AiJobSelectWidgetState extends State<AiJobSelectWidget> {
   // Property
+
+  // final AiTestController controller = Get.put(AiTestController());  // 액션 없으면 어사인 부분만 안해주면됨
+
   late bool buttonStatus1;
   late bool buttonStatus2;
   late bool buttonStatus3;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:get/get_core/src/get_main.dart';
 
-import '../model/aiTestModel.dart';
+import '../vm/ai_test_controller.dart';
 
 class AiSexWidget extends StatefulWidget {
   @override
@@ -31,9 +31,7 @@ class _AiSexWidgetState extends State<AiSexWidget> {
                       groupValue: aiTestController.sexSelected.value,
                       onChanged: (value) {
                         aiTestController.onSexSelected(value as int);
-                        setState(() {
-                          
-                        });
+                        setState(() {});
                       },
                     ),
                   ],
@@ -47,18 +45,19 @@ class _AiSexWidgetState extends State<AiSexWidget> {
                       groupValue: aiTestController.sexSelected.value,
                       onChanged: (value) {
                         aiTestController.onSexSelected(value as int);
-                        setState(() {
-                          
-                        });
+                        setState(() {});
                       },
                     ),
                   ],
                 ),
               ],
             ),
-            const Divider(
-              color: Colors.grey,
-              thickness: 2.0,
+            const SizedBox(
+              width: 350,
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1.0,
+              ),
             ),
           ],
         ),

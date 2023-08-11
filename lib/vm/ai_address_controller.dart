@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 
 // import 'address_access.dart';
 // import 'address_dept_server.dart';
-import 'ai_address_access.dart';
-import 'ai_address_server_model.dart';
+import '../model/ai_address_access_model.dart';
+import '../model/ai_address_server_model.dart';
 
 class AddressController extends GetxController {
   final isLoading = true.obs;
@@ -20,6 +20,9 @@ class AddressController extends GetxController {
   String address_result = "";
   String subAddress_result = "";
   String subAddresses1_result = "";
+  String address_result111 = "";
+  String subAddress_result111 = "";
+  // String subAddresses1_result111 = "";
   bool addressStatus = false;
 
   @override
@@ -29,15 +32,17 @@ class AddressController extends GetxController {
   }
 
 
-  // 시 데이터 넘겨주기
+  /// 시 데이터 넘겨주기
   void address(String address) {
     address_result = address;
+    address_result111 = "$address >";
     update();
   }
 
   // 구 데이터 넘겨주기
   void subAddressesR(String subAddresses) {
     subAddress_result = subAddresses;
+    subAddress_result111 = "$subAddresses >";
     update();
   }
 
@@ -46,6 +51,8 @@ class AddressController extends GetxController {
     subAddresses1_result = subAddresses1;
     update();
   }
+
+  // 
 
   // 처음 accessToken받기위함
   Future<String?> getSgisApiAccessToken() async {

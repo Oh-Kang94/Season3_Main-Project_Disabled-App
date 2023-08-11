@@ -11,11 +11,12 @@ import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/view/ai_result_view.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/ai_test_next_view.dart';
+import 'package:season3_team1_mainproject/view/ai_test_view_jobselect.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
 import '../components/ai_job_select_widget.dart';
 import '../components/loding_widget.dart';
-import '../model/ai_address_model.dart';
+import '../vm/ai_address_controller.dart';
 
 class AiTestView extends StatefulWidget {
   const AiTestView({Key? key}) : super(key: key);
@@ -54,9 +55,15 @@ class _AiTestViewState extends State<AiTestView> {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text('성별'),
+                  const Text(
+                    '성별',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                   AiSexWidget(),
-                  const Text('연령'),
+                  const Text(
+                    '연령',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: AiAgeWidget(
@@ -69,7 +76,11 @@ class _AiTestViewState extends State<AiTestView> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          const Text('장애유형'),
+                          const Text(
+                            '장애유형',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
                           AiDisableWidget(
                             onDisabledSelected: _disabledSelected,
                           ),
@@ -83,7 +94,11 @@ class _AiTestViewState extends State<AiTestView> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          const Text('희망 취업일자'),
+                          const Text(
+                            '희망 취업일자',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
                           AiEmployDayWidget(
                             onEmploySelected: _employSelected,
                           ),
@@ -97,36 +112,44 @@ class _AiTestViewState extends State<AiTestView> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          const Text('희망 근무지역'),
+                          const Text(
+                            '희망 근무지역',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
                           ElevatedButton(
                             onPressed: () {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const AiLocationWidget();
+                                  return AiLocationWidget();
                                 },
                               );
                             },
-                            child: const Text('근무지역 선택하기'),
+                            child: const Text(
+                              '근무지역 선택하기',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Text(
                               "${_controller.address_result} ${_controller.subAddress_result} ${_controller.subAddresses1_result}"),
-                          const Divider(
-                            color: Colors.grey,
-                            thickness: 2.0,
+                          const SizedBox(
+                            width: 350,
+                            child: Divider(
+                              color: Colors.grey,
+                              thickness: 1.0,
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  const Text(
+                    '이용약관',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Visibility(
-                    visible: _controller.addressStatus,
-                    child: const AiJobSelectWidget(),
-                  ),
-                  const Text('이용약관'),
+                  const Text('동의시에만 검사가 가능합니다'),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -166,22 +189,15 @@ class _AiTestViewState extends State<AiTestView> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
+                    // 동의에 체크 돼있어야지 검사 시작 가능
                     child: ElevatedButton(
                       onPressed: okChecked
                           ? () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) => LoadingDialog(),
-                              );
-
-                              Future.delayed(const Duration(seconds: 1), () {
-                                Navigator.pop(context);
-                                Get.to(const AiResultView());
-                              });
+                              Navigator.pop(context);
+                              Get.to(const AiTestViewJobSelect());
                             }
-                          : null, // "동의" 체크박스가 체크되어야 버튼이 활성화됩니다.
-                      child: const Text('검사시작'),
+                          : null,
+                      child: const Text('희망 직업선택'),
                     ),
                   ),
                   const SizedBox(

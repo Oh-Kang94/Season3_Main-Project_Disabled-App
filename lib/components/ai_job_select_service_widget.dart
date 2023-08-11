@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/model/aiTestModel.dart';
+import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
 
 class AIJobSelectServiceWidget extends StatefulWidget {
   const AIJobSelectServiceWidget({super.key});
@@ -13,6 +13,8 @@ class AIJobSelectServiceWidget extends StatefulWidget {
 class _AIJobSelectServiceWidgetState extends State<AIJobSelectServiceWidget> {
   List<String> jobList = ["경호·경비·스포츠·레크리에이션직", "영업·미용·예식 서비스직", "음식 서비스직"];
   int listCount = 0;
+
+  final AiTestController controller = Get.put(AiTestController());  // 액션 없으면 어사인 부분만 안해주면됨
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _AIJobSelectServiceWidgetState extends State<AIJobSelectServiceWidget> {
                       child: GestureDetector(
                         onTap: () {
                           listCount = index; // 선택된 항목의 인덱스 저장
-                          controller.selectJob = jobList[index];
+                          controller.selectJob = jobList[listCount];
                           setState(() {});
                         },
                         child: SizedBox(

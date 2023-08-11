@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-import '../model/aiTestModel.dart';
+import '../vm/ai_test_controller.dart';
 
 typedef OnAgeSelectedCallback = void Function(
     String selectedDropdown, int selected);
@@ -62,12 +62,12 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
                         );
                       }).toList(),
                       onChanged: (value) {
-                        setState(() {});
                         selectedDropdown = value!;
                         controller.disabledSelect = selectedDropdown;
                         // controller.selectedDisabled(selectedDropdown);
                         // aiTestController.onDropdownSelected(value!);
                         widget.onDisabledSelected(selectedDropdown, selected);
+                        setState(() {});
                       },
                     ),
                   ),
@@ -81,10 +81,10 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
                           groupValue: selected,
                           onChanged: (value) {
                             selected = value!;
-                            setState(() {});
                             controller.radioDisabledSelect = selected;
                             widget.onDisabledSelected(
                                 selectedDropdown, selected);
+                            setState(() {});
                           },
                         ),
                       ],
@@ -100,10 +100,10 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
                           groupValue: selected,
                           onChanged: (value) {
                             selected = value!;
-                            setState(() {});
                             controller.radioDisabledSelect = selected;
                             widget.onDisabledSelected(
                                 selectedDropdown, selected);
+                            setState(() {});
                           },
                         ),
                       ],
@@ -111,9 +111,12 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
                   ),
                 ],
               ),
-              const Divider(
-                color: Colors.grey,
-                thickness: 2.0,
+              const SizedBox(
+                width: 350,
+                child: Divider(
+                  color: Colors.grey,
+                  thickness: 1.0,
+                ),
               ),
             ],
           ),

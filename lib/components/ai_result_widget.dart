@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
-import 'package:season3_team1_mainproject/model/ai_address_model.dart';
+import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
+import 'package:season3_team1_mainproject/util/api_endpoint.dart';
 
-import '../model/aiTestModel.dart';
+import '../vm/ai_test_controller.dart';
 
 class AiResultWidget extends StatefulWidget {
-  AiResultWidget({super.key});
+  const AiResultWidget({super.key});
 
   @override
   State<AiResultWidget> createState() => _AiResultWidgetState();
@@ -17,130 +18,231 @@ class AiResultWidget extends StatefulWidget {
 
 class _AiResultWidgetState extends State<AiResultWidget> {
   // Property
+
+
+  // final AiTestController controller = Get.put(AiTestController());  // 액션 없으면 어사인 부분만 안해주면됨
+
+
   String result = "";
 
-  bool age_20 = false; // 20대
-  bool age_30 = false; // 30대
-  bool age_40 = false; // 40대
-  bool age_50 = false; // 50대
-  bool age_60 = false; // 60대
-  bool age_70 = false; // 70대
-  bool visual_impairmen_mild = false; // 시각장애 경증
-  bool visual_impairmen_severe = false; // 시각장애 중증
-  bool physical_disability_mild = false; // 지체장애 경증
-  bool physical_disability_severe = false; // 지체장애 중증
-  bool intellectual_disability_mild = false; // 지적장애 경증
-  bool intellectual_disability_severe = false; // 지적장애 중증
-  bool auditory_disorder_mild = false; // 청각장애 경증
-  bool auditory_disorder_severe = false; // 청각장애 중증
-  bool mental_disorder_mild = false; // 정신장애 경증
-  bool mental_disorder_severe = false; // 정신장애 중증
-  bool gyeongbuk = false; // 경북
-  bool gangwon = false; // 강원
-  bool jeonnam = false; // 전남
-  bool chungbuk = false; // 충북
-  bool gyenggi = false; // 경기
-  bool incheon = false; // 인천
-  bool seoul = false; // 서울
-  bool ulsan = false; // 울산
-  bool daejeon = false; // 대전
-  bool busan = false; // 부산
-  bool jeonbuk = false; // 전북
-  bool gwangju = false; // 광주
-  bool chungnam = false; // 충남
-  bool daegu = false; // 대구
-  bool gyengnam = false; // 경남
-  bool jeju = false; // 제주
-  bool sejong = false; // 세종
-  bool jan = false; // 1월
-  bool feb = false; // 2월
-  bool mar = false; // 3월
-  bool apr = false; // 4월
-  bool may = false; // 5월
-  bool jun = false; // 6월
-  bool jul = false; // 7월
-  bool aug = false; // 8월
-  bool sep = false; // 9월
-  bool oct = false; // 10월
-  bool nov = false; // 11월
-  bool dec = false; // 12월
+  String age_20 = "FALSE"; // 20대
+  String age_30 = "FALSE"; // 30대
+  String age_40 = "FALSE"; // 40대
+  String age_50 = "FALSE"; // 50대
+  String age_60 = "FALSE"; // 60대
+  String age_70 = "FALSE"; // 70대
+  String visual_impairmen_mild = "FALSE"; // 시각장애 경증
+  String visual_impairmen_severe = "FALSE"; // 시각장애 중증
+  String physical_disability_mild = "FALSE"; // 지체장애 경증
+  String physical_disability_severe = "FALSE"; // 지체장애 중증
+  String intellectual_disability_mild = "FALSE"; // 지적장애 경증
+  String intellectual_disability_severe = "FALSE"; // 지적장애 중증
+  String auditory_disorder_mild = "FALSE"; // 청각장애 경증
+  String auditory_disorder_severe = "FALSE"; // 청각장애 중증
+  String mental_disorder_mild = "FALSE"; // 정신장애 경증
+  String mental_disorder_severe = "FALSE"; // 정신장애 중증
+  String gyeongbuk = "FALSE"; // 경북
+  String gangwon = "FALSE"; // 강원
+  String jeonnam = "FALSE"; // 전남
+  String chungbuk = "FALSE"; // 충북
+  String gyenggi = "FALSE"; // 경기
+  String incheon = "FALSE"; // 인천
+  String seoul = "FALSE"; // 서울
+  String ulsan = "FALSE"; // 울산
+  String daejeon = "FALSE"; // 대전
+  String busan = "FALSE"; // 부산
+  String jeonbuk = "FALSE"; // 전북
+  String gwangju = "FALSE"; // 광주
+  String chungnam = "FALSE"; // 충남
+  String daegu = "FALSE"; // 대구
+  String gyengnam = "FALSE"; // 경남
+  String jeju = "FALSE"; // 제주
+  String sejong = "FALSE"; // 세종
+  String jan = "FALSE"; // 1월
+  String feb = "FALSE"; // 2월
+  String mar = "FALSE"; // 3월
+  String apr = "FALSE"; // 4월
+  String may = "FALSE"; // 5월
+  String jun = "FALSE"; // 6월
+  String jul = "FALSE"; // 7월
+  String aug = "FALSE"; // 8월
+  String sep = "FALSE"; // 9월
+  String oct = "FALSE"; // 10월
+  String nov = "FALSE"; // 11월
+  String dec = "FALSE"; // 12월
 
+  double resultPercent = 0.0;
 
   final AiTestController aiController = Get.find();
   final AddressController addressController = Get.find();
 
-  
   @override
   void initState() {
     super.initState();
     getJSONData();
   }
-  
 
   @override
   Widget build(BuildContext context) {
     int selectedSex = aiController.sexSelected.value;
-    String address = "${addressController.address_result} ${addressController.subAddress_result} ${addressController.subAddresses1_result}";
+    String address =
+        "${addressController.address_result} ${addressController.subAddress_result} ${addressController.subAddresses1_result}";
 
+    switch (aiController.age.value) {
+      case >= 20 && < 30:
+        age_20 = "TRUE";
+        break;
+      case >= 30 && < 40:
+        age_30 = "TRUE";
+        break;
+      case >= 40 && < 50:
+        age_40 = "TRUE";
+        break;
+      case >= 50 && < 60:
+        age_50 = "TRUE";
+        break;
+      case >= 60 && < 70:
+        age_60 = "TRUE";
+        break;
+      default:
+        age_70 = "TRUE";
+    }
 
-  // if(aiController.age.value >= 20 && aiController.age.value < 30){
-  //   age_20 = true;
-  // }else if(aiController.age.value >= 30 && aiController.age.value < 40){
-  //   age_30 = true;
-  // }else if(aiController.age.value >= 40 && aiController.age.value < 50){
-  //   age_40 = true;
-  // }else if(aiController.age.value >= 50 && aiController.age.value < 60){
-  //   age_50 = true;
-  // }else if(aiController.age.value >= 30 && aiController.age.value < 40){
-  //   age_60 = true;
-  // }else{
-  //   age_70 = true;
-  // }
+    switch (aiController.radioDisabledSelect) {
+      case 1:
+        switch (aiController.disabledSelect) {
+          case "시각장애":
+            visual_impairmen_mild = "TRUE";
+            break;
+          case "지체장애":
+            physical_disability_mild = "TRUE";
+            break;
+          case "지적장애":
+            intellectual_disability_mild = "TRUE";
+            break;
+          case "청각장애":
+            auditory_disorder_mild = "TRUE";
+            break;
+          case "정신장애":
+            intellectual_disability_mild = "TRUE";
+            break;
+        }
+        break;
+      case 0:
+        switch (aiController.disabledSelect) {
+          case "시각장애":
+            visual_impairmen_severe = "TRUE";
+            break;
+          case "지체장애":
+            physical_disability_severe = "TRUE";
+            break;
+          case "지적장애":
+            intellectual_disability_severe = "TRUE";
+            break;
+          case "청각장애":
+            auditory_disorder_severe = "TRUE";
+            break;
+          case "정신장애":
+            intellectual_disability_severe = "TRUE";
+            break;
+        }
+        break;
+    }
 
-  switch (aiController.age.value) {
-  case >= 20 && < 30:
-    age_20 = true;
-    break;
-  case >= 30 && < 40:
-    age_30 = true;
-    break;
-  case >= 40 && < 50:
-    age_40 = true;
-    break;
-  case >= 50 && < 60:
-    age_50 = true;
-    break;
-  case >= 60 && < 70:
-    age_60 = true;
-    break;
-  default:
-    age_70 = true;
-}
+    switch (addressController.address_result) {
+      case "경상북도":
+        gyeongbuk = "TRUE";
+        break;
+      case "강원도":
+        gangwon = "TRUE";
+        break;
+      case "전라남도":
+        jeonnam = "TRUE";
+        break;
+      case "경기도":
+        gyenggi = "TRUE";
+        break;
+      case "충청북도":
+        chungbuk = "TRUE";
+        break;
+      case "인천광역시":
+        incheon = "TRUE";
+        break;
+      case "서울특별시":
+        seoul = "TRUE";
+        break;
+      case "울산광역시":
+        ulsan = "TRUE";
+        break;
+      case "대전광역시":
+        daejeon = "TRUE";
+        break;
+      case "부산광역시":
+        busan = "TRUE";
+        break;
+      case "전라북도":
+        jeonbuk = "TRUE";
+        break;
+      case "광주광역시":
+        gwangju = "TRUE";
+        break;
+      case "충청남도":
+        chungnam = "TRUE";
+        break;
+      case "대구광역시":
+        daegu = "TRUE";
+        break;
+      case "경상남도":
+        gyengnam = "TRUE";
+        break;
+      case "제주특별자치도":
+        jeju = "TRUE";
+        break;
+      case "세종특별자치시":
+        sejong = "TRUE";
+        break;
+    }
 
-  if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "시각장애"){
-    visual_impairmen_mild = true;
-  }else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "시각장애"){
-    visual_impairmen_severe = true;
-  }else if (aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "지체장애"){
-    physical_disability_mild = true;
-  } else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "지체장애"){
-    physical_disability_severe = true;
-  } else if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "지적장애"){
-    intellectual_disability_mild = true;
-  } else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "지적장애"){
-    intellectual_disability_severe = true;
-  }else if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "청각장애"){
-    auditory_disorder_mild = true;
-  }else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "청각장애"){
-    auditory_disorder_severe = true;
-  } else if(aiController.radioDisabledSelect == 1 && aiController.disabledSelect == "정신장애"){
-    intellectual_disability_mild = true;
-  } else if(aiController.radioDisabledSelect == 0 && aiController.disabledSelect == "정신장애"){
-    intellectual_disability_severe = true;
-  }
-
-
-
+    switch (aiController.employMonth) {
+      case "1":
+        jan = "TRUE";
+        break;
+      case "2":
+        feb = "TRUE";
+        break;
+      case "3":
+        mar = "TRUE";
+        break;
+      case "4":
+        apr = "TRUE";
+        break;
+      case "5":
+        may = "TRUE";
+        break;
+      case "6":
+        jun = "TRUE";
+        break;
+      case "7":
+        jul = "TRUE";
+        break;
+      case "8":
+        aug = "TRUE";
+        break;
+      case "9":
+        sep = "TRUE";
+        break;
+      case "10":
+        oct = "TRUE";
+        break;
+      case "11":
+        nov = "TRUE";
+        break;
+      case "12":
+        dec = "TRUE";
+        break;
+      default:
+        break;
+    }
 
 
     return GetBuilder<AiTestController>(
@@ -155,6 +257,10 @@ class _AiResultWidgetState extends State<AiResultWidget> {
               Text('${aiController.employMonth}'),
               Text('${aiController.selectJob}'),
               Text('당신이 선택한 주소는$address'),
+              Text("$age_20 $may $intellectual_disability_mild $incheon"),
+              Text("결과는 $resultPercent"),
+              // 20대 2월 지적장애_경증 제주도
+              // 넘어간거: 나이, 지역
             ],
           ),
         );
@@ -163,12 +269,43 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   }
 
   getJSONData() async {
+    String baseUrl = ApiEndPoints.localhost + ApiEndPoints.apiEndPoints.ai_test;
+    int ai_phase = 0;
 
-    // if(aiController.age.value =)
+    switch (aiController.selectJob) {
+      case "경영·행정·사무직":
+        ai_phase = 1;
+        break;
+      case "간호·보건 및 돌봄 서비스 관련 직군" || "전문·생산 및 정비 관련 직군" || "제조 단순직":
+        ai_phase = 2;
+        break;
+      case "서비스 및 판매 관련 직군" || "청소 및 기타 개인서비스직":
+        ai_phase = 3;
+        break;
+      case "돌봄 서비스직(간병·육아)" || "보건·의료직" || "사회복지·종교직":
+        ai_phase = 4;
+        break;
+      case "건설·채굴직" ||
+            "관리직(임원·부서장)" ||
+            "교육직" ||
+            "기계 설치·정비·생산직" ||
+            "섬유·의복 생산직" ||
+            "식품 가공·생산직" ||
+            "예술·디자인·방송직" ||
+            "운전·운송직" ||
+            "인쇄·목재·공예 및 기타 설치·정비·생산직" ||
+            "전기·전자 설치·정비·생산직":
+        ai_phase = 5;
+        break;
+      case "경호·경비·스포츠·레크리에이션직" || "영업·미용·예식 서비스직" || "음식 서비스직":
+        ai_phase = 6;
+        break;
+      default:
+        break;
+    }
 
-
-    var url = Uri.parse(
-        "http://localhost:8080/Rserve/response_phase1.jsp?age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
+    String requestUrl =
+        "${baseUrl}?ai=$ai_phase&age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
         "visualImpairment_Severe=$visual_impairmen_severe&visualImpairment_Mild=$visual_impairmen_mild&"
         "physicalImpairment_Mild=$physical_disability_mild&physicalImpairment_Severe=$physical_disability_severe&"
         "intellectualImpairment_Mild=$intellectual_disability_mild&intellectualImpairment_Severe=$intellectual_disability_severe&"
@@ -178,26 +315,54 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         "Gyeonggi=$gyenggi&Incheon=$incheon&Seoul=$seoul&Ulsan=$ulsan&Daejeon=$daejeon&"
         "Busan=$busan&Jeonbuk=$jeonbuk&Gwangju=$gwangju&Chungnam=$chungnam&"
         "Daegu=$daegu&Gyeongnam=$gyengnam&Jeju=$jeju&Sejong=$sejong&"
-        "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec");
-    var response = await http.get(url);
-    print(response);
-    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-    result = dataConvertedJSON['result'];
-    setState(() {});
-    _showDialog();
+        "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec";
+    print(requestUrl);
+    // var url = Uri.parse(
+    //     "http://localhost:8080/Rserve/response_phase1.jsp?age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
+    //     "visualImpairment_Severe=$visual_impairmen_severe&visualImpairment_Mild=$visual_impairmen_mild&"
+    //     "physicalImpairment_Mild=$physical_disability_mild&physicalImpairment_Severe=$physical_disability_severe&"
+    //     "intellectualImpairment_Mild=$intellectual_disability_mild&intellectualImpairment_Severe=$intellectual_disability_severe&"
+    //     "hearingImpairment_Mild=$auditory_disorder_mild&hearingImpairment_Severe=$auditory_disorder_severe&"
+    //     "mentalDisorder_Mild=$mental_disorder_mild&mentalDisorder_Severe=$mental_disorder_severe&"
+    //     "Gyeongbuk=$gyeongbuk&Gangwon=$gangwon&Jeonnam=$jeonnam&Chungbuk=$chungbuk&"
+    //     "Gyeonggi=$gyenggi&Incheon=$incheon&Seoul=$seoul&Ulsan=$ulsan&Daejeon=$daejeon&"
+    //     "Busan=$busan&Jeonbuk=$jeonbuk&Gwangju=$gwangju&Chungnam=$chungnam&"
+    //     "Daegu=$daegu&Gyeongnam=$gyengnam&Jeju=$jeju&Sejong=$sejong&"
+    //     "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec");
+    // var response = await http.get(url);
+    // print(response);
+    try {
+      var response = await GetConnect().get(requestUrl);
+      if (response.isOk) {
+        result = response.body['message'][0];
+        print(double.parse(result));
+        resultPercent = double.parse(result) * 100;
+        setState(() {});
+        print("결과는 $result");
+        return true;
+      } else {
+        print("좇됨");
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    // _showDialog();
   }
 
-  _showDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('품종 예측 결과'),
-          content: Text('입력하신 품종은 $result 입니다.'),
-        );
-      },
-    );
-  }
+  // _showDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: const Text('품종 예측 결과'),
+  //         content: Text('입력하신 품종은 $result 입니다.'),
+  //       );
+  //     },
+  //   );
+  // }
 }
 
 // End

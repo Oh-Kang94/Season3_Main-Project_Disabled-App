@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../model/aiTestModel.dart';
+import '../vm/ai_test_controller.dart';
 
 typedef OnAgeSelectedCallback = void Function(
     int selectedYear, int selectedMonth, int selectedDay);
@@ -120,11 +119,14 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                 ],
               ),
               // Text("만 ${aiTestController.age}세"),
-              
-                Text("나이: ${aiTestController.age}세"),
-              const Divider(
-                color: Colors.grey,
-                thickness: 2.0,
+
+              Text("나이: ${aiTestController.age}세"),
+              const SizedBox(
+                width: 350,
+                child: Divider(
+                  color: Colors.grey,
+                  thickness: 1.0,
+                ),
               ),
             ],
           ),
