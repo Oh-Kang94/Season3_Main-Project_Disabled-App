@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
+import 'package:season3_team1_mainproject/util/asset_image.dart';
+import 'package:season3_team1_mainproject/view/login/findid_login.dart';
 import 'package:season3_team1_mainproject/view/register/register_user.dart';
 
 import '../../components/login_form.dart';
 import '../../components/logo_pic.dart';
 import '../../vm/login_ctrl.dart';
+import 'findpassword_login.dart';
 
 class LoginUser extends StatelessWidget {
   const LoginUser({Key? key}) : super(key: key);
@@ -47,25 +49,83 @@ class LoginUser extends StatelessWidget {
                         ),
                         SizedBox(height: 20.h),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               ElevatedButton(
                                 onPressed: controller.login,
-                                child: const Text('로그인'),
+                                child: SizedBox(
+                                    width: 75.w,
+                                    height: 30.h,
+                                    child: const Center(
+                                      child: Text(
+                                        '로그인',
+                                      ),
+                                    )),
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  Get.to(RegisterUser());
+                                  Get.to(
+                                    RegisterUser(),
+                                  );
                                 },
-                                child: const Text('회원가입'),
+                                child: SizedBox(
+                                  width: 75.w,
+                                  height: 30.h,
+                                  child: const Center(
+                                    child: Text('회원가입'),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
+                        GestureDetector(
+                          onTap: () {
+                            Get.dialog(
+                              AlertDialog(
+                                title: const Text('ID 및 비밀번호 찾기'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('아이디나 비밀번호 중 어떤 것을 찾으시나요?'),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 30),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Get.to(() => const FindIdView());
+                                            },
+                                            child: const Text('ID 찾기'),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Get.to(() =>
+                                                  const FindPasswordView());
+                                            },
+                                            child: const Text('비밀번호 찾기'),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("아이디 및 비밀번호를 모른다면..."),
+                            ],
+                          ),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -77,7 +137,7 @@ class LoginUser extends StatelessWidget {
                                   width: 110.w,
                                   height: 30.h,
                                   child: Image.asset(
-                                    "assets/images/kakao_login_medium_narrow.png",
+                                    AssetsImage.KAKAO_LOGIN,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -90,7 +150,7 @@ class LoginUser extends StatelessWidget {
                                   width: 110.w,
                                   height: 30.h,
                                   child: Image.asset(
-                                    "assets/images/googleLogin.png",
+                                    AssetsImage.GOOGLE_LOGIN,
                                     fit: BoxFit.fill,
                                   ),
                                 ),
