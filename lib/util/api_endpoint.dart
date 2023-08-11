@@ -13,5 +13,4 @@ class _ApiEndPoints {
   final String getUser = 'register/getuser';
 
   final String ai_test = 'test';
-  final String abc = 'abc';
 }
