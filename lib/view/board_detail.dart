@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:season3_team1_mainproject/view/community.dart';
 
+import '../vm/home_ctrl.dart';
 import 'appbar/myappbar.dart';
 import 'board_update.dart';
+import 'home.dart';
 
 class BoardDetail extends StatefulWidget {
   const BoardDetail({super.key});
@@ -33,7 +33,7 @@ class _BoardDetailState extends State<BoardDetail> {
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
     return Scaffold(
-     appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -52,15 +52,15 @@ class _BoardDetailState extends State<BoardDetail> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 thickness: 1.0,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 300,
                   ),
                   Text(board.date),
@@ -71,42 +71,53 @@ class _BoardDetailState extends State<BoardDetail> {
                 children: [
                   Text(
                     board.title,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1.0,
                   ),
                   Text(
                     board.content,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 200,
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 1.0,
                   ),
-                  SizedBox(width: 10,height: 10,),
-                  Text('댓글', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                    Text(
-                      'comment',
-                    // board.comment,
-                    style: TextStyle(fontSize: 15, ),
+                  const SizedBox(
+                    width: 10,
+                    height: 10,
                   ),
-                      SizedBox(
-                    height: 5,),
+                  const Text(
+                    '댓글',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    'comment',
+                    // board.comment,
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage(
                           'assets/images/user.png',
                         ),
                         radius: 20,
                       ),
-                      SizedBox(width: 10), // 간격 추가
+                      const SizedBox(width: 10), // 간격 추가
                       Expanded(
                         // TextField를 확장하여 빈 공간을 모두 사용
                         child: TextField(
@@ -127,7 +138,7 @@ class _BoardDetailState extends State<BoardDetail> {
                             ),
                           ),
                           keyboardType: TextInputType.text,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                           ),
                         ),
@@ -137,24 +148,24 @@ class _BoardDetailState extends State<BoardDetail> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(340, 5, 0, 120),
                     child: ElevatedButton(
-                          onPressed: () {
-                            FirebaseFirestore.instance.collection('community').add({
-                  'title': commentController.text,
-                });
-                          },
-                            style: ElevatedButton.styleFrom(
+                      onPressed: () {
+                        FirebaseFirestore.instance.collection('community').add({
+                          'title': commentController.text,
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),),), //버튼 모양 각지게),
-                          child: Text('입력'),
+                          borderRadius: BorderRadius.circular(10),
                         ),
+                      ), //버튼 모양 각지게),
+                      child: const Text('입력'),
+                    ),
                   ),
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const SizedBox(
-                    width: 140,
-                  ),
                   ElevatedButton.icon(
                     onPressed: () {
                       //게시글 수정 기능
@@ -163,7 +174,7 @@ class _BoardDetailState extends State<BoardDetail> {
                       Get.to(const BoardUpdate(), arguments: board);
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(50, 50),
+                      minimumSize: const Size(50, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -184,10 +195,7 @@ class _BoardDetailState extends State<BoardDetail> {
                         ),
                       ],
                     ),
-                    label: SizedBox.shrink(),
-                  ),
-                  SizedBox(
-                    width: 10,
+                    label: const SizedBox.shrink(),
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
@@ -203,29 +211,32 @@ class _BoardDetailState extends State<BoardDetail> {
                                     onPressed: () {
                                       Get.back();
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'EXIT',
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     )),
                                 TextButton(
                                     onPressed: () {
                                       board.ref.delete();
-                                      Get.off(const Community());
+                                      HomeController homeController =
+                                          Get.find();
+                                      homeController.controller.animateTo(3);
+                                      Get.off(const Home());
                                     },
                                     style: TextButton.styleFrom(
                                         foregroundColor: Colors.red),
-                                    child: Text(
+                                    child: const Text(
                                       'DELETE',
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     )),
                               ],
                             )
                           ]);
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(50, 50),
+                      minimumSize: const Size(50, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -246,17 +257,16 @@ class _BoardDetailState extends State<BoardDetail> {
                         ),
                       ],
                     ),
-                    label: SizedBox.shrink(),
-                  ),
-                  SizedBox(
-                    width: 10,
+                    label: const SizedBox.shrink(),
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      Get.to(Community());
+                      HomeController homeController = Get.find();
+                      homeController.controller.animateTo(3);
+                      Get.to(const Home());
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(50, 50),
+                      minimumSize: const Size(50, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -277,8 +287,8 @@ class _BoardDetailState extends State<BoardDetail> {
                         ),
                       ],
                     ),
-                    label:
-                        SizedBox.shrink(), // 라벨을 감추기 위해 SizedBox.shrink()를 사용합니다.
+                    label: const SizedBox
+                        .shrink(), // 라벨을 감추기 위해 SizedBox.shrink()를 사용합니다.
                   ),
                 ],
               )

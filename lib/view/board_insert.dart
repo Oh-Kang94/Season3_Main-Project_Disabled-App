@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:season3_team1_mainproject/view/community.dart';
 
+import '../vm/home_ctrl.dart';
 import 'appbar/myappbar.dart';
+import 'home.dart';
 
 class BoardInsert extends StatefulWidget {
   const BoardInsert({Key? key}) : super(key: key);
@@ -29,7 +28,7 @@ class _BoardInsertState extends State<BoardInsert> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -47,7 +46,7 @@ class _BoardInsertState extends State<BoardInsert> {
                 ),
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 1.0,
             ),
             const SizedBox(
@@ -94,7 +93,8 @@ class _BoardInsertState extends State<BoardInsert> {
                   ),
                 ),
                 keyboardType: TextInputType.text,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -118,12 +118,12 @@ class _BoardInsertState extends State<BoardInsert> {
                 ),
                 keyboardType: TextInputType.text,
                 maxLines: 15,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             ElevatedButton.icon(
@@ -148,8 +148,8 @@ class _BoardInsertState extends State<BoardInsert> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              icon: Icon(Icons.check),
-              label: Text(
+              icon: const Icon(Icons.check),
+              label: const Text(
                 '게시',
                 style: TextStyle(fontSize: 20),
               ),
@@ -163,17 +163,24 @@ class _BoardInsertState extends State<BoardInsert> {
   //Function----------------
   _showDialog(BuildContext context) {
     Get.defaultDialog(
-        title: '입력 결과',
-        middleText: '입력이 완료 되었습니다.',
-        backgroundColor:  Color.fromARGB(255, 145, 199, 167),
-        barrierDismissible: false,
-        actions: [
-          TextButton(
-              onPressed: () {
-                Get.to(Community());
-              },
-              child: Text('OK',style: TextStyle(fontWeight: FontWeight.bold),)),
-        ]);
+      title: '입력 결과',
+      middleText: '입력이 완료 되었습니다.',
+      backgroundColor: const Color.fromARGB(255, 145, 199, 167),
+      barrierDismissible: false,
+      actions: [
+        TextButton(
+          onPressed: () {
+            HomeController homeController = Get.find();
+            homeController.controller.animateTo(3);
+            Get.off(const Home());
+          },
+          child: const Text(
+            'OK',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+    );
 
     // showDialog(
     //   context: context,
