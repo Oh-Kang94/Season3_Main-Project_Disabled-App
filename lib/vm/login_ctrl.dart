@@ -66,7 +66,30 @@ class LoginController extends GetxService {
 
   // LOGOUT
 
-  void logout() {
+  void showlogout() {
+    Get.defaultDialog(
+      title: "로그아웃 하시겠습니까?",
+      middleText: "로그아웃 하시겠습니까?",
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+            Get.snackbar("logout", "logout 되었습니다.");
+            dologout();
+          },
+          child: const Text('네'),
+        ),
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: const Text('아니오'),
+        ),
+      ],
+    );
+  }
+
+  void dologout() {
     isLogged.value = false;
     userId.value = "";
     userName.value = "";

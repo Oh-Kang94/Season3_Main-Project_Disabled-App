@@ -42,35 +42,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Obx(
               () => loginController.isLogged.value
                   ? IconButton(
-                      onPressed: () {
-                        Get.defaultDialog(
-                          title: "로그아웃 하시겠습니까?",
-                          middleText: "로그아웃 하시겠습니까?",
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                                Get.snackbar("logout", "logout 되었습니다.");
-                                loginController.logout();
-                              },
-                              child: const Text('네'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text('아니오'),
-                            ),
-                          ],
-                        );
-                      },
+                      onPressed: () {},
                       icon: Icon(Icons.logout,
                           color: Theme.of(context).colorScheme.error),
                     )
                   : IconButton(
                       onPressed: () {
                         Get.to(
-                          LoginUser(),
+                          const LoginUser(),
                           binding: LoginBinding(),
                         );
                       },

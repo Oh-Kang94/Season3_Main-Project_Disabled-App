@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
+import 'package:season3_team1_mainproject/view/register/register.dart';
 
 import '../../binding/Binding.dart';
 import '../../components/firebase_image.dart';
@@ -49,26 +50,48 @@ class Mydrawer extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            onTap: () {
-              Get.to(
-                const ChangeUser(),
-              );
-            },
-            leading: Icon(Icons.emoji_people_sharp,
-                color: Theme.of(context).colorScheme.secondary),
-            title: const Text('계정 설정'),
+          Obx(
+            () => loginController.isLogged.value
+                ? ListTile(
+                    onTap: () {
+                      Get.to(
+                        const ChangeUser(),
+                      );
+                    },
+                    leading: Icon(Icons.emoji_people_sharp,
+                        color: Theme.of(context).colorScheme.secondary),
+                    title: const Text('계정 설정'),
+                  )
+                : ListTile(
+                    onTap: () {
+                      Get.to(RegisterUser());
+                    },
+                    leading: Icon(Icons.emoji_people_sharp,
+                        color: Theme.of(context).colorScheme.secondary),
+                    title: const Text('회원 가입'),
+                  ),
           ),
-          ListTile(
-            onTap: () {
-              Get.to(
-                LoginUser(),
-                binding: LoginBinding(),
-              );
-            },
-            leading: Icon(Icons.login,
-                color: Theme.of(context).colorScheme.secondary),
-            title: const Text('로그인 하기'),
+          Obx(
+            () => loginController.isLogged.value
+                ? ListTile(
+                    onTap: () {
+                      loginController.showlogout();
+                    },
+                    leading: Icon(Icons.login,
+                        color: Theme.of(context).colorScheme.error),
+                    title: const Text('로그아웃 하기'),
+                  )
+                : ListTile(
+                    onTap: () {
+                      Get.to(
+                        const LoginUser(),
+                        binding: LoginBinding(),
+                      );
+                    },
+                    leading: Icon(Icons.login,
+                        color: Theme.of(context).colorScheme.secondary),
+                    title: const Text('로그인 하기'),
+                  ),
           ),
           ListTile(
             onTap: () {
