@@ -42,6 +42,7 @@ class LoginController extends GetxService {
   void onClose() {
     idController.dispose();
     passwordController.dispose();
+    removeSharedPreferences();
     super.onClose();
   }
 
@@ -54,8 +55,10 @@ class LoginController extends GetxService {
         if (auth) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           isLogged.value = true;
-          Get.off(const Home());
+          saveSharedPreferences();
+          getSharedPreferences();
           getPic(idController.text);
+          Get.off(const Home());
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
         }
@@ -65,7 +68,7 @@ class LoginController extends GetxService {
   }
 
   // LOGOUT
-
+  /// Logout 창을 띄어준다.
   void showlogout() {
     Get.defaultDialog(
       title: "로그아웃 하시겠습니까?",
@@ -74,7 +77,7 @@ class LoginController extends GetxService {
         TextButton(
           onPressed: () {
             Get.back();
-            Get.snackbar("logout", "logout 되었습니다.");
+            Get.snackbar("로그아웃", "성공적으로 로그아웃 되었습니다.");
             dologout();
           },
           child: const Text('네'),
@@ -89,6 +92,7 @@ class LoginController extends GetxService {
     );
   }
 
+  /// 실질적인 로그아웃을 말함.
   void dologout() {
     isLogged.value = false;
     userId.value = "";
@@ -96,11 +100,12 @@ class LoginController extends GetxService {
     picPath.value = "default";
     user = null;
     tryKaokaologout();
+    tryGooglelogout();
     removeSharedPreferences();
   }
 
   // Api
-  // USER DB CHECK
+  /// USER DB CHECK
   Future<bool> checkUser(String user, String password) async {
     String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.loginid;
 
@@ -121,7 +126,6 @@ class LoginController extends GetxService {
         String name = decodedToken['name'];
         userId.value = id;
         userName.value = name;
-        await saveSharedPreferences();
 
         return true;
       } else {
@@ -145,6 +149,8 @@ class LoginController extends GetxService {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           getPic(userId.value);
           isLogged.value = true;
+          saveSharedPreferences();
+          getSharedPreferences();
           Get.offAll(const Home());
         } else {
           Get.defaultDialog(
@@ -192,6 +198,7 @@ class LoginController extends GetxService {
     }
   }
 
+  /// 서버에 카카오 로그인을 시도.
   tryKakaologin() async {
     try {
       bool isInstalled = await isKakaoTalkInstalled();
@@ -215,6 +222,7 @@ class LoginController extends GetxService {
     }
   }
 
+  /// 서버에 카카오 로그아웃을 시도.
   tryKaokaologout() async {
     try {
       await UserApi.instance.logout(); // 로그아웃이다.
@@ -237,6 +245,8 @@ class LoginController extends GetxService {
         if (isEnrolled) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           getPic(userId.value);
+          saveSharedPreferences();
+          getSharedPreferences();
           Get.offAll(const Home());
         } else {
           print("확인2");
@@ -256,6 +266,17 @@ class LoginController extends GetxService {
           );
         }
       });
+    }
+  }
+
+  /// GoogleLogout
+  tryGooglelogout() async {
+    try {
+      await googleSignIn.signOut(); // 로그아웃이다.
+      // await UserApi.instance.unlink(); // 회원 탈퇴이다.
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 
@@ -312,7 +333,7 @@ class LoginController extends GetxService {
   }
 
   /// Shared Prefernces
-
+  /// Shared Pref 저장
   saveSharedPreferences() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

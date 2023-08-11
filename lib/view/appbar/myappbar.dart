@@ -33,7 +33,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                         "로그인이 필요합니다",
                         style: TextStyle(fontFamily: "NotoSansKR-Light"),
                       ),
-              ),
+              )
             ],
           ),
         ),
@@ -42,7 +42,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Obx(
               () => loginController.isLogged.value
                   ? IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        loginController.showlogout();
+                      },
                       icon: Icon(Icons.logout,
                           color: Theme.of(context).colorScheme.error),
                     )
