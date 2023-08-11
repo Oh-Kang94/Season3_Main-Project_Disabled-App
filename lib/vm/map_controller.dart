@@ -40,6 +40,43 @@ class MapController extends GetxController{
   //완료되면 로딩을 거짓으로 만든 뒤 api에서 가져온 위치에 마커를 생성해야 한다.
 
 
+//location받아오기
+Future<void> fetchLocationData() async {
+  final url = Uri.parse('http://www.oh-kang.kro.kr:7288/maps/');
+  
+  try {
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final List<dynamic> LocationList = jsonData['result'];
+
+      for (var location in LocationList) {
+        final int seq = location['seq'];
+        final String businessName = location['사업장명'];
+        final String address = location['주소'];
+        // final double latitude = location['위도']; // 위도 정보 추가
+        // final double longitude = location['경도']; // 경도 정보 추가
+
+        // 마커 생성 및 추가
+        markers.add(Marker(
+          markerId: MarkerId(seq.toString()),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          position: LatLng(37.494552, 127.029932),
+          infoWindow: InfoWindow(title: businessName, snippet: address),
+          onTap: () {
+            print('마커 탭됨: $businessName');
+          },
+        ));
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error fetching data: $error');
+  }
+}
+
+
   //마커 생성함수
   createMarkers(){
     mapModel.forEach((list) {
