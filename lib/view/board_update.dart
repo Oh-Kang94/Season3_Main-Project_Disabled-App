@@ -118,11 +118,11 @@ class _BoardUpdateState extends State<BoardUpdate> {
                     ),
                   ),
                 ),
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.multiline, 
+                maxLines: 15, 
                 style: const TextStyle(
                   fontSize: 17,
                 ),
-                maxLines: 15,
               ),
             ),
             const SizedBox(
@@ -167,7 +167,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
         actions: [
           TextButton(
               onPressed: () {
-                Get.to(const Community());
+                Get.to(Community());
               },
               child: const Text('OK',style: TextStyle(fontWeight: FontWeight.bold),)),
         ]);

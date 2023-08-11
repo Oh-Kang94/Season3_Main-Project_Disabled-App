@@ -116,7 +116,7 @@ class _BoardInsertState extends State<BoardInsert> {
                     ),
                   ),
                 ),
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.multiline,
                 maxLines: 15,
                 style: const TextStyle(
                   fontSize: 16,
