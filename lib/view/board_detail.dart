@@ -60,42 +60,56 @@ class _BoardDetailState extends State<BoardDetail> {
               ),
               Row(
                 children: [
-
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   // Text('조회',style: TextStyle(fontSize: 13),),
-                  SizedBox(width: 300,),
+                  const SizedBox(
+                    width: 300,
+                  ),
                   Text(board.date),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
-                      SizedBox(width: 5,),
-                      CircleAvatar(backgroundImage: AssetImage('assets/images/user.png',),radius: 30,),
-                SizedBox(width: 5,),
-                Text('login id'),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          'assets/images/user.png',
+                        ),
+                        radius: 30,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text('login id'),
                     ],
                   ),
-                
-                  Divider(
+                  const Divider(
                     thickness: 1.0,
                   ),
-                   SizedBox(width: 5,),
-                      Text(
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
                     board.title,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10,width: 5,),
-
+                  const SizedBox(
+                    height: 10,
+                    width: 5,
+                  ),
                   Text(
                     board.content,
                     style: const TextStyle(
-                        fontSize: 16,),
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(
                     height: 200,
@@ -123,7 +137,9 @@ class _BoardDetailState extends State<BoardDetail> {
                   ),
                   Row(
                     children: [
-                       SizedBox(width: 5,),
+                      const SizedBox(
+                        width: 5,
+                      ),
                       const CircleAvatar(
                         backgroundImage: AssetImage(
                           'assets/images/user.png',
@@ -156,7 +172,9 @@ class _BoardDetailState extends State<BoardDetail> {
                           ),
                         ),
                       ),
-                       SizedBox(width: 5,),
+                      SizedBox(
+                        width: 5,
+                      ),
                     ],
                   ),
                   Padding(

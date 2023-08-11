@@ -5,6 +5,8 @@ import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 import 'package:season3_team1_mainproject/view/community.dart';
 
 import '../model/board_model.dart';
+import '../vm/home_ctrl.dart';
+import 'home.dart';
 
 class BoardUpdate extends StatefulWidget {
   const BoardUpdate({super.key});
@@ -20,9 +22,9 @@ class _BoardUpdateState extends State<BoardUpdate> {
   @override
   void initState() {
     super.initState();
-    titleController = TextEditingController(); 
-    contentController = TextEditingController(); 
-    var board = Get.arguments as Board?; 
+    titleController = TextEditingController();
+    contentController = TextEditingController();
+    var board = Get.arguments as Board?;
     if (board != null) {
       titleController.text = board.title;
       contentController.text = board.content;
@@ -118,8 +120,8 @@ class _BoardUpdateState extends State<BoardUpdate> {
                     ),
                   ),
                 ),
-                keyboardType: TextInputType.multiline, 
-                maxLines: 15, 
+                keyboardType: TextInputType.multiline,
+                maxLines: 15,
                 style: const TextStyle(
                   fontSize: 17,
                 ),
@@ -166,10 +168,16 @@ class _BoardUpdateState extends State<BoardUpdate> {
         barrierDismissible: false,
         actions: [
           TextButton(
-              onPressed: () {
-                Get.to(Community());
-              },
-              child: const Text('OK',style: TextStyle(fontWeight: FontWeight.bold),)),
+            onPressed: () {
+              HomeController homeController = Get.find();
+              homeController.controller.animateTo(3);
+              Get.off(const Home());
+            },
+            child: const Text(
+              'OK',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
         ]);
   }
 }
