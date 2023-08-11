@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/agreement_view.dart';
 import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
@@ -102,7 +103,7 @@ class _AiTestViewState extends State<AiTestView> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AiLocationWidget();
+                                  return const AiLocationWidget();
                                 },
                               );
                             },
@@ -155,8 +156,14 @@ class _AiTestViewState extends State<AiTestView> {
                       ],
                     ),
                   ),
-                  AgreementViewWidget(agreement: Agreement.personalCollection),
-                  AgreementViewWidget(agreement: Agreement.personalUseage),
+                  AgreementViewWidget(
+                    agreement: Agreement.personalCollection,
+                    height: 100.h,
+                  ),
+                  AgreementViewWidget(
+                    agreement: Agreement.personalUseage,
+                    height: 100.h,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
