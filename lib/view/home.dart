@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
@@ -22,15 +20,15 @@ class Home extends StatelessWidget {
       body: TabBarView(
           controller: homeController.controller,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
+          children: [
             // 각자 페이지 넣기
-            Mainview(),
+            const Mainview(),
             // main 자리
-            AiFirstView(),
+            const AiFirstView(),
             // map 자리
-            mapView(),
+            MapViewPage(),
             // community 자리
-            Community()
+            const Community()
           ]),
       bottomNavigationBar: Container(
         color: Theme.of(context).colorScheme.secondary,

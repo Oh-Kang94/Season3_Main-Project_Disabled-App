@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -249,9 +251,15 @@ class UpdateUser extends StatelessWidget {
                           GestureDetector(
                             onTap: () => updateController.imagePicker(),
                             child: Obx(
-                              () => FirebaseImageWidget(
-                                  imagePath: updateController.path.value,
-                                  size: 200),
+                              () => updateController.pick.value == null
+                                  ? FirebaseImageWidget(
+                                      imagePath: updateController.path.value,
+                                      size: 100.h)
+                                  : CircleAvatar(
+                                      radius: 100.h,
+                                      backgroundImage: FileImage(File(
+                                          updateController.pick.value!.path)),
+                                    ),
                             ),
                           ),
                           SizedBox(height: 20.h),

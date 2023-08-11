@@ -46,9 +46,6 @@ class UpdateController extends GetxController {
   Rx<XFile?> pick = Rx<XFile?>(null);
   RxString path = "default".obs;
 
-  RxBool consentCollectInfo = false.obs;
-  RxBool consentProcessInfo = false.obs;
-
   UserData? userData;
 
   final updateFormKey = GlobalKey<FormState>();
@@ -141,15 +138,6 @@ class UpdateController extends GetxController {
     birthController.text = date.toString().substring(0, 11);
   }
 
-  // 개인정보 동의 설정
-  void toggleConsentCollect(bool newValue) {
-    consentCollectInfo.value = newValue;
-  }
-
-  void toggleConsentProcess(bool newValue) {
-    consentProcessInfo.value = newValue;
-  }
-
   /// 생년월일 나타내는 widget
   Future<void> showBirthPicker(BuildContext context) async {
     showModalBottomSheet(
@@ -189,13 +177,8 @@ class UpdateController extends GetxController {
     }
   }
 
-  bool get isConsentCollect => consentCollectInfo.value;
-  bool get isConsentProcess => consentProcessInfo.value;
-
   void onSaved() {
-    if (updateFormKey.currentState!.validate() &&
-        consentCollectInfo.value == true &&
-        consentProcessInfo.value == true) {
+    if (updateFormKey.currentState!.validate()) {
       onSavedPic(pick.value);
       UserData userData = UserData(
         id: idController.text,
@@ -216,18 +199,20 @@ class UpdateController extends GetxController {
       );
       saveUser(userData).then((auth) {
         if (auth) {
-          Get.snackbar('회원 가입 성공', '성공적으로 회원가입 되었습니다.');
+          Get.snackbar('회원 정보 수정 성공', '성공적으로 수정 되었습니다.');
           Get.offAll(
             const Home(),
           );
         } else {
-          Get.snackbar('회원가입 실패', '아이디가 중복되었습니다.');
+          Get.snackbar('회원 정보 수정 실패', '중복이 문제가 되었습니다.');
         }
         passwordController.clear();
       });
     }
   }
 
+  ///API
+  ///회원 정보 수정
   Future<bool> saveUser(UserData userData) async {
     String baseUrl =
         ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.registerid;
@@ -249,7 +234,6 @@ class UpdateController extends GetxController {
   loadUser(String id) async {
     String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getUser;
     String requestUri = "$baseUrl/?id=$id";
-    print("id는 $id");
     try {
       var response = await GetConnect().get(requestUri);
       if (response.isOk) {
@@ -259,7 +243,6 @@ class UpdateController extends GetxController {
         return false;
       }
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -285,7 +268,6 @@ class UpdateController extends GetxController {
         ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
 
     String requestUrl = "$baseUrl/?id=$userid";
-    print(requestUrl);
     try {
       // GetConnect를 사용하여 GET 요청을 보냅니다.
       var response = await GetConnect().get(requestUrl);
@@ -294,8 +276,7 @@ class UpdateController extends GetxController {
       if (response.isOk) {
         // send로 보내서, 그냥 하나만 보내게 됨
         path.value = response.body;
-        var ref = FirebaseStorage.instance.ref(path.value.trim());
-        print("pic경로는 ${path.value}");
+        Reference ref = FirebaseStorage.instance.ref(path.value.trim());
         path.value = await ref.getDownloadURL();
         return true;
       } else {

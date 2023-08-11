@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../util/asset_image.dart';
+
 class FirebaseImageWidget extends StatelessWidget {
   const FirebaseImageWidget({Key? key, this.size, required this.imagePath})
       : super(key: key);
@@ -17,6 +19,6 @@ class FirebaseImageWidget extends StatelessWidget {
             ),
           )
         : const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/user.png"));
+            backgroundImage: AssetImage(AssetsImage.PROFILE_IMAGE));
   }
 }

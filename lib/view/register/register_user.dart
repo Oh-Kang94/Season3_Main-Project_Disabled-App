@@ -8,10 +8,11 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/logo_pic.dart';
 import 'package:kpostal/kpostal.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
+import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/util/regex.dart';
 
 import '../../components/agreement_view.dart';
-import '../../vm/register_ctrl copy.dart';
+import '../../vm/register_ctrl.dart';
 
 class RegisterUser extends StatelessWidget {
   RegisterUser({super.key});
@@ -266,7 +267,7 @@ class RegisterUser extends StatelessWidget {
                                       child: CircleAvatar(
                                           radius: 100.h,
                                           backgroundImage: const AssetImage(
-                                              "assets/images/uploadbutton.png")),
+                                              AssetsImage.PROFILE_IMAGE)),
                                     )
                                   : SizedBox(
                                       height: 200.h,
