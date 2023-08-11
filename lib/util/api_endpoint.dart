@@ -11,7 +11,7 @@ class _ApiEndPoints {
   final String getpicPath = 'login/getpic';
   final String registerid = 'register/registration';
   final String getUser = 'register/getuser';
-  final String updateUser = 'register/updateUser';
+  final String updateUser = 'register/updateuser';
 
   final String ai_test = 'test';
 }

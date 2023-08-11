@@ -55,7 +55,7 @@ class LoginController extends GetxService {
         if (auth) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           isLogged.value = true;
-          saveSharedPreferences();
+          saveSharedPreferences(userId.value, userName.value);
           getSharedPreferences(userId.value);
           getPic(idController.text);
           Get.off(const Home());
@@ -149,7 +149,7 @@ class LoginController extends GetxService {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           getPic(userId.value);
           isLogged.value = true;
-          saveSharedPreferences();
+          saveSharedPreferences(userId.value, userName.value);
           getSharedPreferences(userId.value);
           Get.offAll(const Home());
         } else {
@@ -245,7 +245,7 @@ class LoginController extends GetxService {
         if (isEnrolled) {
           Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
           getPic(userId.value);
-          saveSharedPreferences();
+          saveSharedPreferences(userId.value, userName.value);
           getSharedPreferences(userId.value);
           Get.offAll(const Home());
         } else {
@@ -334,16 +334,15 @@ class LoginController extends GetxService {
 
   /// Shared Prefernces
   /// Shared Pref 저장
-  saveSharedPreferences() async {
+  saveSharedPreferences(id, name) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('userId', userId.value);
-      prefs.setString('userName', userName.value);
+      prefs.setString('userId', id);
+      prefs.setString('userName', name);
     } catch (e) {
       print(e);
     }
-    print(
-        "LOGIN SAVE SHAREDPREFERENCE: userid: ${userId.value} username: ${userName.value}");
+    print("LOGIN SAVE SHAREDPREFERENCE: userid: $id username: $name");
   }
 
   getSharedPreferences(String? savedUserId) async {

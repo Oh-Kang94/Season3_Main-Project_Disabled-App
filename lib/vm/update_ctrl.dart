@@ -181,28 +181,29 @@ class UpdateController extends GetxController {
     if (updateFormKey.currentState!.validate()) {
       onSavedPic(pick.value);
       UserData userData = UserData(
-        id: idController.text,
         password: passwordController.text,
         name: nameController.text,
         avatar: path.value,
         email: emailController.text,
         phone:
             "${phoneController.text.substring(0, 3)}-${phoneController.text.substring(3, 7)}-${phoneController.text.substring(7, 11)}",
-        gender: selectedgender.value!.name,
-        disability: selectedDisability.value!.name,
+        gender: genderController.text,
+        disability: disabledController.text,
         address: addressController.text,
         latitude: _latitude.value,
         longitude: _longitude.value,
         birth: birthController.text,
-        kakaoid: loginController.kakaoid.value,
-        googleid: loginController.googleid.value,
+        id: idController.text,
       );
-      saveUser(userData).then((auth) {
+      updateUser(userData).then((auth) {
         if (auth) {
           Get.snackbar('회원 정보 수정 성공', '성공적으로 수정 되었습니다.');
           Get.offAll(
             const Home(),
           );
+          loginController.saveSharedPreferences(
+              idController.text, nameController.text);
+          loginController.getSharedPreferences(idController.text);
         } else {
           Get.snackbar('회원 정보 수정 실패', '중복이 문제가 되었습니다.');
         }
@@ -213,9 +214,9 @@ class UpdateController extends GetxController {
 
   ///API
   ///회원 정보 수정
-  Future<bool> saveUser(UserData userData) async {
+  Future<bool> updateUser(UserData userData) async {
     String baseUrl =
-        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.registerid;
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.updateUser;
     var body = userData.toJson();
     try {
       var response = await GetConnect().post(baseUrl, body);
@@ -257,9 +258,11 @@ class UpdateController extends GetxController {
         userData!.phone.substring(4, 8) +
         userData!.phone.substring(9, 13);
     birthController.text = userData!.birth.substring(0, 10);
-    disabledController.text = userData!.email;
+    disabledController.text = userData!.disability;
     genderController.text = userData!.gender;
     addressController.text = userData!.address;
+    _latitude.value = userData!.latitude;
+    _longitude.value = userData!.longitude;
   }
 
   /// profile 사진 가져오기

@@ -79,7 +79,6 @@
 //   }
 // }
 
-
 //stateful로 다시 코드 짜기
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -87,11 +86,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../vm/map_controller.dart';
 
 class MapViewPage extends StatefulWidget {
+  const MapViewPage({super.key});
+
   @override
-  _MapViewPageState createState() => _MapViewPageState();
+  MapViewPageState createState() => MapViewPageState();
 }
 
-class _MapViewPageState extends State<MapViewPage> {
+class MapViewPageState extends State<MapViewPage> {
   final MapController _mapController = MapController();
 
   @override
@@ -109,19 +110,19 @@ class _MapViewPageState extends State<MapViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Map View'),
+        title: const Text('Map View'),
       ),
       body: Center(
         child: _mapController.markers.isNotEmpty
             ? GoogleMap(
                 mapType: MapType.normal,
-                initialCameraPosition: CameraPosition(
+                initialCameraPosition: const CameraPosition(
                   target: LatLng(37.494552, 127.029932),
                   zoom: 18,
                 ),
                 markers: _mapController.markers.toSet(),
               )
-            : CircularProgressIndicator(), // 데이터 로딩 중에는 로딩 인디케이터 표시
+            : const CircularProgressIndicator(), // 데이터 로딩 중에는 로딩 인디케이터 표시
       ),
     );
   }

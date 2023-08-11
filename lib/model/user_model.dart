@@ -39,12 +39,12 @@ class UserData {
       avatar: json['avatar'],
       email: json['email'],
       phone: json['phone'],
-      gender: json['sex'], // JSON 데이터의 "sex" 필드를 "gender"로 변환
-      disability: json['disabled'], // JSON 데이터의 "disabled" 필드를 "disability"로 변환
+      gender: json['gender'],
+      disability: json['disability'],
       address: json['address'],
       latitude: json['latitude'].toDouble(),
       longitude: json['longitude'].toDouble(),
-      birth: json['birthdate'],
+      birth: json['birth'],
       kakaoid: json['kakaoid'],
       googleid: json['googleid'],
     );
