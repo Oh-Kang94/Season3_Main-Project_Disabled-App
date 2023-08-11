@@ -8,13 +8,14 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/disabled_model.dart';
 import '../model/gender_model.dart';
 import '../model/user_model.dart';
 import '../util/api_endpoint.dart';
 
-class RegisterationController extends GetxController {
+class UpdateController extends GetxController {
   TextEditingController idController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
@@ -25,6 +26,7 @@ class RegisterationController extends GetxController {
 
   TextEditingController phoneController = TextEditingController();
 
+  DateTime selectedDate = DateTime.now();
   TextEditingController birthController = TextEditingController();
   Rx<DateTime?> selectedBirth = Rx<DateTime?>(null);
 
@@ -47,15 +49,14 @@ class RegisterationController extends GetxController {
   RxBool consentCollectInfo = false.obs;
   RxBool consentProcessInfo = false.obs;
 
-  final registerFormKey = GlobalKey<FormState>();
-  final httpClient = GetConnect();
+  UserData? userData;
+
+  final updateFormKey = GlobalKey<FormState>();
 
   @override
-  void onInit() {
-    disabledController.text = '장애 유형 선택';
-    genderController.text = '누르시면 성별이 검색됩니다.';
-    birthController.text = '누르시면 생년월일이 검색됩니다.';
-    addressController.text = '누르시면 주소가 검색됩니다.';
+  void onInit() async {
+    await getSharedPreferences();
+    setUser();
     super.onInit();
   }
 
@@ -149,6 +150,27 @@ class RegisterationController extends GetxController {
     consentProcessInfo.value = newValue;
   }
 
+  /// 생년월일 나타내는 widget
+  Future<void> showBirthPicker(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SizedBox(
+          height: 200,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            maximumDate: DateTime.now(),
+            initialDateTime: selectedDate,
+            onDateTimeChanged: (DateTime newDate) {
+              selectedDate = newDate; // Update the selected date
+              setBirthDate(selectedDate);
+            },
+          ),
+        );
+      },
+    );
+  }
+
   // ImagePicker
   imagePicker() async {
     ImagePicker picker = ImagePicker();
@@ -171,7 +193,7 @@ class RegisterationController extends GetxController {
   bool get isConsentProcess => consentProcessInfo.value;
 
   void onSaved() {
-    if (registerFormKey.currentState!.validate() &&
+    if (updateFormKey.currentState!.validate() &&
         consentCollectInfo.value == true &&
         consentProcessInfo.value == true) {
       onSavedPic(pick.value);
@@ -221,5 +243,78 @@ class RegisterationController extends GetxController {
       print(e);
       return false;
     }
+  }
+
+  /// user id 불러내는 것.
+  loadUser(String id) async {
+    String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getUser;
+    String requestUri = "$baseUrl/?id=$id";
+    print("id는 $id");
+    try {
+      var response = await GetConnect().get(requestUri);
+      if (response.isOk) {
+        userData = UserData.fromJson(response.body);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  /// controller.text에 값 넣기
+  setUser() async {
+    await loadUser(idController.text);
+    await getPic(idController.text);
+    nameController.text = userData!.name;
+    emailController.text = userData!.email;
+    phoneController.text = userData!.phone.substring(0, 3) +
+        userData!.phone.substring(4, 8) +
+        userData!.phone.substring(9, 13);
+    birthController.text = userData!.birth.substring(0, 10);
+    disabledController.text = userData!.email;
+    genderController.text = userData!.gender;
+    addressController.text = userData!.address;
+  }
+
+  /// profile 사진 가져오기
+  Future<bool> getPic(String userid) async {
+    String baseUrl =
+        ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getpicPath;
+
+    String requestUrl = "$baseUrl/?id=$userid";
+    print(requestUrl);
+    try {
+      // GetConnect를 사용하여 GET 요청을 보냅니다.
+      var response = await GetConnect().get(requestUrl);
+
+      // 응답 데이터를 확인합니다.
+      if (response.isOk) {
+        // send로 보내서, 그냥 하나만 보내게 됨
+        path.value = response.body;
+        var ref = FirebaseStorage.instance.ref(path.value.trim());
+        print("pic경로는 ${path.value}");
+        path.value = await ref.getDownloadURL();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /// Sharedpref으로 아이디 부르기
+  getSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      idController.text = userId ?? ''; // userId가 null이면 빈 문자열로 초기화
+    } catch (e) {
+      print(e);
+    }
+    print("UPDATE LOAD SHAREDPREFERENCE: userid: ${idController.text}");
   }
 }

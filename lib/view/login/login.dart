@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
-import 'package:season3_team1_mainproject/view/register/register.dart';
+import 'package:season3_team1_mainproject/view/register/register_user.dart';
 
 import '../../components/login_form.dart';
 import '../../components/logo_pic.dart';

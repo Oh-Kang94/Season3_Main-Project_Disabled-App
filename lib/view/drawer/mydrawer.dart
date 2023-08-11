@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
-import 'package:season3_team1_mainproject/view/register/register.dart';
+import 'package:season3_team1_mainproject/view/register/register_user.dart';
 
 import '../../binding/Binding.dart';
 import '../../components/firebase_image.dart';
@@ -64,7 +64,7 @@ class Mydrawer extends StatelessWidget {
                   )
                 : ListTile(
                     onTap: () {
-                      Get.to(RegisterUser());
+                      Get.to(RegisterUser(), arguments: true);
                     },
                     leading: Icon(Icons.emoji_people_sharp,
                         color: Theme.of(context).colorScheme.secondary),

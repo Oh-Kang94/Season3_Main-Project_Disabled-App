@@ -5,11 +5,13 @@ class ApiEndPoints {
 }
 
 class _ApiEndPoints {
-  final String loginid = 'authaccount/login';
-  final String checkkakao = 'authaccount/login/checkKaKaoEnrolled';
-  final String checkgoogle = 'authaccount/login/checkGoogleEnrolled';
-  final String registerid = 'authaccount/registration';
-  final String getpicPath = 'authaccount/getpic';
+  final String loginid = 'login/login';
+  final String checkkakao = 'login/checkKaKaoEnrolled';
+  final String checkgoogle = 'login/checkGoogleEnrolled';
+  final String getpicPath = 'login/getpic';
+  final String registerid = 'register/registration';
+  final String getUser = 'register/getuser';
 
   final String ai_test = 'test';
+  final String abc = 'abc';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
+import 'package:season3_team1_mainproject/view/register/update_user.dart';
 
 import '../drawer/agreement.dart';
 
@@ -18,7 +19,9 @@ class ChangeUser extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Get.to(UpdateUser());
+              },
               minVerticalPadding: 10.h,
               leading: const Icon(Icons.settings),
               title: const Text(

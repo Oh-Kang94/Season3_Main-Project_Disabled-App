@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FirebaseImageWidget extends StatelessWidget {
+  const FirebaseImageWidget({Key? key, this.size, required this.imagePath})
+      : super(key: key);
+
+  final double? size;
   final String imagePath;
-
-  const FirebaseImageWidget({super.key, required this.imagePath});
-
   @override
   Widget build(BuildContext context) {
     return imagePath != "default"
         ? CircleAvatar(
+            radius: size ?? 40.h,
             backgroundImage: NetworkImage(
               imagePath,
             ),

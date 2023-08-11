@@ -5,10 +5,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
-import 'package:season3_team1_mainproject/view/register/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../util/api_endpoint.dart';
+import '../view/register/register_user.dart';
 
 class LoginController extends GetxService {
   //PROPERTIES

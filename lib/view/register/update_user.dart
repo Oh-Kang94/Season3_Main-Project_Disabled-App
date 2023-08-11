@@ -1,29 +1,22 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:season3_team1_mainproject/components/logo_pic.dart';
 import 'package:kpostal/kpostal.dart';
-import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/util/regex.dart';
 
-import '../../components/agreement_view.dart';
-import '../../vm/register_ctrl.dart';
+import '../../components/firebase_image.dart';
+import '../../vm/update_ctrl.dart';
 
-class RegisterUser extends StatelessWidget {
-  RegisterUser({super.key});
-  final RegisterationController registerationController =
-      Get.put(RegisterationController());
+class UpdateUser extends StatelessWidget {
+  UpdateUser({super.key});
+  final UpdateController updateController = Get.put(UpdateController());
 
-  DateTime selectedDate = DateTime.now();
-  XFile? pick;
   @override
   Widget build(BuildContext context) {
+    updateController.onInit;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -36,21 +29,22 @@ class RegisterUser extends StatelessWidget {
                   const LogoPic(isappbar: false),
                   SizedBox(height: 30.h),
                   const Text(
-                    "회원 가입",
+                    "회원 수정",
                     style:
                         TextStyle(fontFamily: "NotoSansKR-Bold", fontSize: 30),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: Form(
-                      key: registerationController.registerFormKey,
+                      key: updateController.updateFormKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            controller: registerationController.idController,
+                            controller: updateController.idController,
+                            readOnly: true,
                             keyboardType: TextInputType.text,
                             decoration: const InputDecoration(
                               labelText: 'ID',
@@ -70,8 +64,7 @@ class RegisterUser extends StatelessWidget {
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            controller:
-                                registerationController.passwordController,
+                            controller: updateController.passwordController,
                             obscureText: true,
                             textInputAction: TextInputAction.next,
                             decoration: const InputDecoration(
@@ -91,7 +84,7 @@ class RegisterUser extends StatelessWidget {
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            controller: registerationController.nameController,
+                            controller: updateController.nameController,
                             textInputAction: TextInputAction.next,
                             decoration: const InputDecoration(
                               labelText: '이름',
@@ -108,7 +101,7 @@ class RegisterUser extends StatelessWidget {
                           ),
                           SizedBox(height: 10.h),
                           TextFormField(
-                            controller: registerationController.emailController,
+                            controller: updateController.emailController,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             keyboardType: TextInputType.emailAddress,
@@ -130,7 +123,7 @@ class RegisterUser extends StatelessWidget {
                           TextFormField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            controller: registerationController.phoneController,
+                            controller: updateController.phoneController,
                             keyboardType: TextInputType.phone,
                             decoration: const InputDecoration(
                                 labelText: '핸드폰', hintText: "'-'없이 입력하세요!"),
@@ -147,11 +140,9 @@ class RegisterUser extends StatelessWidget {
                           SizedBox(height: 10.h),
                           Obx(
                             () => TextFormField(
-                              controller:
-                                  registerationController.genderController,
+                              controller: updateController.genderController,
                               onTap: () async {
-                                registerationController
-                                    .showGenderPicker(context);
+                                updateController.showGenderPicker(context);
                               },
                               validator: (value) {
                                 if (value == "누르시면 성별이 검색됩니다.") {
@@ -163,12 +154,12 @@ class RegisterUser extends StatelessWidget {
                               keyboardType: TextInputType.none,
                               decoration: InputDecoration(
                                 labelText: '성별',
-                                hintText: registerationController
-                                            .selectedgender.value !=
-                                        null
-                                    ? registerationController
-                                        .selectedgender.value!.name
-                                    : '누르시면 입력 가능합니다.',
+                                hintText:
+                                    updateController.selectedgender.value !=
+                                            null
+                                        ? updateController
+                                            .selectedgender.value!.name
+                                        : '누르시면 입력 가능합니다.',
                               ),
                             ),
                           ),
@@ -176,10 +167,9 @@ class RegisterUser extends StatelessWidget {
                           Obx(
                             () => TextFormField(
                               onTap: () async {
-                                showBirthPicker(context);
+                                updateController.showBirthPicker(context);
                               },
-                              controller:
-                                  registerationController.birthController,
+                              controller: updateController.birthController,
                               readOnly: true,
                               validator: (value) {
                                 if (value == "누르시면 생년월일이 검색됩니다.") {
@@ -189,10 +179,10 @@ class RegisterUser extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                 labelText: '생년월일',
-                                hintText: registerationController
+                                hintText: updateController
                                             .selectedBirth.value !=
                                         null
-                                    ? "${registerationController.selectedBirth.value?.year.toString()}-${registerationController.selectedBirth.value?.month.toString()}-${registerationController.selectedBirth.value?.day.toString()}"
+                                    ? "${updateController.selectedBirth.value?.year.toString()}-${updateController.selectedBirth.value?.month.toString()}-${updateController.selectedBirth.value?.day.toString()}"
                                     : '누르시면 입력 가능합니다.',
                               ),
                             ),
@@ -200,11 +190,9 @@ class RegisterUser extends StatelessWidget {
                           SizedBox(height: 10.h),
                           Obx(
                             () => TextFormField(
-                              controller:
-                                  registerationController.disabledController,
+                              controller: updateController.disabledController,
                               onTap: () async {
-                                registerationController
-                                    .showDisabilityPicker(context);
+                                updateController.showDisabilityPicker(context);
                               },
                               validator: (value) {
                                 if (value == "장애 유형 선택") {
@@ -216,10 +204,10 @@ class RegisterUser extends StatelessWidget {
                               keyboardType: TextInputType.none,
                               decoration: InputDecoration(
                                   labelText: '장애유형선택',
-                                  hintText: registerationController
+                                  hintText: updateController
                                               .selectedDisability.value !=
                                           null
-                                      ? registerationController
+                                      ? updateController
                                           .selectedDisability.value!.name
                                       : '누르시면 입력 가능합니다.'),
                             ),
@@ -232,7 +220,7 @@ class RegisterUser extends StatelessWidget {
                                     print(result.address);
                                     print(
                                         "경도: ${result.latitude} 위도: ${result.longitude}");
-                                    registerationController.setAddress(
+                                    updateController.setAddress(
                                         result.address,
                                         result.latitude!,
                                         result.longitude!); // 주소를 설정
@@ -247,8 +235,7 @@ class RegisterUser extends StatelessWidget {
                               return null;
                             },
                             readOnly: true,
-                            controller:
-                                registerationController.addressController,
+                            controller: updateController.addressController,
                             decoration: const InputDecoration(
                               labelText: '주소',
                             ),
@@ -260,83 +247,19 @@ class RegisterUser extends StatelessWidget {
                                 Text("프로필 사진 설정"),
                               ]),
                           GestureDetector(
-                            onTap: () => registerationController.imagePicker(),
+                            onTap: () => updateController.imagePicker(),
                             child: Obx(
-                              () => registerationController.pick.value == null
-                                  ? SizedBox(
-                                      height: 200.h,
-                                      child: CircleAvatar(
-                                          radius: 100.h,
-                                          backgroundImage: const AssetImage(
-                                              "assets/images/uploadbutton.png")),
-                                    )
-                                  : SizedBox(
-                                      height: 200.h,
-                                      child: CircleAvatar(
-                                        radius: 100.h,
-                                        backgroundImage: FileImage(File(
-                                            registerationController
-                                                .pick.value!.path)),
-                                      ),
-                                    ),
+                              () => FirebaseImageWidget(
+                                  imagePath: updateController.path.value,
+                                  size: 200),
                             ),
-                          ),
-                          SizedBox(height: 10.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                '개인정보 수집동의',
-                                style: TextStyle(fontFamily: "NotoSansKR-Bold"),
-                              ),
-                              Obx(
-                                () => Checkbox(
-                                  value:
-                                      registerationController.isConsentCollect,
-                                  onChanged: (newValue) {
-                                    registerationController
-                                        .toggleConsentCollect(
-                                            newValue ?? false);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          AgreementViewWidget(
-                              agreement: Agreement.personalCollection,
-                              height: 100.h),
-                          SizedBox(height: 10.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                '개인정보 처리 동의',
-                                style: TextStyle(fontFamily: "NotoSansKR-Bold"),
-                              ),
-                              Obx(
-                                () => Checkbox(
-                                  value:
-                                      registerationController.isConsentProcess,
-                                  onChanged: (newValue) {
-                                    registerationController
-                                        .toggleConsentProcess(
-                                            newValue ?? false);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10.h),
-                          AgreementViewWidget(
-                            agreement: Agreement.personalUseage,
-                            height: 100.h,
                           ),
                           SizedBox(height: 20.h),
                           ElevatedButton(
                             onPressed: () {
-                              registerationController.onSaved();
+                              updateController.onSaved();
                             },
-                            child: const Text('회원가입'),
+                            child: const Text('회원 수정'),
                           ),
                         ],
                       ),
@@ -348,27 +271,6 @@ class RegisterUser extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  /// 생년월일 나타내는 widget
-  Future<void> showBirthPicker(BuildContext context) async {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: 200,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            maximumDate: DateTime.now(),
-            initialDateTime: selectedDate,
-            onDateTimeChanged: (DateTime newDate) {
-              selectedDate = newDate; // Update the selected date
-              registerationController.setBirthDate(selectedDate);
-            },
-          ),
-        );
-      },
     );
   }
 }
