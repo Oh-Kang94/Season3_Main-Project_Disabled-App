@@ -4,8 +4,6 @@ import 'package:season3_team1_mainproject/components/logo_pic.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
-import '../../binding/Binding.dart';
-
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
@@ -52,7 +50,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       onPressed: () {
                         Get.to(
                           const LoginUser(),
-                          binding: LoginBinding(),
                         );
                       },
                       icon: const Icon(Icons.login),

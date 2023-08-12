@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController homeController = Get.put(HomeController());
+    final HomeController homeController = Get.find<HomeController>();
     return Scaffold(
       appBar: const MyAppBar(),
       body: TabBarView(
@@ -39,16 +39,16 @@ class Home extends StatelessWidget {
           indicatorColor:
               Theme.of(context).colorScheme.onSurface, // 아래 선택되어 있는 바 보여주기
           indicatorWeight: 3, // 바의 크기 키우기
-          tabs: const [
+          tabs: [
             // 각자 탭바 채워 넣기
             Tab(
-              icon: Icon(
-                Icons.home,
-              ),
+              icon: AnimatedIcon(
+                  icon: AnimatedIcons.home_menu,
+                  progress: homeController.animationController),
               text: "메인뷰",
             ),
             //  1st main
-            Tab(
+            const Tab(
               icon: Icon(
                 Icons.recommend,
               ),
@@ -56,13 +56,13 @@ class Home extends StatelessWidget {
             ),
 
             //  3rd map
-            Tab(
+            const Tab(
               icon: Icon(
                 Icons.map,
               ),
               text: "일자리지도",
             ),
-            Tab(
+            const Tab(
               icon: Icon(
                 Icons.group,
               ),

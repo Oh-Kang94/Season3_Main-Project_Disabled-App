@@ -29,7 +29,7 @@ class LoginUser extends StatelessWidget {
                 const LogoPic(
                   isappbar: false,
                 ),
-                Lottie.asset('assets/lottie/lottieLogin.json', height: 260.h),
+                Lottie.asset(AssetsImage.LOGIN_LOTTIE, height: 260.h),
                 Container(
                   padding: const EdgeInsets.all(50.0),
                   child: Form(

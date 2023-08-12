@@ -8,6 +8,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:season3_team1_mainproject/util/theme.dart';
 import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:season3_team1_mainproject/view/register/change_user.dart';
+import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
 import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
 import 'firebase_options.dart';
@@ -17,6 +18,7 @@ void main() async {
   await dotenv.load(); // .env 파일 로드
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  Get.put(HomeController());
   Get.put(LoginController());
   KakaoSdk.init(
     nativeAppKey: dotenv.env["KAKAO_NATIVE_APP_KEY"],
