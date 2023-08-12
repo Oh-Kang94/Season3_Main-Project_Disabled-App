@@ -14,6 +14,7 @@ class _ApiEndPoints {
   final String updateUser = 'register/updateuser';
 
   final String sendemail = 'mail/email';
+  final String findId = 'mail/findId';
   final String verifycode = 'mail/verifycode';
 
   final String ai_test = 'test';
