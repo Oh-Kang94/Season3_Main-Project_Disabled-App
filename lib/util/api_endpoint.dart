@@ -13,5 +13,8 @@ class _ApiEndPoints {
   final String getUser = 'register/getuser';
   final String updateUser = 'register/updateuser';
 
+  final String sendemail = 'mail/email';
+  final String verifycode = 'mail/verifycode';
+
   final String ai_test = 'test';
 }
