@@ -2,13 +2,19 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 // import 'address_access.dart';
 // import 'address_dept_server.dart';
 import '../model/ai_address_access_model.dart';
 import '../model/ai_address_server_model.dart';
+import '../model/user_model.dart';
+import '../util/api_endpoint.dart';
 
 class AddressController extends GetxController {
+  String? userId;
+  UserData? userData;
+
   final isLoading = true.obs;
   final hasError = false.obs;
   final error = "".obs;
@@ -25,12 +31,14 @@ class AddressController extends GetxController {
   // String subAddresses1_result111 = "";
   bool addressStatus = false;
 
+  // get userData => null;
+
   @override
   void onInit() {
     super.onInit();
     fetchAddresses(); // 시 데이터 처음에 보여주기위해 init에 넣기
+    loadUser();
   }
-
 
   /// 시 데이터 넘겨주기
   void address(String address) {
@@ -52,7 +60,7 @@ class AddressController extends GetxController {
     update();
   }
 
-  // 
+  //
 
   // 처음 accessToken받기위함
   Future<String?> getSgisApiAccessToken() async {
@@ -149,4 +157,36 @@ class AddressController extends GetxController {
       // Handle error
     }
   }
+
+    loadUser() async {
+    await getSharedPreferences();
+    if (userId != null) {
+      String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getUser;
+      String requestUri = "$baseUrl/?id=$userId";
+      try {
+        var response = await GetConnect().get(requestUri);
+        if (response.isOk) {
+          userData = UserData.fromJson(response.body);
+          print("이름은 이래: username: ${userData!.name}");
+          update();
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+  }
+
+  getSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      userId = prefs.getString('userId');
+    } catch (e) {
+      print(e);
+    }
+    print("LOAD SHAREDPREFERENCE: userid: $userId");
+  }
+
 }

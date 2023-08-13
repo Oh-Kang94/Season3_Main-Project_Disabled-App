@@ -26,6 +26,8 @@ class AiTestController extends GetxController {
     super.onInit();
   }
 
+  
+
   void onSexSelected(int value) {
     sexSelected.value = value;
     _updateAge();
@@ -58,6 +60,25 @@ class AiTestController extends GetxController {
   // }
 
   /// user id 불러내는 것.
+  /// 
+  
+  // Future<void> loadUser() async {
+  //   await getSharedPreferences();
+  //   if (userId != null) {
+  //     String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getUser;
+  //     String requestUri = "$baseUrl/?id=$userId";
+  //     try {
+  //       var response = await GetConnect().get(requestUri);
+  //       if (response.isOk) {
+  //         userData = UserData.fromJson(response.body);
+  //         print("이름은 이래: username: ${userData!.name}");
+  //         update(); // 상태 업데이트
+  //       }
+  //     } catch (e) {
+  //       print(e);
+  //     }
+  //   }
+  // }
   loadUser() async {
     await getSharedPreferences();
     if (userId != null) {
@@ -68,6 +89,7 @@ class AiTestController extends GetxController {
         if (response.isOk) {
           userData = UserData.fromJson(response.body);
           print("이름은 이래: username: ${userData!.name}");
+          update();
           return true;
         } else {
           return false;
