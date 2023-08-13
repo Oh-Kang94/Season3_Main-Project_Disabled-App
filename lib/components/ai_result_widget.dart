@@ -18,7 +18,7 @@ class AiResultWidget extends StatefulWidget {
 class _AiResultWidgetState extends State<AiResultWidget> {
   // Property
 
-  final AiTestController controller =
+  final AiTestController Tcontroller =
       Get.put(AiTestController()); // 액션 없으면 어사인 부분만 안해주면됨
 
   String result = "";
@@ -91,9 +91,8 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         ? resultPercent
         : resultPercentList.join(", ");
 
-    var resultJobText = resultJobList.isEmpty
-        ? resultJob
-        : resultJobList.join(", ");
+    var resultJobText =
+        resultJobList.isEmpty ? resultJob : resultJobList.join(", ");
 
     final LoginController loginController = Get.find();
 
@@ -112,18 +111,16 @@ class _AiResultWidgetState extends State<AiResultWidget> {
               // Text("$age_20 $may $intellectual_disability_mild $incheon"),
 
               Text(
-                "${loginController.userName ?? '당신의'}님의",
+                controller.userData?.name != null ? '${controller.userData!.name}님의' : '당신의',
                 style:
                     const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
+
               Text('가장 높은 확률의 직업은 $resultJobText 입니다.'),
               Text(
                 "${aiController.selectJob} 합격 예상률은 $resultText %입니다!",
                 style: const TextStyle(fontSize: 18),
               ),
-              // resultText
-              // 20대 2월 지적장애_경증 제주도
-              // 넘어간거: 나이, 지역
             ],
           ),
         );
@@ -391,7 +388,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     } else {
       print("실패");
     }
-
   }
 }
 
