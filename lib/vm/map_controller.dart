@@ -1,99 +1,89 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:html';
 
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/mapModel.dart';
 
-class MapController extends GetxController{
-  
-  //변수선언부
-  List<MapModel> mapModel = <MapModel>[].obs;//mapmodel을 가져올 것
-  var markers = RxSet<Marker>(); //map에 marker찍어줄 변수
-  RxBool isLoading = false.obs;//완료되었는지 여부 bool함수
-  var Url =  Uri.tryParse('http://www.oh-kang.kro.kr:7288/maps/');
+class MapController extends GetxController {
+  List<MapModel> mapModel = <MapModel>[].obs;
+  var markers = RxSet<Marker>();
+  RxBool isLoading = false.obs;
+  var Url = Uri.tryParse('http://www.oh-kang.kro.kr:7288/maps/');
 
-  //api url제공하는 함수
-    //결과를 얻은 뒤에 문자열 맵목록으로 변환 시킨다.
-    //그 후 다시 모델에 추가하는 과정을 거치는 함수
-  // fetchLocations() async{
-  //   try{
-  //     isLoading(true);
-  //     http.Response response = await http.get(Url!);
-  //     if(response.statusCode ==200){
-  //       var result = jsonDecode(response.body);
-  //       log(result.toString());
-  //       mapModel.addAll(RxList<Map<String,dynamic>>.from(result)
-  //         .map((e) => MapModel.fromJson(e))
-  //         .toList());
-  //     }
-  //   } catch(e){
-  //     print('Error while getting data is $e');
-  //   } finally{
-  //     isLoading(false);
-  //     print('finally: $mapModel');
-  //     createMarkers();//마커를 생성하는 함수
-  //   }
-  // }
-  //완료되면 로딩을 거짓으로 만든 뒤 api에서 가져온 위치에 마커를 생성해야 한다.
-
-
-//location받아오기. awsdb로 부터
-Future<void> fetchLocationData() async {
-  final url = Uri.parse('http://www.oh-kang.kro.kr:7288/maps/');
-  
-  try {
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      final List<dynamic> LocationList = jsonData['result'];
-
-      for (var location in LocationList) {
-        final int seq = location['seq'];
-        final String businessName = location['사업장명'];
-        final String address = location['주소'];
-        // 추후 지오코딩 후 반영 예정.
-        // final double latitude = location['위도']; // 위도 정보 추가
-        // final double longitude = location['경도']; // 경도 정보 추가
-
-        // 마커 생성 및 추가
-        markers.add(Marker(
-          markerId: MarkerId(seq.toString()),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          position: LatLng(37.494552, 127.029932),//일단 학원위치로 고정좌표 찍어놓음
-          infoWindow: InfoWindow(title: businessName, snippet: address),
-          onTap: () {
-            print('마커 탭됨: $businessName');
-          },
-        ));
-        print(address);
-        //지오코딩하자
-        
+  fetchLocations() async {
+    try {
+      isLoading(true);
+      http.Response response = await http.get(Url!);//강현이url에서 데이터 parsing
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);//가져온 jsondata디코딩
+        List<dynamic> resultMapList = result as List<dynamic>;
+        mapModel.addAll(resultMapList
+            .map((e) => MapModel.fromJson(e as Map<String, dynamic>))
+            .toList());//가져온 데이터를 mapModel리스트에 추가.
       }
-    } else {
-      print('Request failed with status: ${response.statusCode}');
+    } catch (e) {
+      print('데이터를 가져오는 도중 오류 발생: $e');
+    } finally {
+      isLoading(false);
+      print('최종적으로 데이터 가져옴: $mapModel');
+      createMarkersWithData(mapModel);
     }
-  } catch (error) {
-    print('Error fetching data: $error');
   }
-}
 
+  // 데이터를 불러와서 마커를 생성하는 함수
+  createMarkersWithData(List<MapModel> data) async {
+    markers.clear(); // 기존 마커를 지웁니다.
+    for (var map in data) {
+      // 주소를 좌표로 변환하는 과정
+      try {
+        List<Location> locations = await locationFromAddress(map.address);
+        if (locations.isNotEmpty) {
+          LatLng latLng = LatLng(locations.first.latitude, locations.first.longitude);
+          markers.add(Marker(
+            markerId: MarkerId(map.seq),
+            position: latLng,
+            infoWindow: InfoWindow(
+              title: map.name,
+              snippet: map.address,
+            ),
+          ));
+        }
+      } catch (e) {
+        print('주소를 좌표로 변환하는 도중 오류 발생: $e');
+      }
+    }
+  }
 
-  //마커 생성함수 (기본적인 마커 생성함수 우리가 쓸건 아니므로 일단 제외함.)
-  // createMarkers(){
-  //   mapModel.forEach((list) {
-  //     markers.add(Marker(
-  //       markerId: MarkerId(list.id.toString()),  
-  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-  //       position: LatLng(list.latitude, list.longitude),
-  //       infoWindow: InfoWindow(title: list.name, snippet: list.city),
-  //       onTap: () {
-  //         print('market tapped');
-  //       },
+  // 데이터를 불러오고 지오코딩을 적용하여 마커 생성
+  fetchAndCreateMarkers() async {
+    try {
+      isLoading(true);
+      http.Response response = await http.get(Url!);
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+        List<dynamic> resultMapList = result as List<dynamic>;
+        List<MapModel> parsedData = resultMapList
+            .map((e) => MapModel.fromJson(e as Map<String, dynamic>))
+            .toList();
 
-  //     ),);
-  //   });
-  // }
+        mapModel.addAll(parsedData); // 파싱된 데이터를 mapModel 리스트에 추가.
+        await createMarkersWithData(parsedData); // 지오코딩을 적용하여 마커를 생성.
+      }
+    } catch (e) {
+      print('데이터를 가져오는 도중 오류 발생: $e');
+    } finally {
+      isLoading(false);
+      print('최종적으로 데이터 가져옴: $mapModel');
+    }
+  }
+
+  @override
+  void onInit() {
+    fetchAndCreateMarkers(); // 데이터를 가져와서 마커를 생성하는 함수를 호출합니다.
+    super.onInit();
+  }
 }
