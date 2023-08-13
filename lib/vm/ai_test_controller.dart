@@ -26,8 +26,6 @@ class AiTestController extends GetxController {
     super.onInit();
   }
 
-  
-
   void onSexSelected(int value) {
     sexSelected.value = value;
     _updateAge();
@@ -60,8 +58,8 @@ class AiTestController extends GetxController {
   // }
 
   /// user id 불러내는 것.
-  /// 
-  
+  ///
+
   // Future<void> loadUser() async {
   //   await getSharedPreferences();
   //   if (userId != null) {
