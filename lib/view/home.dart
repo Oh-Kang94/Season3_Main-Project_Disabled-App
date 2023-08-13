@@ -21,15 +21,15 @@ class Home extends StatelessWidget {
       body: TabBarView(
           controller: homeController.controller,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
+          children:  [
             // 각자 페이지 넣기
-            Mainview(),
+            const Mainview(),
             // main 자리
-            AiFirstView(),
+            const AiFirstView(),
             // map 자리
             MapViewPage(),
             // community 자리
-            Community()
+            const Community()
           ]),
       bottomNavigationBar: MotionTabBar(
         controller: homeController.controller,
