@@ -6,6 +6,7 @@ class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
   late MotionTabBarController controller;
   RxString userId = "".obs;
+  int initialSelectedTab = 0;
 
   @override
   void onInit() {
@@ -18,6 +19,10 @@ class HomeController extends GetxController
   void onClose() {
     controller.dispose(); // Dispose the TabController's ticker.
     super.onClose();
+  }
+
+  onTabItemSelected(int value) {
+    initialSelectedTab = value;
   }
 
   getSharedPreferences() async {

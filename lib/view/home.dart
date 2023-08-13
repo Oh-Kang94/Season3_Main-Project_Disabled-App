@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
@@ -15,13 +17,14 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> tabLabels = ["홈", "일자리 추천", "일자리 지도", "공지사항"];
     final HomeController homeController = Get.find<HomeController>();
     return Scaffold(
       appBar: const MyAppBar(),
       body: TabBarView(
           controller: homeController.controller,
           physics: const NeverScrollableScrollPhysics(),
-          children:  [
+          children: [
             // 각자 페이지 넣기
             const Mainview(),
             // main 자리
@@ -33,9 +36,14 @@ class Home extends StatelessWidget {
           ]),
       bottomNavigationBar: MotionTabBar(
         controller: homeController.controller,
-        initialSelectedTab: "홈",
-        labels: const ["홈", "일자리 추천", "일자리 지도", "공지사항"],
-        icons: const [Icons.home, Icons.recommend, Icons.map, Icons.notifications],
+        initialSelectedTab: tabLabels[homeController.initialSelectedTab],
+        labels: tabLabels,
+        icons: const [
+          Icons.home,
+          Icons.recommend,
+          Icons.map,
+          Icons.notifications
+        ],
         tabSize: 50,
         tabBarHeight: 55,
         textStyle: const TextStyle(fontFamily: "NotoSansKR-Bold"),
@@ -47,6 +55,7 @@ class Home extends StatelessWidget {
         tabBarColor: Theme.of(context).colorScheme.surface,
         onTabItemSelected: (int value) {
           homeController.controller.index = value;
+          homeController.onTabItemSelected(value);
         },
       ),
       drawer: const Mydrawer(),
