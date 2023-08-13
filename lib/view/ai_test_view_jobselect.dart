@@ -5,9 +5,11 @@ import 'package:season3_team1_mainproject/view/ai_result_view.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
 import '../components/loding_widget.dart';
+import '../vm/ai_address_controller.dart';
 
 class AiTestViewJobSelect extends StatelessWidget {
-  const AiTestViewJobSelect({super.key});
+  AiTestViewJobSelect({super.key});
+  final AddressController _controller = Get.put(AddressController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +20,13 @@ class AiTestViewJobSelect extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
-              width: 400, 
-              height: 600, 
+              width: 400,
+              height: 600,
               child: AiJobSelectWidget(),
-              ),
+            ),
             ElevatedButton(
               onPressed: () {
+
                 showDialog(
                   context: context,
                   barrierDismissible:
@@ -32,8 +35,9 @@ class AiTestViewJobSelect extends StatelessWidget {
                 );
                 Future.delayed(const Duration(milliseconds: 1500), () {
                   Get.back();
-                  Get.to(const AiResultView());
+                  Get.to(() => AiResultView());
                 });
+
               },
               child: const Text("검사시작"),
             ),

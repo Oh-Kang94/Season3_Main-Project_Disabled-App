@@ -7,24 +7,38 @@ import 'package:http/http.dart' as http;
 
 import '../vm/ai_address_controller.dart';
 import '../vm/ai_test_controller.dart';
+import 'home.dart';
 
 class AiResultView extends StatelessWidget {
   const AiResultView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => AddressController());
+    // Get.lazyPut(() => AddressController());
+    final AddressController controller = Get.put(AddressController());
 
     return Scaffold(
       appBar: const MyAppBar(),
       body: GetBuilder<AiTestController>(
         builder: (controller) {
-          return const Center(
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('결과 보여주기'),
-                AiResultWidget(),
+                const SizedBox(
+                  width: 400,
+                  height: 500,
+                  child: AiResultWidget(),
+                  ),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.offAll(
+                      const Home(),
+                      transition: Transition.noTransition,
+                    );
+                  },
+                  child: const Text('홈으로'),
+                ),
               ],
             ),
           );

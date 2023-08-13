@@ -25,7 +25,7 @@ class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
     "섬유·의복 생산직",
     "예술·디자인·방송직",
   ];
-  int listCount = 0;
+  int listCount = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
                       child: GestureDetector(
                         onTap: () {
                           listCount = index; // 선택된 항목의 인덱스 저장
-                          controller.selectJob = jobList[index!];
+                          controller.selectJob = jobList[index];
                           setState(() {});
                         },
                         child: SizedBox(

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
 import 'package:season3_team1_mainproject/util/api_endpoint.dart';
+import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
 import '../vm/ai_test_controller.dart';
 
@@ -19,11 +20,13 @@ class AiResultWidget extends StatefulWidget {
 class _AiResultWidgetState extends State<AiResultWidget> {
   // Property
 
-
-  // final AiTestController controller = Get.put(AiTestController());  // 액션 없으면 어사인 부분만 안해주면됨
-
+  final AiTestController controller =
+      Get.put(AiTestController()); // 액션 없으면 어사인 부분만 안해주면됨
 
   String result = "";
+  String result1 = "";
+  List<String> resultPercentList = [];
+  double resultPercent = 0.0;
 
   String age_20 = "FALSE"; // 20대
   String age_30 = "FALSE"; // 30대
@@ -71,8 +74,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   String nov = "FALSE"; // 11월
   String dec = "FALSE"; // 12월
 
-  double resultPercent = 0.0;
-
   final AiTestController aiController = Get.find();
   final AddressController addressController = Get.find();
 
@@ -80,6 +81,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   void initState() {
     super.initState();
     getJSONData();
+    // range();
   }
 
   @override
@@ -88,26 +90,67 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     String address =
         "${addressController.address_result} ${addressController.subAddress_result} ${addressController.subAddresses1_result}";
 
-    switch (aiController.age.value) {
-      case >= 20 && < 30:
-        age_20 = "TRUE";
-        break;
-      case >= 30 && < 40:
-        age_30 = "TRUE";
-        break;
-      case >= 40 && < 50:
-        age_40 = "TRUE";
-        break;
-      case >= 50 && < 60:
-        age_50 = "TRUE";
-        break;
-      case >= 60 && < 70:
-        age_60 = "TRUE";
-        break;
-      default:
-        age_70 = "TRUE";
+    var resultText = resultPercentList.isEmpty
+        ? resultPercent
+        : resultPercentList.join(", ");
+
+    final LoginController loginController = Get.find();
+
+    return GetBuilder<AiTestController>(
+      builder: (controller) {
+        return Center(
+          child: Column(
+            children: [
+              // Text('당신이 합격할 확률은 ${selectedSex == 1 ? '남성' : '여성'} %입니다.'),
+              Text("당신의 나이는 ${aiController.age.value.toString()}"),
+              Text("당신의 장애유형은 ${aiController.disabledSelect}"),
+              Text('${aiController.radioDisabledSelect == 1 ? '경증' : '중증'}'),
+              Text('당신의 희망 취업일은 ${aiController.employMonth} 월'),
+              Text('당신이 고른 직업은 ${aiController.selectJob}'),
+              Text('당신이 선택한 주소는$address'),
+              // Text("$age_20 $may $intellectual_disability_mild $incheon"),
+
+              Text(
+                "${loginController.userName ?? '당신의'}님의",
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "${aiController.selectJob} 합격 예상률은 $resultText %입니다!",
+                style: const TextStyle(fontSize: 18),
+              ),
+              // resultText
+              // 20대 2월 지적장애_경증 제주도
+              // 넘어간거: 나이, 지역
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  getJSONData() async {
+    String baseUrl = ApiEndPoints.localhost + ApiEndPoints.apiEndPoints.ai_test;
+    int ai_phase = 0;
+
+    // range();
+
+    if (aiController.age.value >= 20 && aiController.age.value < 30) {
+      age_20 = "TRUE";
+    } else if (aiController.age.value >= 30 && aiController.age.value < 40) {
+      age_30 = "TRUE";
+    } else if (aiController.age.value >= 40 && aiController.age.value < 50) {
+      age_40 = "TRUE";
+    } else if (aiController.age.value >= 50 && aiController.age.value < 60) {
+      age_50 = "TRUE";
+    } else if (aiController.age.value >= 60 && aiController.age.value < 70) {
+      age_60 = "TRUE";
+    } else {
+      age_70 = "TRUE";
     }
 
+    print(
+        "변환된 경증 중증 ${aiController.radioDisabledSelect} 변환된 장애 ${aiController.disabledSelect}");
     switch (aiController.radioDisabledSelect) {
       case 1:
         switch (aiController.disabledSelect) {
@@ -244,34 +287,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         break;
     }
 
-
-    return GetBuilder<AiTestController>(
-      builder: (controller) {
-        return Center(
-          child: Column(
-            children: [
-              Text('당신이 합격할 확률은 ${selectedSex == 1 ? '남성' : '여성'} %입니다.'),
-              Text(aiController.age.value.toString()),
-              Text('${aiController.disabledSelect}'),
-              Text('${aiController.radioDisabledSelect == 1 ? '경증' : '중증'}'),
-              Text('${aiController.employMonth}'),
-              Text('${aiController.selectJob}'),
-              Text('당신이 선택한 주소는$address'),
-              Text("$age_20 $may $intellectual_disability_mild $incheon"),
-              Text("결과는 $resultPercent"),
-              // 20대 2월 지적장애_경증 제주도
-              // 넘어간거: 나이, 지역
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  getJSONData() async {
-    String baseUrl = ApiEndPoints.localhost + ApiEndPoints.apiEndPoints.ai_test;
-    int ai_phase = 0;
-
     switch (aiController.selectJob) {
       case "경영·행정·사무직":
         ai_phase = 1;
@@ -316,7 +331,100 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         "Busan=$busan&Jeonbuk=$jeonbuk&Gwangju=$gwangju&Chungnam=$chungnam&"
         "Daegu=$daegu&Gyeongnam=$gyengnam&Jeju=$jeju&Sejong=$sejong&"
         "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec";
+
+    // try {
+    //   var response = await GetConnect().get(requestUrl);
+    //   if (response.isOk) {
+    //     result = response.body['message'][0];
+    //     print(double.parse(result));
+    //     resultPercent = double.parse(result) * 100;
+    //     setState(() {});
+    //     print("결과는 $result");
+    //     return true;
+    //   } else {
+    //     print("실패");
+    //     return false;
+    //   }
+    // } catch (e) {
+    //   print(e);
+    //   return false;
+    // }
     print(requestUrl);
+
+    var response = await GetConnect().get(requestUrl);
+    if (response.isOk) {
+      var responseData = response.body;
+      var messages = responseData['message'];
+      var message2 = responseData['message2'];
+
+      if (messages is List) {
+        for (var message in messages) {
+          var result = double.tryParse(message);
+          if (result != null) {
+            var resultPercent = (result * 100).toStringAsFixed(2);
+            resultPercentList.add(resultPercent);
+          } else {
+            resultPercentList.add(message);
+          }
+        }
+      } else if (messages != null) {
+        var result = double.tryParse(messages);
+        if (result != null) {
+          var resultPercent = (result * 100).toStringAsFixed(2);
+          resultPercentList.add(resultPercent);
+        } else {
+          resultPercentList.add(messages);
+        }
+      }
+
+      if (message2 is List) {
+        for (var message in message2) {
+          resultPercentList.add(message);
+        }
+      } else if (message2 != null) {
+        resultPercentList.add(message2);
+      }
+
+      setState(() {});
+    } else {
+      print("실패");
+    }
+
+    // var response = await GetConnect().get(requestUrl);
+    // if (response.isOk) {
+    //   // print(messages);
+    //   var messages = response.body['message'];
+    //   var messages1 = response.body['message'][0];
+
+    //   if (messages is List) {
+    //     for (var message in messages) {
+    //       var result = double.parse(message);
+    //       var resultPercent = (result * 100).toStringAsFixed(2);
+    //       resultPercentList.add(resultPercent);
+    //     }
+    //   } else if (messages1 != null) {
+    //     // 결과값이 리스트 형태가 아니라면 단일 값으로 처리
+    //     var result = double.parse(messages1);
+    //     var resultPercent = (result * 100).toStringAsFixed(2);
+    //     resultPercentList.add(resultPercent);
+    //   }
+    //   print(resultPercentList);
+
+    //   setState(() {});
+    // } else {
+    //   print("실패");
+    // }
+  }
+}
+
+
+// }// End
+
+
+
+
+
+
     // var url = Uri.parse(
     //     "http://localhost:8080/Rserve/response_phase1.jsp?age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
     //     "visualImpairment_Severe=$visual_impairmen_severe&visualImpairment_Mild=$visual_impairmen_mild&"
@@ -331,26 +439,25 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     //     "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec");
     // var response = await http.get(url);
     // print(response);
-    try {
-      var response = await GetConnect().get(requestUrl);
-      if (response.isOk) {
-        result = response.body['message'][0];
-        print(double.parse(result));
-        resultPercent = double.parse(result) * 100;
-        setState(() {});
-        print("결과는 $result");
-        return true;
-      } else {
-        print("좇됨");
-        return false;
-      }
-    } catch (e) {
-      print(e);
-      return false;
-    }
+    // try {
+    //   var response = await GetConnect().get(requestUrl);
+    //   if (response.isOk) {
+    //     result = response.body['message'][0];
+    //     print(double.parse(result));
+    //     resultPercent = double.parse(result) * 100;
+    //     setState(() {});
+    //     print("결과는 $result");
+    //     return true;
+    //   } else {
+    //     print("좇됨");
+    //     return false;
+    //   }
+    // } catch (e) {
+    //   print(e);
+    //   return false;
+    // }
 
     // _showDialog();
-  }
 
   // _showDialog() {
   //   showDialog(
@@ -363,6 +470,5 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   //     },
   //   );
   // }
-}
 
-// End
+

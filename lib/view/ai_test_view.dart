@@ -6,11 +6,11 @@ import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_disabled_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
+import 'package:season3_team1_mainproject/components/ai_result_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_sex_widget.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/view/ai_result_view.dart';
 import 'package:season3_team1_mainproject/view/ai_start_view.dart';
-import 'package:season3_team1_mainproject/view/ai_test_next_view.dart';
 import 'package:season3_team1_mainproject/view/ai_test_view_jobselect.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
@@ -145,6 +145,7 @@ class _AiTestViewState extends State<AiTestView> {
                       ),
                     ),
                   ),
+                  // AiJobSelectWidget(),
                   const Text(
                     '이용약관',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -193,8 +194,20 @@ class _AiTestViewState extends State<AiTestView> {
                     child: ElevatedButton(
                       onPressed: okChecked
                           ? () {
-                              Navigator.pop(context);
-                              Get.to(const AiTestViewJobSelect());
+                              Get.to(AiTestViewJobSelect());
+                              // Navigator.pop(context);
+                              // Get.to(AiResultView());
+                              // showDialog(
+                              //   context: context,
+                              //   barrierDismissible:
+                              //       false, // 사용자가 다이얼로그 바깥을 터치해도 닫히지 않도록 설정합니다.
+                              //   builder: (context) => LoadingDialog(),
+                              // );
+                              // Future.delayed(const Duration(milliseconds: 1500),
+                              //     () {
+                              //   Get.back();
+                              //   Get.to(() => AiResultView());
+                              // });
                             }
                           : null,
                       child: const Text('희망 직업선택'),
