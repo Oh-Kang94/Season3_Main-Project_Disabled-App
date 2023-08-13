@@ -17,7 +17,10 @@ class SplashScreen extends StatelessWidget {
             width: 250,
             height: 250,
           ),
-          const Text("Disabled app")
+          const Text(
+            "포용 누리",
+            style: TextStyle(fontFamily: "NotoSansKR-Bold", fontSize: 50),
+          )
         ],
       ),
       splashTransition: SplashTransition.fadeTransition,
@@ -27,4 +30,3 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
-

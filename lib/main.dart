@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:season3_team1_mainproject/util/theme.dart';
-import 'package:season3_team1_mainproject/view/home.dart';
 import 'package:season3_team1_mainproject/view/register/change_user.dart';
+import 'package:season3_team1_mainproject/view/splash.dart';
 import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
 import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
           getPages: [
             GetPage(
               name: '/',
-              page: () => const Home(),
+              page: () => const SplashScreen(),
             ),
             GetPage(
               name: '/Editing',
