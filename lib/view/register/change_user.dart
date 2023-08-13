@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 import 'package:season3_team1_mainproject/view/register/update_user.dart';
+import 'package:season3_team1_mainproject/vm/signout_ctrl.dart';
 
 import '../drawer/agreement.dart';
 
@@ -11,6 +12,7 @@ class ChangeUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WithdrawalController controller = Get.put(WithdrawalController());
     return Scaffold(
       appBar: const MyAppBar(),
       body: Center(
@@ -45,7 +47,9 @@ class ChangeUser extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                controller.showWithdrawal();
+              },
               minVerticalPadding: 10.h,
               leading: const Icon(
                 Icons.run_circle,

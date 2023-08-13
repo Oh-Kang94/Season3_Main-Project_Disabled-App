@@ -33,8 +33,8 @@ class Home extends StatelessWidget {
           ]),
       bottomNavigationBar: MotionTabBar(
         controller: homeController.controller,
-        initialSelectedTab: "메인뷰",
-        labels: const ["메인뷰", "일자리추천", "일자리지도", "커뮤니티"],
+        initialSelectedTab: "홈",
+        labels: const ["홈", "일자리 추천", "일자리 지도", "커뮤니티"],
         icons: const [Icons.home, Icons.recommend, Icons.map, Icons.group],
         tabSize: 50,
         tabBarHeight: 55,

@@ -36,25 +36,26 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         Tooltip(
-            message: "로그인",
-            child: Obx(
-              () => loginController.isLogged.value
-                  ? IconButton(
-                      onPressed: () {
-                        loginController.showlogout();
-                      },
-                      icon: Icon(Icons.logout,
-                          color: Theme.of(context).colorScheme.error),
-                    )
-                  : IconButton(
-                      onPressed: () {
-                        Get.to(
-                          const LoginUser(),
-                        );
-                      },
-                      icon: const Icon(Icons.login),
-                    ),
-            )),
+          message: "로그인",
+          child: Obx(
+            () => loginController.isLogged.value
+                ? IconButton(
+                    onPressed: () {
+                      loginController.showlogout();
+                    },
+                    icon: Icon(Icons.logout,
+                        color: Theme.of(context).colorScheme.error),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      Get.to(
+                        const LoginUser(),
+                      );
+                    },
+                    icon: const Icon(Icons.login),
+                  ),
+          ),
+        ),
       ],
     );
   }
