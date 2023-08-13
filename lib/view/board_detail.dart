@@ -17,26 +17,22 @@ class BoardDetail extends StatefulWidget {
 
 class _BoardDetailState extends State<BoardDetail> {
   late TextEditingController commentController;
+  late TextEditingController commentUpdateController;
 
   @override
   void initState() {
     super.initState();
     commentController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    commentController.dispose();
-    super.dispose();
+    commentUpdateController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
-    // board = Get.arguments as Board?;
-    //   if (board != null) {
-    //     commentController.text = board.comment;
-    //   }
+    board = Get.arguments as Board?;
+    if (board != null) {
+      commentUpdateController.text = board.comment ?? "";
+    }
     return Scaffold(
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
@@ -121,7 +117,7 @@ class _BoardDetailState extends State<BoardDetail> {
                   const Divider(
                     thickness: 1.0,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                     height: 10,
                   ),
@@ -133,7 +129,7 @@ class _BoardDetailState extends State<BoardDetail> {
                     children: [
                       Text(
                         board.comment ?? '',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
@@ -141,51 +137,109 @@ class _BoardDetailState extends State<BoardDetail> {
                           onPressed: () {
                             Get.bottomSheet(
                               Container(
-                                child: Row(
+                                height: 230,
+                                color: Color.fromARGB(255, 241, 250, 237),
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          if (board != null) {
-                                            board?.ref.update({
-                                              'content': commentController.text
-                                            });
-                                          }
-                                          Get.back();
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(120, 50),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
+                                    const Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 5,
                                         ),
-                                        child: Text(
-                                          "수정",
-                                          style: TextStyle(color: Colors.black),
-                                        )),
-                                    SizedBox(
-                                      width: 10,
+                                        Text(
+                                          '댓글',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(2, 0, 340, 0),
+                                          child: Icon(Icons.mode_edit_outlined),
+                                        ),
+                                      ],
                                     ),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          board?.ref.delete();
-                                          Get.back();
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: const Size(120, 50),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextField(
+                                        controller: commentUpdateController,
+                                        decoration: const InputDecoration(
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0),
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0),
+                                            ),
                                           ),
                                         ),
-                                        child: Text(
-                                          "삭제",
-                                          style: TextStyle(color: Colors.black),
-                                        )),
+                                        keyboardType: TextInputType.text,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
                                     SizedBox(
-                                      height: 200,
-                                    )
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              if (board != null) {
+                                                board?.ref.update({
+                                                  'content':
+                                                      commentUpdateController
+                                                          .text
+                                                });
+                                              }
+                                              Get.back();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: const Size(120, 50),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            child: const Text(
+                                              "수정",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              board?.ref.delete();
+                                              Get.back();
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              minimumSize: const Size(120, 50),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            child: const Text(
+                                              "삭제",
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
