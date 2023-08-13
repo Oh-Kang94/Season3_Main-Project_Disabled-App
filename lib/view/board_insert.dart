@@ -181,25 +181,5 @@ class _BoardInsertState extends State<BoardInsert> {
         ),
       ],
     );
-
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     // 다이얼로그 띄우기
-    //     return AlertDialog(
-    //       title: const Text("입력 결과"),
-    //       content: const Text("입력이 완료 되었습니다."),
-    //       actions: [
-    //         ElevatedButton(
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //             Navigator.pop(context); // Main화면으로 이동
-    //           },
-    //           child: Center(child: const Text('OK')),
-    //         ),
-    //       ],
-    //     );
-    //   },
-    // );
   }
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../model/board_model.dart';
 import '../vm/home_ctrl.dart';
 import 'appbar/myappbar.dart';
 import 'board_update.dart';
@@ -32,6 +33,10 @@ class _BoardDetailState extends State<BoardDetail> {
   @override
   Widget build(BuildContext context) {
     var board = Get.arguments ?? "_";
+    // board = Get.arguments as Board?;
+    //   if (board != null) {
+    //     commentController.text = board.comment;
+    //   }
     return Scaffold(
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
@@ -63,7 +68,6 @@ class _BoardDetailState extends State<BoardDetail> {
                   const SizedBox(
                     width: 15,
                   ),
-                  // Text('조회',style: TextStyle(fontSize: 13),),
                   const SizedBox(
                     width: 300,
                   ),
@@ -125,12 +129,70 @@ class _BoardDetailState extends State<BoardDetail> {
                     '댓글',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const Text(
-                    'comment',
-                    // board.comment,
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        board.comment ?? '',
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Get.bottomSheet(
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          if (board != null) {
+                                            board?.ref.update({
+                                              'content': commentController.text
+                                            });
+                                          }
+                                          Get.back();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(120, 50),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "수정",
+                                          style: TextStyle(color: Colors.black),
+                                        )),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          board?.ref.delete();
+                                          Get.back();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: const Size(120, 50),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          "삭제",
+                                          style: TextStyle(color: Colors.black),
+                                        )),
+                                    SizedBox(
+                                      height: 200,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.arrow_drop_down)),
+                    ],
                   ),
                   const SizedBox(
                     height: 5,
@@ -146,9 +208,8 @@ class _BoardDetailState extends State<BoardDetail> {
                         ),
                         radius: 20,
                       ),
-                      const SizedBox(width: 10), // 간격 추가
+                      const SizedBox(width: 10),
                       Expanded(
-                        // TextField를 확장하여 빈 공간을 모두 사용
                         child: TextField(
                           controller: commentController,
                           decoration: const InputDecoration(
@@ -182,14 +243,14 @@ class _BoardDetailState extends State<BoardDetail> {
                     child: ElevatedButton(
                       onPressed: () {
                         FirebaseFirestore.instance.collection('community').add({
-                          'title': commentController.text,
+                          'comment': commentController.text,
                         });
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                      ), //버튼 모양 각지게),
+                      ),
                       child: const Text('입력'),
                     ),
                   ),
@@ -200,9 +261,9 @@ class _BoardDetailState extends State<BoardDetail> {
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
-                      //게시글 수정 기능
-                      board.ref.update(
-                          {'title': board.title, 'content': board.content});
+                      board?.ref.update(
+                        {'title': board.title, 'content': board.content},
+                      );
                       Get.to(const BoardUpdate(), arguments: board);
                     },
                     style: ElevatedButton.styleFrom(
@@ -212,8 +273,7 @@ class _BoardDetailState extends State<BoardDetail> {
                       ),
                     ),
                     icon: const Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // 아이콘과 텍스트를 중앙 정렬
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(12, 2, 0, 0),
@@ -232,40 +292,40 @@ class _BoardDetailState extends State<BoardDetail> {
                   ElevatedButton.icon(
                     onPressed: () {
                       Get.defaultDialog(
-                          title: '삭제',
-                          middleText: '게시글을 삭제하시겠습니까?',
-                          barrierDismissible: false,
-                          actions: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    child: const Text(
-                                      'EXIT',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                TextButton(
-                                    onPressed: () {
-                                      board.ref.delete();
-                                      HomeController homeController =
-                                          Get.find();
-                                      homeController.controller.animateTo(3);
-                                      Get.off(const Home());
-                                    },
-                                    style: TextButton.styleFrom(
-                                        foregroundColor: Colors.red),
-                                    child: const Text(
-                                      'DELETE',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              ],
-                            )
-                          ]);
+                        title: '삭제',
+                        middleText: '게시글을 삭제하시겠습니까?',
+                        barrierDismissible: false,
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: const Text(
+                                  '나가기',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  board?.ref.delete();
+                                  HomeController homeController = Get.find();
+                                  homeController.controller.animateTo(3);
+                                  Get.off(const Home());
+                                },
+                                style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red),
+                                child: const Text(
+                                  '삭제',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(50, 50),
@@ -274,8 +334,7 @@ class _BoardDetailState extends State<BoardDetail> {
                       ),
                     ),
                     icon: const Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // 아이콘과 텍스트를 중앙 정렬
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(12, 2, 0, 0),
@@ -304,8 +363,7 @@ class _BoardDetailState extends State<BoardDetail> {
                       ),
                     ),
                     icon: const Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // 아이콘과 텍스트를 중앙 정렬
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(12, 2, 0, 0),
@@ -319,8 +377,7 @@ class _BoardDetailState extends State<BoardDetail> {
                         ),
                       ],
                     ),
-                    label: const SizedBox
-                        .shrink(), // 라벨을 감추기 위해 SizedBox.shrink()를 사용합니다.
+                    label: const SizedBox.shrink(),
                   ),
                 ],
               )
