@@ -13,6 +13,8 @@ class _ApiEndPoints {
   final String updateUser = 'register/updateuser';
   final String withdrawal = 'register/withdrawal';
 
+  final String map = 'map/';
+
   final String sendemail = 'mail/sendemail';
   final String findId = 'mail/findId';
   final String verifycode = 'mail/verifycode';
