@@ -12,6 +12,7 @@ class AiSexWidget extends StatefulWidget {
 class _AiSexWidgetState extends State<AiSexWidget> {
   final AiTestController aiTestController = Get.put(AiTestController());
 
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -64,4 +65,12 @@ class _AiSexWidgetState extends State<AiSexWidget> {
       ),
     );
   }
+  // --- Functions ---
+
+
+    
+ 
+  
+
+
 }

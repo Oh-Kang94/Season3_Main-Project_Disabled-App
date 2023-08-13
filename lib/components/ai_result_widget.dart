@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:get/get_core/src/get_main.dart';
-import 'package:http/http.dart' as http;
 import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
 import 'package:season3_team1_mainproject/util/api_endpoint.dart';
 import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
@@ -24,7 +22,8 @@ class _AiResultWidgetState extends State<AiResultWidget> {
       Get.put(AiTestController()); // 액션 없으면 어사인 부분만 안해주면됨
 
   String result = "";
-  String result1 = "";
+  String resultJob = "";
+  List<String> resultJobList = [];
   List<String> resultPercentList = [];
   double resultPercent = 0.0;
 
@@ -81,18 +80,20 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   void initState() {
     super.initState();
     getJSONData();
-    // range();
   }
 
   @override
   Widget build(BuildContext context) {
-    int selectedSex = aiController.sexSelected.value;
-    String address =
-        "${addressController.address_result} ${addressController.subAddress_result} ${addressController.subAddresses1_result}";
+    // String address =
+    //     "${addressController.address_result} ${addressController.subAddress_result} ${addressController.subAddresses1_result}";
 
     var resultText = resultPercentList.isEmpty
         ? resultPercent
         : resultPercentList.join(", ");
+
+    var resultJobText = resultJobList.isEmpty
+        ? resultJob
+        : resultJobList.join(", ");
 
     final LoginController loginController = Get.find();
 
@@ -102,12 +103,12 @@ class _AiResultWidgetState extends State<AiResultWidget> {
           child: Column(
             children: [
               // Text('당신이 합격할 확률은 ${selectedSex == 1 ? '남성' : '여성'} %입니다.'),
-              Text("당신의 나이는 ${aiController.age.value.toString()}"),
-              Text("당신의 장애유형은 ${aiController.disabledSelect}"),
-              Text('${aiController.radioDisabledSelect == 1 ? '경증' : '중증'}'),
-              Text('당신의 희망 취업일은 ${aiController.employMonth} 월'),
-              Text('당신이 고른 직업은 ${aiController.selectJob}'),
-              Text('당신이 선택한 주소는$address'),
+              // Text("당신의 나이는 ${aiController.age.value.toString()}"),
+              // Text("당신의 장애유형은 ${aiController.disabledSelect}"),
+              // Text('${aiController.radioDisabledSelect == 1 ? '경증' : '중증'}'),
+              // Text('당신의 희망 취업일은 ${aiController.employMonth} 월'),
+              // Text('당신이 고른 직업은 ${aiController.selectJob}'),
+              // Text('당신이 선택한 주소는$address'),
               // Text("$age_20 $may $intellectual_disability_mild $incheon"),
 
               Text(
@@ -115,6 +116,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
                 style:
                     const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
+              Text('가장 높은 확률의 직업은 $resultJobText 입니다.'),
               Text(
                 "${aiController.selectJob} 합격 예상률은 $resultText %입니다!",
                 style: const TextStyle(fontSize: 18),
@@ -154,38 +156,38 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     switch (aiController.radioDisabledSelect) {
       case 1:
         switch (aiController.disabledSelect) {
-          case "시각장애":
+          case "시각 장애":
             visual_impairmen_mild = "TRUE";
             break;
-          case "지체장애":
+          case "지체 장애":
             physical_disability_mild = "TRUE";
             break;
-          case "지적장애":
+          case "지적 장애":
             intellectual_disability_mild = "TRUE";
             break;
-          case "청각장애":
+          case "청각 장애":
             auditory_disorder_mild = "TRUE";
             break;
-          case "정신장애":
+          case "정신 장애":
             intellectual_disability_mild = "TRUE";
             break;
         }
         break;
       case 0:
         switch (aiController.disabledSelect) {
-          case "시각장애":
+          case "시각 장애":
             visual_impairmen_severe = "TRUE";
             break;
-          case "지체장애":
+          case "지체 장애":
             physical_disability_severe = "TRUE";
             break;
-          case "지적장애":
+          case "지적 장애":
             intellectual_disability_severe = "TRUE";
             break;
-          case "청각장애":
+          case "청각 장애":
             auditory_disorder_severe = "TRUE";
             break;
-          case "정신장애":
+          case "정신 장애":
             intellectual_disability_severe = "TRUE";
             break;
         }
@@ -379,10 +381,10 @@ class _AiResultWidgetState extends State<AiResultWidget> {
 
       if (message2 is List) {
         for (var message in message2) {
-          resultPercentList.add(message);
+          resultJobList.add(message);
         }
       } else if (message2 != null) {
-        resultPercentList.add(message2);
+        resultJobList.add(message2);
       }
 
       setState(() {});
@@ -390,30 +392,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
       print("실패");
     }
 
-    // var response = await GetConnect().get(requestUrl);
-    // if (response.isOk) {
-    //   // print(messages);
-    //   var messages = response.body['message'];
-    //   var messages1 = response.body['message'][0];
-
-    //   if (messages is List) {
-    //     for (var message in messages) {
-    //       var result = double.parse(message);
-    //       var resultPercent = (result * 100).toStringAsFixed(2);
-    //       resultPercentList.add(resultPercent);
-    //     }
-    //   } else if (messages1 != null) {
-    //     // 결과값이 리스트 형태가 아니라면 단일 값으로 처리
-    //     var result = double.parse(messages1);
-    //     var resultPercent = (result * 100).toStringAsFixed(2);
-    //     resultPercentList.add(resultPercent);
-    //   }
-    //   print(resultPercentList);
-
-    //   setState(() {});
-    // } else {
-    //   print("실패");
-    // }
   }
 }
 

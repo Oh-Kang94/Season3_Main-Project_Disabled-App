@@ -64,11 +64,8 @@ class _AiTestViewState extends State<AiTestView> {
                     '연령',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AiAgeWidget(
-                      onAgeSelected: _ageSelected,
-                    ),
+                  AiAgeWidget(
+                    onAgeSelected: _ageSelected,
                   ),
                   Visibility(
                     visible: disableVisible,
@@ -117,12 +114,15 @@ class _AiTestViewState extends State<AiTestView> {
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           ElevatedButton(
                             onPressed: () {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AiLocationWidget();
+                                  return const AiLocationWidget();
                                 },
                               );
                             },
@@ -131,6 +131,10 @@ class _AiTestViewState extends State<AiTestView> {
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
+                            style: ElevatedButton.styleFrom()
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Text(
                               "${_controller.address_result} ${_controller.subAddress_result} ${_controller.subAddresses1_result}"),
@@ -146,11 +150,27 @@ class _AiTestViewState extends State<AiTestView> {
                     ),
                   ),
                   // AiJobSelectWidget(),
-                  const Text(
-                    '이용약관',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '이용약관',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  const Text('동의시에만 검사가 가능합니다'),
+                  
+                  AgreementViewWidget(
+                    agreement: Agreement.personalCollection,
+                    height: 100.h,
+                  ),
+                  AgreementViewWidget(
+                    agreement: Agreement.personalUseage,
+                    height: 100.h,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('※ 동의시에만 검사가 가능합니다'),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -179,14 +199,6 @@ class _AiTestViewState extends State<AiTestView> {
                         ),
                       ],
                     ),
-                  ),
-                  AgreementViewWidget(
-                    agreement: Agreement.personalCollection,
-                    height: 100.h,
-                  ),
-                  AgreementViewWidget(
-                    agreement: Agreement.personalUseage,
-                    height: 100.h,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),

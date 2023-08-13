@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/agreement_view.dart';
-import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_disabled_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_sex_widget.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/view/ai_test_view_jobselect.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
 
+import '../components/ai_location_result_text_widget.dart';
 import '../vm/ai_address_controller.dart';
+import '../vm/login_ctrl.dart';
 
 class AiTestViewLoadUser extends StatefulWidget {
   const AiTestViewLoadUser({Key? key}) : super(key: key);
@@ -24,12 +23,8 @@ class AiTestViewLoadUser extends StatefulWidget {
 class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
   final AiTestController tController = Get.put(AiTestController());
   final AddressController _controller = Get.put(AddressController());
-  // final AiTestController controller =
-  //     Get.find<AiTestController>(); // 컨트롤러 인스턴스 생성
+  final LoginController loginController = Get.find<LoginController>();
 
-  // late int selectedYear;
-  // late int selectedMonth;
-  // late int selectedDay;
   bool okChecked = false;
   bool noChecked = false;
 
@@ -40,8 +35,31 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
   bool locationVisible = false;
   bool jobSelectVisible = false;
 
+  int selectedYear = DateTime.now().year;
+  int selectedMonth = DateTime.now().month;
+  int selectedDay = DateTime.now().day;
+
+  late DateTime? birthDateTime;
+  int? userYear;
+  int? userMonth;
+  int? userDay;
+  // String birthDate;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (tController.userData != null) {
+      birthDateTime = DateTime.parse(tController.userData!.birth);
+      userYear = birthDateTime?.year;
+      userMonth = birthDateTime?.month;
+      userDay = birthDateTime?.day;
+    }
+
     return Scaffold(
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
@@ -52,7 +70,6 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('이름: ${tController.userData!.name}'),
                     const SizedBox(
                       height: 30,
                     ),
@@ -61,7 +78,15 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    AiSexWidget(),
+                    Text(tController.userData!.gender),
+                    const SizedBox(
+                      width: 350,
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
+                      ),
+                    ),
+
                     const Text(
                       '연령',
                       style:
@@ -69,92 +94,110 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: AiAgeWidget(
-                        onAgeSelected: _ageSelected,
+                      child: Text("$userYear 년 $userMonth 월 $userDay 일생"),
+                    ),
+                    Text("만 ${age()}세"),
+                    const SizedBox(
+                      width: 350,
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
                       ),
                     ),
-                    Visibility(
-                      visible: disableVisible,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            const Text(
-                              '장애유형',
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            '장애유형',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(tController.userData!.disability),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 350,
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 1.0,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            '희망 취업일자',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          AiEmployDayWidget(
+                            onEmploySelected: _employSelected,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            '희망 근무지역',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const AiLocationWidget();
+                                },
+                              );
+                            },
+                            child: const Text(
+                              '근무지역 선택하기',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                            AiDisableWidget(
-                              onDisabledSelected: _disabledSelected,
+                          ),
+                          const AiLocationResultTextWidget(),
+                          const SizedBox(
+                            width: 350,
+                            child: Divider(
+                              color: Colors.grey,
+                              thickness: 1.0,
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: employVisible,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            const Text(
-                              '희망 취업일자',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            AiEmployDayWidget(
-                              onEmploySelected: _employSelected,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: locationVisible,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            const Text(
-                              '희망 근무지역',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const AiLocationWidget();
-                                  },
-                                );
-                              },
-                              child: const Text(
-                                '근무지역 선택하기',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Text(
-                                "${_controller.address_result} ${_controller.subAddress_result} ${_controller.subAddresses1_result}"),
-                            const SizedBox(
-                              width: 350,
-                              child: Divider(
-                                color: Colors.grey,
-                                thickness: 1.0,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     // AiJobSelectWidget(),
-                    const Text(
-                      '이용약관',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '이용약관',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    const Text('동의시에만 검사가 가능합니다'),
+
+                    AgreementViewWidget(
+                      agreement: Agreement.personalCollection,
+                      height: 100.h,
+                    ),
+                    AgreementViewWidget(
+                      agreement: Agreement.personalUseage,
+                      height: 100.h,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('※ 동의시에만 검사가 가능합니다'),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -184,34 +227,16 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         ],
                       ),
                     ),
-                    AgreementViewWidget(
-                      agreement: Agreement.personalCollection,
-                      height: 100.h,
-                    ),
-                    AgreementViewWidget(
-                      agreement: Agreement.personalUseage,
-                      height: 100.h,
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       // 동의에 체크 돼있어야지 검사 시작 가능
                       child: ElevatedButton(
                         onPressed: okChecked
                             ? () {
+                                tController.age.value = age();
+                                disabledSelect();
+
                                 Get.to(AiTestViewJobSelect());
-                                // Navigator.pop(context);
-                                // Get.to(AiResultView());
-                                // showDialog(
-                                //   context: context,
-                                //   barrierDismissible:
-                                //       false, // 사용자가 다이얼로그 바깥을 터치해도 닫히지 않도록 설정합니다.
-                                //   builder: (context) => LoadingDialog(),
-                                // );
-                                // Future.delayed(const Duration(milliseconds: 1500),
-                                //     () {
-                                //   Get.back();
-                                //   Get.to(() => AiResultView());
-                                // });
                               }
                             : null,
                         child: const Text('희망 직업선택'),
@@ -232,6 +257,63 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
     );
   }
   // --- Functions ---
+
+  // 바로 로그인 정보를 불러오지 못해서 추가
+  void loadUserData() async {
+    await tController.loadUser(); // 데이터 로딩
+    setState(() {}); // 화면을 다시 그림
+  }
+
+  // 장애유형 분류
+  disabledSelect() {
+    if (tController.userData!.disability == "시각 장애 경증") {
+      tController.radioDisabledSelect = 1;
+      tController.disabledSelect = "지적 장애";
+    } else if (tController.userData!.disability == "시각 장애 중증") {
+      tController.radioDisabledSelect = 0;
+      tController.disabledSelect = "지적 장애";
+    } else if (tController.userData!.disability == "지체 장애 경증") {
+      tController.radioDisabledSelect = 1;
+      tController.disabledSelect = "지체 장애";
+    } else if (tController.userData!.disability == "지체 장애 중증") {
+      tController.radioDisabledSelect = 0;
+      tController.disabledSelect = "지체 장애";
+    } else if (tController.userData!.disability == "지적 장애 경증") {
+      tController.radioDisabledSelect = 1;
+      tController.disabledSelect = "지적 장애";
+    } else if (tController.userData!.disability == "지적 장애 중증") {
+      tController.radioDisabledSelect = 0;
+      tController.disabledSelect = "지적 장애";
+    } else if (tController.userData!.disability == "청각 장애 경증") {
+      tController.radioDisabledSelect = 1;
+      tController.disabledSelect = "청각 장애";
+    } else if (tController.userData!.disability == "청각 장애 중증") {
+      tController.radioDisabledSelect = 0;
+      tController.disabledSelect = "청각 장애";
+    } else if (tController.userData!.disability == "정신 장애 경증") {
+      tController.radioDisabledSelect = 1;
+      tController.disabledSelect = "정신 장애";
+    } else if (tController.userData!.disability == "정신 장애 중증") {
+      tController.radioDisabledSelect = 0;
+      tController.disabledSelect = "정신 장애";
+    }
+    setState(() {});
+  }
+
+  // 만나이 계산
+  int age() {
+    DateTime now = DateTime.now();
+    if (userYear != null && userMonth != null && userDay != null) {
+      int age = now.year - userYear!;
+      if (now.month < userMonth! ||
+          (now.month == userMonth && now.day < userDay!)) {
+        age--; // 생일이 지나지 않았으면 나이 -1
+      }
+      return age;
+    } else {
+      return 0; // 혹은 다른 기본값 설정
+    }
+  }
 
   // 연령 항목 선택시 장애유형 항목 등장
   void _ageSelected(int year, int month, int day) {
@@ -268,17 +350,6 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
     }
     setState(() {});
   }
-
-  // 지역항목 선택시 체크박스 항목 등장
-  // void _jobSelectVisible() {
-  //   if (_controller.addressStatus = true) {
-  //     jobSelectVisible = true;
-  //   } else {
-  //     jobSelectVisible = false;
-  //   }
-  //   // jobSelectVisible = _controller.addressStatus;
-  //   setState(() {});
-  // }
 
   // 체크박스 그룹화(라디오버튼 안예쁨)
   void _checkboxGroup(bool value) {

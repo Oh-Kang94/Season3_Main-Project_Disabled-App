@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/user_model.dart';
@@ -20,10 +21,19 @@ class AiTestController extends GetxController {
   String selectJob = "";
   bool jobSelectStatus = false;
 
+  // int manAge = 0;
+
+  late int? userYear;
+  late int? userMonth;
+  late int? userDay;
+  late int? manAge;
+
   @override
   void onInit() {
     loadUser();
+    _updateAge();
     super.onInit();
+    manAge = age();
   }
 
   void onSexSelected(int value) {
@@ -49,6 +59,7 @@ class AiTestController extends GetxController {
       calculatedAge--; // 생일이 지나지 않았으면 나이 -1
     }
     age.value = calculatedAge;
+    update();
   }
 
   // void disabledData(){
@@ -60,23 +71,6 @@ class AiTestController extends GetxController {
   /// user id 불러내는 것.
   ///
 
-  // Future<void> loadUser() async {
-  //   await getSharedPreferences();
-  //   if (userId != null) {
-  //     String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getUser;
-  //     String requestUri = "$baseUrl/?id=$userId";
-  //     try {
-  //       var response = await GetConnect().get(requestUri);
-  //       if (response.isOk) {
-  //         userData = UserData.fromJson(response.body);
-  //         print("이름은 이래: username: ${userData!.name}");
-  //         update(); // 상태 업데이트
-  //       }
-  //     } catch (e) {
-  //       print(e);
-  //     }
-  //   }
-  // }
   loadUser() async {
     await getSharedPreferences();
     if (userId != null) {

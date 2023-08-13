@@ -45,40 +45,45 @@ class AiFirstView extends StatelessWidget {
                 } else {
                   Get.defaultDialog(
                     title: '로그인이 되어있지 않습니다.',
-                    middleText: '로그인을 하러 가시겠습니까?',
+                    middleText: '로그인 하러 가시겠습니까?',
                     // backgroundColor: Colors.yellowAccent,
                     // barrierDismissible: false,
                     actions: [
-                      Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Get.off(const LoginUser());
-                            },
-                            child: const Text('로그인하기'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Get.off(const AiTestView());
-                            },
-                            child: const Text('비회원 정보로 테스트하기'),
-                          ),
-                        ],
+                      TextButton(
+                        onPressed: () {
+                          Get.off(const LoginUser());
+                        },
+                        child: const Text('로그인하기'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.off(const AiTestView());
+                        },
+                        child: const Text('비회원 정보로 테스트하기'),
                       ),
                     ],
                   );
                 }
               },
-              child: SvgPicture.asset(
-                AssetsImage.LOGO,
+              child: SizedBox(
                 width: 300,
                 height: 300,
+                child: CircleAvatar(
+                  child: SvgPicture.asset(
+                    AssetsImage.LOGO,
+                  ),
+                ),
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 40,
             ),
-            const Text('버튼을 눌러서 테스트를 시작'),
+            const Text('버튼을 눌러서 테스트를 시작',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+            ),
           ],
         ),
       ),
