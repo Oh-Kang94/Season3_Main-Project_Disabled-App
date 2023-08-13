@@ -94,7 +94,8 @@ class AiLocationWidget extends StatelessWidget {
                                       subAddress;
                                   _controller
                                       .loadSubAddressDetails(subAddress.code);
-                                  _controller.subAddressesR(subAddress.name);
+                                  _controller.subAddressesR(
+                                      subAddress.name);
 
                                   // 선택 상태 초기화 및 현재 타일 선택 상태 설정
                                   for (var item in _controller.subAddresses) {
@@ -127,17 +128,11 @@ class AiLocationWidget extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  _controller
-                                      .subAddresses1R(subAddresses1.name);
+                                  _controller.subAddresses1R(
+                                      subAddresses1.name);
                                   _controller.selectedAddress.value =
                                       subAddresses1;
                                   _controller.update();
-
-                                  // 선택 상태 초기화 및 현재 타일 선택 상태 설정
-                                  //   for (var item in _controller.subAddresses1) {
-                                  //     item.isSelected = false;
-                                  //   }
-                                  //   subAddresses1.isSelected = true;
                                 },
                               );
                             },
