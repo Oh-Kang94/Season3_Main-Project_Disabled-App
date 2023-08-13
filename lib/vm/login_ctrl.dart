@@ -18,6 +18,7 @@ class LoginController extends GetxService {
   RxString picPath = "default".obs;
   Rx<String> kakaoid = "".obs;
   Rx<String> googleid = "".obs;
+  bool withdrawl = false;
   User? user;
   GoogleSignInAccount? googleSignInAccount;
 
@@ -58,12 +59,16 @@ class LoginController extends GetxService {
     if (loginFormKey.currentState!.validate()) {
       checkUser(idController.text, passwordController.text).then((bool auth) {
         if (auth) {
-          Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
-          isLogged.value = true;
-          saveSharedPreferences(userId.value, userName.value);
-          getSharedPreferences(userId.value);
-          getPic(idController.text);
-          Get.off(const Home());
+          if (!withdrawl) {
+            Get.snackbar('로그인 성공', '성공적으로 로그인 되었습니다.');
+            isLogged.value = true;
+            saveSharedPreferences(userId.value, userName.value);
+            getSharedPreferences(userId.value);
+            getPic(idController.text);
+            Get.off(const Home());
+          } else {
+            Get.snackbar('탈퇴된 회원입니다.', '복구요청이 필요합니다.');
+          }
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
         }
@@ -134,6 +139,10 @@ class LoginController extends GetxService {
 
         return true;
       } else {
+        if (response.body['error'] == "삭제된 사용자입니다.") {
+          withdrawl = true;
+          return true;
+        }
         return false;
       }
     } catch (e) {

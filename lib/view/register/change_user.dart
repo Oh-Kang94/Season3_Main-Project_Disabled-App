@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 import 'package:season3_team1_mainproject/view/register/update_user.dart';
-import 'package:season3_team1_mainproject/vm/signout_ctrl.dart';
+import 'package:season3_team1_mainproject/vm/withdrawal_ctrl.dart';
 
 import '../drawer/agreement.dart';
 
