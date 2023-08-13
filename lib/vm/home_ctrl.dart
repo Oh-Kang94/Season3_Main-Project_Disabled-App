@@ -1,29 +1,24 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeController extends GetxController with GetTickerProviderStateMixin {
-  late TabController controller;
-  late AnimationController animationController;
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  late MotionTabBarController controller;
   RxString userId = "".obs;
 
   @override
   void onInit() {
     super.onInit();
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
     getSharedPreferences();
-    controller = TabController(length: 4, vsync: this);
+    controller = MotionTabBarController(length: 4, vsync: this);
   }
 
-  // @override
-  // void onClose() {
-  //   animationController.dispose(); // Dispose the AnimationController's ticker.
-  //   controller.dispose(); // Dispose the TabController's ticker.
-  //   super.onClose();
-  // }
+  @override
+  void onClose() {
+    controller.dispose(); // Dispose the TabController's ticker.
+    super.onClose();
+  }
 
   getSharedPreferences() async {
     try {

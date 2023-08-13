@@ -91,6 +91,8 @@ dependencies:
   kakao_flutter_sdk_user: ^1.4.1
   # GOOGLE 로그인
   google_sign_in: ^6.1.4
+  # 이쁜 Tabbar
+  motion_tab_bar_v2: ^0.3.0
 
 dev_dependencies:
   flutter_test:
