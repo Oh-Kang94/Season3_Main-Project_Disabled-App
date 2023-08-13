@@ -93,7 +93,7 @@ class _BoardDetailState extends State<BoardDetail> {
                   ),
                 ),
                 const SizedBox(
-                  height: 300,
+                  height: 180,
                 ),
                 const Divider(
                   thickness: 1.0,
