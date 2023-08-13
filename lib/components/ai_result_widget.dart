@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
@@ -111,7 +109,9 @@ class _AiResultWidgetState extends State<AiResultWidget> {
               // Text("$age_20 $may $intellectual_disability_mild $incheon"),
 
               Text(
-                controller.userData?.name != null ? '${controller.userData!.name}님의' : '당신의',
+                controller.userData?.name != null
+                    ? '${controller.userData!.name}님의'
+                    : '당신의',
                 style:
                     const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
@@ -129,8 +129,8 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   }
 
   getJSONData() async {
-    String baseUrl = ApiEndPoints.localhost + ApiEndPoints.apiEndPoints.ai_test;
-    int ai_phase = 0;
+    String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.ai_test;
+    int aiPhase = 0;
 
     // range();
 
@@ -288,16 +288,16 @@ class _AiResultWidgetState extends State<AiResultWidget> {
 
     switch (aiController.selectJob) {
       case "경영·행정·사무직":
-        ai_phase = 1;
+        aiPhase = 1;
         break;
       case "간호·보건 및 돌봄 서비스 관련 직군" || "전문·생산 및 정비 관련 직군" || "제조 단순직":
-        ai_phase = 2;
+        aiPhase = 2;
         break;
       case "서비스 및 판매 관련 직군" || "청소 및 기타 개인서비스직":
-        ai_phase = 3;
+        aiPhase = 3;
         break;
       case "돌봄 서비스직(간병·육아)" || "보건·의료직" || "사회복지·종교직":
-        ai_phase = 4;
+        aiPhase = 4;
         break;
       case "건설·채굴직" ||
             "관리직(임원·부서장)" ||
@@ -309,17 +309,17 @@ class _AiResultWidgetState extends State<AiResultWidget> {
             "운전·운송직" ||
             "인쇄·목재·공예 및 기타 설치·정비·생산직" ||
             "전기·전자 설치·정비·생산직":
-        ai_phase = 5;
+        aiPhase = 5;
         break;
       case "경호·경비·스포츠·레크리에이션직" || "영업·미용·예식 서비스직" || "음식 서비스직":
-        ai_phase = 6;
+        aiPhase = 6;
         break;
       default:
         break;
     }
 
     String requestUrl =
-        "${baseUrl}?ai=$ai_phase&age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
+        "$baseUrl?ai=$aiPhase&age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
         "visualImpairment_Severe=$visual_impairmen_severe&visualImpairment_Mild=$visual_impairmen_mild&"
         "physicalImpairment_Mild=$physical_disability_mild&physicalImpairment_Severe=$physical_disability_severe&"
         "intellectualImpairment_Mild=$intellectual_disability_mild&intellectualImpairment_Severe=$intellectual_disability_severe&"
