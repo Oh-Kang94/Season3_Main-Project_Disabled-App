@@ -34,7 +34,7 @@ class LoginController extends GetxService {
 
   @override
   void onInit() {
-    getSharedPreferences(userId.value);
+    checkLogin();
     super.onInit();
   }
 
@@ -42,12 +42,17 @@ class LoginController extends GetxService {
   void onClose() {
     idController.dispose();
     passwordController.dispose();
-    removeSharedPreferences();
     super.onClose();
   }
 
   // FUCTION
   // LOGIN
+  checkLogin() async {
+    await getSharedPreferences(userId.value);
+    if (userId.value != "") {
+      isLogged.value = true;
+    }
+  }
 
   void login() {
     if (loginFormKey.currentState!.validate()) {
@@ -76,9 +81,9 @@ class LoginController extends GetxService {
       actions: [
         TextButton(
           onPressed: () {
+            dologout();
             Get.back();
             Get.snackbar("로그아웃", "성공적으로 로그아웃 되었습니다.");
-            dologout();
           },
           child: const Text('네'),
         ),
@@ -93,7 +98,8 @@ class LoginController extends GetxService {
   }
 
   /// 실질적인 로그아웃을 말함.
-  void dologout() {
+  void dologout() async {
+    await removeSharedPreferences();
     isLogged.value = false;
     userId.value = "";
     userName.value = "";
@@ -101,7 +107,6 @@ class LoginController extends GetxService {
     user = null;
     tryKaokaologout();
     tryGooglelogout();
-    removeSharedPreferences();
   }
 
   // Api
@@ -366,10 +371,10 @@ class LoginController extends GetxService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('userId');
       prefs.remove('userName');
-    } catch (e) {
-      print(e);
       print(
           "remove SHAREDPREFERENCE: userid${userId.value} username${userName.value}");
+    } catch (e) {
+      print(e);
     }
   }
 }

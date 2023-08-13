@@ -12,6 +12,7 @@ class _ApiEndPoints {
   final String registerid = 'register/registration';
   final String getUser = 'register/getuser';
   final String updateUser = 'register/updateuser';
+  final String withdrawal = 'register/withdrawal';
 
   final String sendemail = 'mail/sendemail';
   final String findId = 'mail/findId';
