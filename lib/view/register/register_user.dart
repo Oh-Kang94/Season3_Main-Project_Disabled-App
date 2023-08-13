@@ -60,6 +60,9 @@ class RegisterUser extends StatelessWidget {
                               if (!RegexForm.idpwRegExp.hasMatch(value)) {
                                 return '영어 소문자와 숫자로만 이루어진 10글자 이하로 입력 가능합니다.';
                               }
+                              if (value.trim() == 'admin') {
+                                return '금지된 아이디 입니다. 다른 아이디를 만들어주세요.';
+                              }
                               return null;
                             },
                             textInputAction: TextInputAction.next,
