@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/board_model.dart';
 import 'board_detail.dart';
@@ -43,7 +44,7 @@ class _CommunityState extends State<Community> {
             ),
             child: const Center(
               child: Text(
-                '커뮤니티',
+                '공지사항',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
@@ -119,21 +120,17 @@ class _CommunityState extends State<Community> {
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          // 글쓰기 버튼 눌렀을 때의 동작
-          Get.to(const BoardInsert());
+       checkSharedPreferences();
+          // Get.to(const BoardInsert());
         },
         style: ElevatedButton.styleFrom(
-          minimumSize: const Size(200, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          minimumSize: const Size(55, 55),
+          shape: CircleBorder(),
         ),
-        child: const Text(
-          '글쓰기',
-          style: TextStyle(fontSize: 20),
-        ),
+        child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: SizedBox(height: 50),
     );
   }
 
@@ -149,7 +146,7 @@ class _CommunityState extends State<Community> {
             const SizedBox(width: 10),
             const CircleAvatar(
               backgroundImage: AssetImage(
-                'assets/images/user.png',
+                'assets/images/noticeicon.png',
               ),
               radius: 25,
             ),
@@ -185,4 +182,28 @@ class _CommunityState extends State<Community> {
       ),
     );
   }
+
+
+ void checkSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedUserId = prefs.getString('userId');
+    String? savedUserName = prefs.getString('userName');
+
+    if (savedUserId == 'admin' && savedUserName == '관리자') {
+      Get.to(const BoardInsert());
+    } else {
+      Get.snackbar(
+        "ERROR",
+        "권한이 없습니다.",
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 2),
+        backgroundColor: Color.fromARGB(255, 206, 205, 205),
+      );
+    }
+  }
 }
+
+
+
+
+

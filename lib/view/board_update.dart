@@ -47,7 +47,7 @@ class _BoardUpdateState extends State<BoardUpdate> {
               ),
               child: const Center(
                 child: Text(
-                  '커뮤니티',
+                  '공지사항',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),

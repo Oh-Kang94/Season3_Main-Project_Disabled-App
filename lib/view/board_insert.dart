@@ -41,7 +41,7 @@ class _BoardInsertState extends State<BoardInsert> {
               ),
               child: const Center(
                 child: Text(
-                  '커뮤니티',
+                  '공지사항',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
