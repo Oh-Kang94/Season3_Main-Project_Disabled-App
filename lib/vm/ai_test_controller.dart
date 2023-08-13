@@ -1,6 +1,13 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/user_model.dart';
+import '../util/api_endpoint.dart';
 
 class AiTestController extends GetxController {
+  String? userId;
+  UserData? userData;
+
   RxInt sexSelected = 0.obs;
   RxInt selectedYear = 0.obs;
   RxInt selectedMonth = 0.obs;
@@ -12,6 +19,12 @@ class AiTestController extends GetxController {
   String employMonth = "";
   String selectJob = "";
   bool jobSelectStatus = false;
+
+  @override
+  void onInit() {
+    loadUser();
+    super.onInit();
+  }
 
   void onSexSelected(int value) {
     sexSelected.value = value;
@@ -44,5 +57,34 @@ class AiTestController extends GetxController {
   //   update();
   // }
 
+  /// user id 불러내는 것.
+  loadUser() async {
+    await getSharedPreferences();
+    if (userId != null) {
+      String baseUrl = ApiEndPoints.baseurl + ApiEndPoints.apiEndPoints.getUser;
+      String requestUri = "$baseUrl/?id=$userId";
+      try {
+        var response = await GetConnect().get(requestUri);
+        if (response.isOk) {
+          userData = UserData.fromJson(response.body);
+          print("이름은 이래: username: ${userData!.name}");
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+  }
 
+  getSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      userId = prefs.getString('userId');
+    } catch (e) {
+      print(e);
+    }
+    print("LOAD SHAREDPREFERENCE: userid: $userId");
+  }
 }
