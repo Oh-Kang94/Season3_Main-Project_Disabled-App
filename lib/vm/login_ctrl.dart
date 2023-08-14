@@ -68,6 +68,7 @@ class LoginController extends GetxService {
             Get.off(const Home());
           } else {
             Get.snackbar('탈퇴된 회원입니다.', '복구요청이 필요합니다.');
+            withdrawl = false;
           }
         } else {
           Get.snackbar('로그인 실패', '아이디와 패스워드를 확인해 주세요');
