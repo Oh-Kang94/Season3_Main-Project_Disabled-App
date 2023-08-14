@@ -94,25 +94,25 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     const Color.fromARGB(255, 79, 123, 228),
     const Color.fromARGB(255, 150, 153, 40),
     const Color.fromARGB(255, 36, 60, 74),
-    Color.fromARGB(255, 241, 255, 134),
-    Color.fromARGB(200, 255, 120, 60),
-    Color.fromARGB(255, 232, 141, 255),
+    const Color.fromARGB(255, 241, 255, 134),
+    const Color.fromARGB(200, 255, 120, 60),
+    const Color.fromARGB(255, 232, 141, 255),
     const Color.fromARGB(120, 200, 120, 200),
-    Color.fromARGB(255, 255, 80, 80),
+    const Color.fromARGB(255, 255, 80, 80),
   ];
 
   final gradientList = <List<Color>>[
     [
-      Color.fromRGBO(223, 250, 92, 1),
-      Color.fromRGBO(129, 250, 112, 1),
+      const Color.fromRGBO(223, 250, 92, 1),
+      const Color.fromRGBO(129, 250, 112, 1),
     ],
     [
-      Color.fromRGBO(129, 182, 205, 1),
-      Color.fromRGBO(91, 253, 199, 1),
+      const Color.fromRGBO(129, 182, 205, 1),
+      const Color.fromRGBO(91, 253, 199, 1),
     ],
     [
-      Color.fromRGBO(175, 63, 62, 1),
-      Color.fromRGBO(254, 154, 92, 1),
+      const Color.fromRGBO(175, 63, 62, 1),
+      const Color.fromRGBO(254, 154, 92, 1),
     ],
   ];
 
@@ -236,7 +236,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
                   children: [
                     CircularProgressIndicator(),
                   ],
-                ),) // 로딩 중일 때는 로딩 바 표시
+                ),), // 로딩 중일 때는 로딩 바 표시
               : SingleChildScrollView(
                   child: Center(
                     child: Column(

@@ -78,10 +78,12 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                    Text(tController.userData!.gender == "남자" ? tController.userData!.gender = "남성" : tController.userData!.gender = "여성",
-                                          style:
-                          const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-
+                    Text(
+                      tController.userData!.gender == "남자"
+                          ? tController.userData!.gender = "남성"
+                          : tController.userData!.gender = "여성",
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.normal),
                     ),
                     const SizedBox(
                       width: 350,
@@ -90,7 +92,6 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         thickness: 1.0,
                       ),
                     ),
-
                     const Text(
                       '생년월일',
                       style:
@@ -98,12 +99,11 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("$userYear 년 $userMonth 월 $userDay 일생",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal
-                          ),
-                          ),
+                      child: Text(
+                        "$userYear 년 $userMonth 월 $userDay 일생",
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.normal),
+                      ),
                     ),
                     const SizedBox(
                       width: 350,
@@ -112,21 +112,19 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         thickness: 1.0,
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
                           const Text(
                             '장애유형',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
-                          Text(tController.userData!.disability,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal
-                          ),
+                          Text(
+                            tController.userData!.disability,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.normal),
                           ),
                         ],
                       ),
@@ -138,15 +136,14 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         thickness: 1.0,
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
                           const Text(
                             '희망 취업일자',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           AiEmployDayWidget(
                             onEmploySelected: _employSelected,
@@ -160,8 +157,8 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         children: [
                           const Text(
                             '희망 근무지역',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -196,11 +193,10 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         '이용약관',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
-
                     AgreementViewWidget(
                       agreement: Agreement.personalCollection,
                       height: 100.h,
@@ -254,11 +250,12 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                                 Get.to(AiTestViewJobSelect());
                               }
                             : null,
-                        child: const Text('희망 직업선택',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        child: const Text(
+                          '희망 직업선택',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -269,7 +266,15 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                 ),
               );
             } else {
-              return const CircularProgressIndicator();
+              return SizedBox(
+                height: 690.h,
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              );
             }
           },
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/ai_location_text_widget.dart';
 import 'package:season3_team1_mainproject/model/ai_address_server_model.dart';
@@ -11,7 +12,7 @@ class AiLocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddressController _controller = Get.find<AddressController>();
+    final AddressController controller = Get.find<AddressController>();
 
     return AlertDialog(
       title: const Text(
@@ -25,7 +26,7 @@ class AiLocationWidget extends StatelessWidget {
           return Column(
             children: [
               // const 금지
-              Row(
+              const Row(
                 children: [
                   AiLocationTextWidget(),
                 ],
@@ -34,9 +35,17 @@ class AiLocationWidget extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: Obx(() {
-                  if (_controller.addresses.isEmpty) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                  if (controller.addresses.isEmpty) {
+                    return Center(
+                      child: SizedBox(
+                        height: 690.h,
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      ),
                     );
                   } else {
                     return ListView(
@@ -45,9 +54,9 @@ class AiLocationWidget extends StatelessWidget {
                         SizedBox(
                           width: 130,
                           child: ListView.builder(
-                            itemCount: _controller.addresses.length,
+                            itemCount: controller.addresses.length,
                             itemBuilder: (context, index) {
-                              final address = _controller.addresses[index];
+                              final address = controller.addresses[index];
                               return ListTile(
                                 tileColor: address.isSelected
                                     ? Colors.grey
@@ -60,15 +69,15 @@ class AiLocationWidget extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  _controller.selectedAddress.value = address;
-                                  _controller.address_result111 = "";
-                                  _controller.subAddress_result111 = "";
-                                  _controller.subAddresses1_result = "";
-                                  _controller.loadSubAddresses(address.code);
-                                  _controller.address(address.name);
-                                  _controller.update();
+                                  controller.selectedAddress.value = address;
+                                  controller.address_result111 = "";
+                                  controller.subAddress_result111 = "";
+                                  controller.subAddresses1_result = "";
+                                  controller.loadSubAddresses(address.code);
+                                  controller.address(address.name);
+                                  controller.update();
                                   // 선택 상태 초기화 및 현재 타일 선택 상태 설정
-                                  for (var item in _controller.addresses) {
+                                  for (var item in controller.addresses) {
                                     item.isSelected = false;
                                   }
                                   address.isSelected = true;
@@ -80,10 +89,9 @@ class AiLocationWidget extends StatelessWidget {
                         SizedBox(
                           width: 100,
                           child: ListView.builder(
-                            itemCount: _controller.subAddresses.length,
+                            itemCount: controller.subAddresses.length,
                             itemBuilder: (context, index) {
-                              final subAddress =
-                                  _controller.subAddresses[index];
+                              final subAddress = controller.subAddresses[index];
                               return ListTile(
                                 tileColor: subAddress.isSelected
                                     ? Colors.grey
@@ -96,18 +104,17 @@ class AiLocationWidget extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  _controller.selectedAddress.value =
-                                      subAddress;
-                                  _controller
+                                  controller.selectedAddress.value = subAddress;
+                                  controller
                                       .loadSubAddressDetails(subAddress.code);
-                                  _controller.subAddressesR(subAddress.name);
+                                  controller.subAddressesR(subAddress.name);
 
                                   // 선택 상태 초기화 및 현재 타일 선택 상태 설정
-                                  for (var item in _controller.subAddresses) {
+                                  for (var item in controller.subAddresses) {
                                     item.isSelected = false;
                                   }
                                   subAddress.isSelected = true;
-                                  _controller.update();
+                                  controller.update();
                                 },
                               );
                             },
@@ -116,12 +123,12 @@ class AiLocationWidget extends StatelessWidget {
                         SizedBox(
                           width: 100,
                           child: ListView.builder(
-                            itemCount: _controller.subAddresses1.length,
+                            itemCount: controller.subAddresses1.length,
                             itemBuilder: (context, index) {
                               final subAddresses1 =
-                                  _controller.subAddresses1[index];
+                                  controller.subAddresses1[index];
                               final bool lastIsSelected = subAddresses1 ==
-                                  _controller.selectedAddress.value;
+                                  controller.selectedAddress.value;
                               return ListTile(
                                 tileColor: lastIsSelected
                                     ? Colors.grey
@@ -134,11 +141,10 @@ class AiLocationWidget extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  _controller
-                                      .subAddresses1R(subAddresses1.name);
-                                  _controller.selectedAddress.value =
+                                  controller.subAddresses1R(subAddresses1.name);
+                                  controller.selectedAddress.value =
                                       subAddresses1;
-                                  _controller.update();
+                                  controller.update();
                                 },
                               );
                             },
@@ -156,8 +162,8 @@ class AiLocationWidget extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            _controller.addressStatus = true;
-            _controller.update();
+            controller.addressStatus = true;
+            controller.update();
             Get.back();
           },
           child: const Text('확인'),
