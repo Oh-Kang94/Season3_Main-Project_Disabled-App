@@ -36,10 +36,10 @@ class AiLocationWidget extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: Obx(() {
                   if (controller.addresses.isEmpty) {
-                    return Center(
-                      child: SizedBox(
-                        height: 690.h,
-                        child: const Column(
+                    return SizedBox(
+                      height: 690.h,
+                      child: const Center(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircularProgressIndicator(),

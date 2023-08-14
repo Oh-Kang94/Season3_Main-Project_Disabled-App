@@ -268,11 +268,13 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
             } else {
               return SizedBox(
                 height: 690.h,
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                  ],
+                child: const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                    ],
+                  ),
                 ),
               );
             }
