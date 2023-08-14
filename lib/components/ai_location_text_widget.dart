@@ -18,6 +18,10 @@ class AiLocationTextWidget extends StatelessWidget {
         return Center(
           child: Text(
             "$address1 $address2 $address3",
+            style: const TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
           ),
         );
       },

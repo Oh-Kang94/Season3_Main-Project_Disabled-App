@@ -35,7 +35,7 @@ class _AiJobSelctGanhoWidgetState extends State<AiJobSelctGanhoWidget> {
                       child: GestureDetector(
                         onTap: () {
                           listCount = index; // 선택된 항목의 인덱스 저장
-                          controller.selectJob = jobList[index];
+                          // controller.selectJob = jobList[index];
                           setState(() {});
                         },
                         child: SizedBox(
@@ -49,7 +49,9 @@ class _AiJobSelctGanhoWidgetState extends State<AiJobSelctGanhoWidget> {
                                 Text(
                                   jobList[index],
                                   style: const TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 52, 113, 54),
                                   ),
                                 ),
                               ],

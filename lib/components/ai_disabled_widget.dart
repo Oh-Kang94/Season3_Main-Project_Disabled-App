@@ -48,11 +48,11 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
       int selectedValue = 0;
 
     // loginController.isLogged.value
-    if (loginController.isLogged.value) {
-      selectedValue = controller.userData!.gender == "남자" ? 1 : 2;
-    } else {
-      selectedValue = 0; // 원하는 값으로 설정해주세요
-    }
+    // if (loginController.isLogged.value) {
+    //   selectedValue = controller.userData!.gender == "남자" ? 1 : 2;
+    // } else {
+    //   selectedValue = 0; // 원하는 값으로 설정해주세요
+    // }
 
 
   }

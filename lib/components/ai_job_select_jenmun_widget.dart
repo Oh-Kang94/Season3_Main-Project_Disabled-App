@@ -6,12 +6,13 @@ class AiJobSelectJenmunWidget extends StatefulWidget {
   const AiJobSelectJenmunWidget({super.key});
 
   @override
-  State<AiJobSelectJenmunWidget> createState() => _AiJobSelectJenmunWidgetState();
+  State<AiJobSelectJenmunWidget> createState() =>
+      _AiJobSelectJenmunWidgetState();
 }
 
 class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
-
-  final AiTestController controller = Get.put(AiTestController());  // 액션 없으면 어사인 부분만 안해주면됨
+  final AiTestController controller =
+      Get.put(AiTestController()); // 액션 없으면 어사인 부분만 안해주면됨
 
   List<String> jobList = [
     "관리직(임원·부서장)",
@@ -46,7 +47,7 @@ class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
                       child: GestureDetector(
                         onTap: () {
                           listCount = index; // 선택된 항목의 인덱스 저장
-                          controller.selectJob = jobList[index];
+                          // controller.selectJob = jobList[index];
                           setState(() {});
                         },
                         child: SizedBox(
@@ -60,7 +61,9 @@ class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
                                 Text(
                                   jobList[index],
                                   style: const TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 52, 113, 54),
                                   ),
                                 ),
                               ],

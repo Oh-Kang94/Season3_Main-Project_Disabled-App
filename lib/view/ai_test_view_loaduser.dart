@@ -76,9 +76,13 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                     const Text(
                       '성별',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
-                    Text(tController.userData!.gender),
+                    Text(tController.userData!.gender == "남자" ? tController.userData!.gender = "남성" : tController.userData!.gender = "여성",
+                                          style:
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+
+                    ),
                     const SizedBox(
                       width: 350,
                       child: Divider(
@@ -88,15 +92,19 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                     ),
 
                     const Text(
-                      '연령',
+                      '생년월일',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("$userYear 년 $userMonth 월 $userDay 일생"),
+                      child: Text("$userYear 년 $userMonth 월 $userDay 일생",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal
+                          ),
+                          ),
                     ),
-                    Text("만 ${age()}세"),
                     const SizedBox(
                       width: 350,
                       child: Divider(
@@ -111,10 +119,15 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         children: [
                           const Text(
                             '장애유형',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                           ),
-                          Text(tController.userData!.disability),
+                          Text(tController.userData!.disability,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal
+                          ),
+                          ),
                         ],
                       ),
                     ),
@@ -132,8 +145,8 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         children: [
                           const Text(
                             '희망 취업일자',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           AiEmployDayWidget(
                             onEmploySelected: _employSelected,
@@ -147,8 +160,8 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         children: [
                           const Text(
                             '희망 근무지역',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -176,13 +189,15 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                         ],
                       ),
                     ),
-                    // AiJobSelectWidget(),
+                    const SizedBox(
+                      height: 50,
+                    ),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
                         '이용약관',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                     ),
 
@@ -239,7 +254,12 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                                 Get.to(AiTestViewJobSelect());
                               }
                             : null,
-                        child: const Text('희망 직업선택'),
+                        child: const Text('희망 직업선택',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        ),
                       ),
                     ),
                     const SizedBox(

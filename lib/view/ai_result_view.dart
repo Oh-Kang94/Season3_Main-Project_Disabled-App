@@ -21,25 +21,14 @@ class AiResultView extends StatelessWidget {
       appBar: const MyAppBar(),
       body: GetBuilder<AiTestController>(
         builder: (controller) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 400,
-                  height: 500,
-                  child: AiResultWidget(),
-                  ),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.offAll(
-                      const Home(),
-                      transition: Transition.noTransition,
-                    );
-                  },
-                  child: const Text('홈으로'),
-                ),
-              ],
+          return const SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AiResultWidget(),
+                ],
+              ),
             ),
           );
         },

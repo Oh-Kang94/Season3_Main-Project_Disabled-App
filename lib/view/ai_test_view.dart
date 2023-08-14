@@ -6,16 +6,11 @@ import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_disabled_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_result_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_sex_widget.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
-import 'package:season3_team1_mainproject/view/ai_result_view.dart';
-import 'package:season3_team1_mainproject/view/ai_start_view.dart';
 import 'package:season3_team1_mainproject/view/ai_test_view_jobselect.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
-import '../components/ai_job_select_widget.dart';
-import '../components/loding_widget.dart';
 import '../vm/ai_address_controller.dart';
 
 class AiTestView extends StatefulWidget {
@@ -57,12 +52,12 @@ class _AiTestViewState extends State<AiTestView> {
                   ),
                   const Text(
                     '성별',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   AiSexWidget(),
                   const Text(
-                    '연령',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    '생년월일',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   AiAgeWidget(
                     onAgeSelected: _ageSelected,
@@ -76,7 +71,7 @@ class _AiTestViewState extends State<AiTestView> {
                           const Text(
                             '장애유형',
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           AiDisableWidget(
                             onDisabledSelected: _disabledSelected,
@@ -94,7 +89,7 @@ class _AiTestViewState extends State<AiTestView> {
                           const Text(
                             '희망 취업일자',
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           AiEmployDayWidget(
                             onEmploySelected: _employSelected,
@@ -112,7 +107,7 @@ class _AiTestViewState extends State<AiTestView> {
                           const Text(
                             '희망 근무지역',
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 22, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 20,
@@ -126,18 +121,23 @@ class _AiTestViewState extends State<AiTestView> {
                                 },
                               );
                             },
+                            style: ElevatedButton.styleFrom(),
                             child: const Text(
                               '근무지역 선택하기',
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                            style: ElevatedButton.styleFrom()
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            )
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           Text(
-                              "${_controller.address_result} ${_controller.subAddress_result} ${_controller.subAddresses1_result}"),
+                              "${_controller.address_result} ${_controller.subAddress_result} ${_controller.subAddresses1_result}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16,
+                              ),
+                              ),
                           const SizedBox(
                             width: 350,
                             child: Divider(
@@ -149,13 +149,15 @@ class _AiTestViewState extends State<AiTestView> {
                       ),
                     ),
                   ),
-                  // AiJobSelectWidget(),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       '이용약관',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   ),
                   
@@ -207,22 +209,14 @@ class _AiTestViewState extends State<AiTestView> {
                       onPressed: okChecked
                           ? () {
                               Get.to(AiTestViewJobSelect());
-                              // Navigator.pop(context);
-                              // Get.to(AiResultView());
-                              // showDialog(
-                              //   context: context,
-                              //   barrierDismissible:
-                              //       false, // 사용자가 다이얼로그 바깥을 터치해도 닫히지 않도록 설정합니다.
-                              //   builder: (context) => LoadingDialog(),
-                              // );
-                              // Future.delayed(const Duration(milliseconds: 1500),
-                              //     () {
-                              //   Get.back();
-                              //   Get.to(() => AiResultView());
-                              // });
                             }
                           : null,
-                      child: const Text('희망 직업선택'),
+                      child: const Text('희망 직업선택',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -273,17 +267,6 @@ class _AiTestViewState extends State<AiTestView> {
     }
     setState(() {});
   }
-
-  // 지역항목 선택시 체크박스 항목 등장
-  // void _jobSelectVisible() {
-  //   if (_controller.addressStatus = true) {
-  //     jobSelectVisible = true;
-  //   } else {
-  //     jobSelectVisible = false;
-  //   }
-  //   // jobSelectVisible = _controller.addressStatus;
-  //   setState(() {});
-  // }
 
   // 체크박스 그룹화(라디오버튼 안예쁨)
   void _checkboxGroup(bool value) {

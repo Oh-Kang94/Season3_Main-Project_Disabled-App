@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../vm/ai_test_controller.dart';
-import '../vm/login_ctrl.dart';
 
 typedef OnAgeSelectedCallback = void Function(
     int selectedYear, int selectedMonth, int selectedDay);
@@ -22,17 +21,11 @@ class AiAgeWidget extends StatefulWidget {
 
 class _AiAgeWidgetState extends State<AiAgeWidget> {
   final AiTestController aiTestController = Get.put(AiTestController());
-  final LoginController loginController = Get.find<LoginController>();
   // Property
   late List<int> age_year;
   late List<int> age_month;
   late List<int> age_day;
-  // late int man_age;
-
-  late DateTime? birthDateTime;
-  int? userYear;
-  int? userMonth;
-  int? userDay;
+  late int man_age;
 
   int selectedYear = DateTime.now().year;
   int selectedMonth = DateTime.now().month;
@@ -45,21 +38,7 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
     age_year = [];
     age_month = [];
     age_day = [];
-
-    if (loginController.isLogged.value) {
-      String? birthDate = aiTestController.userData?.birth;
-      if (birthDate != null) {
-        birthDateTime = DateTime.parse(birthDate);
-        userYear = birthDateTime?.year;
-        userMonth = birthDateTime?.month;
-        userDay = birthDateTime?.day;
-      }
-    } else {
-      userYear = selectedYear;
-      userMonth = selectedMonth;
-      userDay = selectedDay;
-    }
-
+    man_age = 0;
     for (int year = 1900; year <= DateTime.now().year; year++) {
       age_year.add(year);
     }
@@ -82,7 +61,7 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButton<int>(
-                      value: userYear,
+                      value: selectedYear,
                       items: age_year
                           .map((year) => DropdownMenuItem(
                                 value: year,
@@ -91,9 +70,9 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                           .toList(),
                       onChanged: (value) {
                         setState(() {
-                          userYear = value!;
+                          selectedYear = value!;
                           aiTestController.onYearSelected(value);
-                          _updateDayRange(userYear!, selectedMonth);
+                          _updateDayRange(selectedYear, selectedMonth);
                           realAdult();
                         });
                       },
@@ -102,7 +81,7 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButton<int>(
-                      value: userMonth,
+                      value: selectedMonth,
                       items: age_month
                           .map((month) => DropdownMenuItem(
                                 value: month,
@@ -111,9 +90,9 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                           .toList(),
                       onChanged: (value) {
                         setState(() {
-                          userMonth = value!;
+                          selectedMonth = value!;
                           aiTestController.onMonthSelected(value);
-                          _updateDayRange(userMonth!, selectedMonth);
+                          _updateDayRange(selectedYear, selectedMonth);
                           realAdult();
                         });
                       },
@@ -122,7 +101,7 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: DropdownButton<int>(
-                      value: userDay,
+                      value: selectedDay,
                       items: age_day
                           .map((day) => DropdownMenuItem(
                                 value: day,
@@ -131,18 +110,17 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
                           .toList(),
                       onChanged: (value) {
                         setState(() {
-                          userDay = value!;
+                          selectedDay = value!;
                           realAdult();
                         });
                       },
                     ),
                   ),
-                  // Text("년도: $userYear, 월: $userMonth, 일: $userDay"),
                 ],
               ),
-              // Text("만 widget ${age()}"),
-
-              // Text("나이: ${aiTestController.age}세"),
+              // Text("만 ${aiTestController.age}세"),
+              
+                // Text("나이: ${aiTestController.age}세"),
               const SizedBox(
                 width: 350,
                 child: Divider(
@@ -173,24 +151,13 @@ class _AiAgeWidgetState extends State<AiAgeWidget> {
   // 만나이 계산 함수
   int age() {
     DateTime now = DateTime.now();
-    int age = now.year - userYear!;
-    if (now.month < userMonth! ||
-        (now.month == userMonth && now.day < userDay!)) {
+    int age = now.year - selectedYear;
+    if (now.month < selectedMonth ||
+        (now.month == selectedMonth && now.day < selectedDay)) {
       age--; // 생일이 지나지 않았으면 나이 -1
     }
-    aiTestController.manAge = age;
     return age;
   }
-//   int age() {
-//   DateTime now = DateTime.now();
-//   int calculatedAge = now.year - userYear!;
-//   if (now.month < userMonth! ||
-//       (now.month == userMonth && now.day < userDay!)) {
-//     calculatedAge--; // 생일이 지나지 않았으면 나이 -1
-//   }
-//   aiTestController.manAge = calculatedAge; // 컨트롤러의 man_age에 할당
-//   return calculatedAge;
-// }
 
   // 최저 취업나이 계산 함수
   realAdult() {

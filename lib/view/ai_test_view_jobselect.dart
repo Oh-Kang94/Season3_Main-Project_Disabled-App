@@ -26,7 +26,6 @@ class AiTestViewJobSelect extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-
                 showDialog(
                   context: context,
                   barrierDismissible:
@@ -37,9 +36,14 @@ class AiTestViewJobSelect extends StatelessWidget {
                   Get.back();
                   Get.to(() => AiResultView());
                 });
-
               },
-              child: const Text("검사시작"),
+              child: const Text(
+                "검사시작",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),

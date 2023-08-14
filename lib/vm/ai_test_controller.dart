@@ -20,6 +20,7 @@ class AiTestController extends GetxController {
   String employMonth = "";
   String selectJob = "";
   bool jobSelectStatus = false;
+  List<double> resultPercent = [];
 
   // int manAge = 0;
 
@@ -35,6 +36,7 @@ class AiTestController extends GetxController {
     super.onInit();
     manAge = age();
   }
+
 
   void onSexSelected(int value) {
     sexSelected.value = value;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/components/ai_location_text_widget.dart';
+import 'package:season3_team1_mainproject/model/ai_address_server_model.dart';
 
 import '../vm/ai_address_controller.dart';
 // import 'model/address.dart';
@@ -30,7 +31,7 @@ class AiLocationWidget extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 1.0,
+                width: MediaQuery.of(context).size.width * 0.8,
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: Obx(() {
                   if (_controller.addresses.isEmpty) {
@@ -55,10 +56,14 @@ class AiLocationWidget extends StatelessWidget {
                                   address.name,
                                   style: const TextStyle(
                                     fontSize: 13,
+                                    fontWeight: FontWeight.normal,
                                   ),
                                 ),
                                 onTap: () {
                                   _controller.selectedAddress.value = address;
+                                  _controller.address_result111 = "";
+                                  _controller.subAddress_result111 = "";
+                                  _controller.subAddresses1_result = "";
                                   _controller.loadSubAddresses(address.code);
                                   _controller.address(address.name);
                                   _controller.update();
@@ -87,6 +92,7 @@ class AiLocationWidget extends StatelessWidget {
                                   subAddress.name,
                                   style: const TextStyle(
                                     fontSize: 13,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                                 onTap: () {
@@ -94,8 +100,7 @@ class AiLocationWidget extends StatelessWidget {
                                       subAddress;
                                   _controller
                                       .loadSubAddressDetails(subAddress.code);
-                                  _controller.subAddressesR(
-                                      subAddress.name);
+                                  _controller.subAddressesR(subAddress.name);
 
                                   // 선택 상태 초기화 및 현재 타일 선택 상태 설정
                                   for (var item in _controller.subAddresses) {
@@ -125,11 +130,12 @@ class AiLocationWidget extends StatelessWidget {
                                   subAddresses1.name,
                                   style: const TextStyle(
                                     fontSize: 13,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                                 onTap: () {
-                                  _controller.subAddresses1R(
-                                      subAddresses1.name);
+                                  _controller
+                                      .subAddresses1R(subAddresses1.name);
                                   _controller.selectedAddress.value =
                                       subAddresses1;
                                   _controller.update();

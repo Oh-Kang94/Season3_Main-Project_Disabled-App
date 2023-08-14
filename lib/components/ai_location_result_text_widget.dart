@@ -17,7 +17,12 @@ class AiLocationResultTextWidget extends StatelessWidget {
       builder: (controller) {
         return Center(
           child: Text(
-              "${controller.address_result} ${controller.subAddress_result} ${controller.subAddresses1_result}"),
+            "${controller.address_result} ${controller.subAddress_result} ${controller.subAddresses1_result}",
+            style: const TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
+          ),
         );
       },
     );

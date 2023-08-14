@@ -29,8 +29,12 @@ class AiFirstView extends StatelessWidget {
                   Get.defaultDialog(
                     title: '$username님의 정보가 있습니다.',
                     middleText: '$username님의 정보로\n테스트를 진행하시겠습니까?',
-                    // backgroundColor: Colors.yellowAccent,
-                    // barrierDismissible: false,
+                    titleStyle: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    middleTextStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () => Get.off(const AiTestView()),
@@ -46,8 +50,12 @@ class AiFirstView extends StatelessWidget {
                   Get.defaultDialog(
                     title: '로그인이 되어있지 않습니다.',
                     middleText: '로그인 하러 가시겠습니까?',
-                    // backgroundColor: Colors.yellowAccent,
-                    // barrierDismissible: false,
+                    titleStyle: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                    middleTextStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal,
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -59,15 +67,15 @@ class AiFirstView extends StatelessWidget {
                         onPressed: () {
                           Get.off(const AiTestView());
                         },
-                        child: const Text('비회원 정보로 테스트하기'),
+                        child: const Text('비회원 테스트하기'),
                       ),
                     ],
                   );
                 }
               },
               child: SizedBox(
-                width: 300,
-                height: 300,
+                width: 260,
+                height: 260,
                 child: CircleAvatar(
                   child: SvgPicture.asset(
                     AssetsImage.LOGO,
@@ -78,11 +86,12 @@ class AiFirstView extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            const Text('버튼을 눌러서 테스트를 시작',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
+            const Text(
+              '버튼을 눌러서 추천을 시작!',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
           ],
         ),

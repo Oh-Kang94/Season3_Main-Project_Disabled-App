@@ -52,7 +52,6 @@ class _AiEmployDayWidgetState extends State<AiEmployDayWidget> {
                                 initialDateTime: initialTime,
                                 onDateTimeChanged: (DateTime newTime) {
                                   dateTime = newTime;
-                                  // setState(() {}); // 여기서는 setState()를 사용할 필요 없음
                                 },
                                 use24hFormat: true,
                               ),
@@ -84,9 +83,19 @@ class _AiEmployDayWidgetState extends State<AiEmployDayWidget> {
                     ),
                   );
                 },
-                child: const Text('날짜 선택'),
+                child: const Text(
+                  '날짜 선택',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
+                ),
               ),
-              Text('${dateTime.year}년 ${dateTime.month}월 ${dateTime.day}일'),
+              Text(
+                '${dateTime.year}년 ${dateTime.month}월 ${dateTime.day}일',
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
               const SizedBox(
                 width: 350,
                 child: Divider(
