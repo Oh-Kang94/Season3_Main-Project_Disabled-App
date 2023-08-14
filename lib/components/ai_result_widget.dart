@@ -236,7 +236,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
                   children: [
                     CircularProgressIndicator(),
                   ],
-                ),), // 로딩 중일 때는 로딩 바 표시
+                ),) // 로딩 중일 때는 로딩 바 표시
               : SingleChildScrollView(
                   child: Center(
                     child: Column(
