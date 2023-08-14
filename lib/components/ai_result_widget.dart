@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
 import 'package:season3_team1_mainproject/util/api_endpoint.dart';
@@ -89,14 +90,14 @@ class _AiResultWidgetState extends State<AiResultWidget> {
 
   List<Color> colorsList = [
     const Color(0xffD95AF3),
-    const Color.fromARGB(255, 55, 157, 64),
+    const Color.fromARGB(255, 55, 100, 64),
     const Color.fromARGB(255, 79, 123, 228),
-    const Color.fromARGB(255, 239, 153, 40),
+    const Color.fromARGB(255, 150, 153, 40),
     const Color.fromARGB(255, 36, 60, 74),
     Color.fromARGB(255, 241, 255, 134),
-    Color.fromARGB(255, 255, 200, 60),
+    Color.fromARGB(200, 255, 120, 60),
     Color.fromARGB(255, 232, 141, 255),
-    Color.fromARGB(255, 3, 126, 27),
+    const Color.fromARGB(120, 200, 120, 200),
     Color.fromARGB(255, 255, 80, 80),
   ];
 
@@ -221,122 +222,137 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     // Text('당신이 선택한 주소는$address'),
     // Text("$age_20 $may $intellectual_disability_mild $incheon"),
 
+    return GetBuilder<AiTestController>(
+  builder: (controller) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
           child: isLoading
-              ? const CircularProgressIndicator() // 로딩 중일 때는 로딩 바 표시
-              : GetBuilder<AiTestController>(
-                  builder: (controller) {
-                    return SingleChildScrollView(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 50,
+              ? SizedBox(
+                height: 690.h,
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                ),) // 로딩 중일 때는 로딩 바 표시
+              : SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          controller.userData?.name != null
+                              ? '${controller.userData!.name}님의'
+                              : '당신의',
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            '가장 높은 확률로 합격할 직업은',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
                             ),
-                            Text(
-                              controller.userData?.name != null
-                                  ? '${controller.userData!.name}님의'
-                                  : '당신의',
-                              style: const TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              '가장 높은 확률로 합격할 직업은',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
-                            ),
-                            Text(
-                              '$resultJobText 입니다!',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                          ),
+                        ),
+                        Text(
+                          '$resultJobText 입니다!',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Text(
+                          "비슷한 직업분류군의 예상 합격률입니다.",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        Container(
+                          color: Theme.of(context).cardColor, // 선택되지 않은 항목의 색상
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 600,
+                            child: PieChart(
+                              dataMap: dataMap,
+                              colorList: colorsList,
+                              chartRadius:
+                                  MediaQuery.of(context).size.width / 1.5,
+                              centerText: Tcontroller.selectJob,
+                              chartType: ChartType.ring,
+                              ringStrokeWidth: 80,
+                              animationDuration: const Duration(seconds: 3),
+                              chartValuesOptions: const ChartValuesOptions(
+                                showChartValues: true,
+                                showChartValuesOutside: true,
+                                showChartValuesInPercentage: true,
+                                showChartValueBackground: true,
+                                chartValueStyle: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            // Text(
-                            //   "${aiController.selectJob} 합격 예상률은 $resultText %입니다!",
-                            //   style: const TextStyle(fontSize: 18),
-                            // ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            const Text(
-                              "비슷한 직업분류군의 예상 합격률입니다.",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 100,
-                            ),
-                            Container(
-                              color: Theme.of(context).cardColor, // 선택되지 않은 항목의 색상,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                height: 600,
-                                child: PieChart(
-                                  dataMap: dataMap,
-                                  colorList: colorsList,
-                                  chartRadius:
-                                      MediaQuery.of(context).size.width / 1.5,
-                                  centerText: Tcontroller.selectJob,
-                                  chartType: ChartType.ring,
-                                  ringStrokeWidth: 80,
-                                  animationDuration: const Duration(seconds: 3),
-                                  chartValuesOptions: const ChartValuesOptions(
-                                    showChartValues: true,
-                                    showChartValuesOutside: true,
-                                    showChartValuesInPercentage: true,
-                                    showChartValueBackground: true,
-                                    chartValueStyle: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  legendOptions: const LegendOptions(
-                                    showLegends: true,
-                                    legendShape: BoxShape.circle,
-                                    legendPosition: LegendPosition.bottom,
-                                    showLegendsInRow: false,
-                                    legendTextStyle: TextStyle(
-                                        fontSize: 15, fontWeight: FontWeight.bold),
-                                  ),
+                              legendOptions: const LegendOptions(
+                                showLegends: true,
+                                legendShape: BoxShape.circle,
+                                legendPosition: LegendPosition.bottom,
+                                showLegendsInRow: false,
+                                legendTextStyle: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Get.offAll(
-                                  const Home(),
-                                  transition: Transition.noTransition,
-                                );
-                              },
-                              child: const Text('홈으로',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.offAll(
+                              const Home(),
+                              transition: Transition.noTransition,
+                            );
+                          },
+                          child: const Text(
+                            '홈으로',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
         ),
       ],
     );
+  },
+);
+
   }
 
 

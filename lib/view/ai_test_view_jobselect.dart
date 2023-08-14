@@ -26,16 +26,16 @@ class AiTestViewJobSelect extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                showDialog(
-                  context: context,
-                  barrierDismissible:
-                      false, // 사용자가 다이얼로그 바깥을 터치해도 닫히지 않도록 설정합니다.
-                  builder: (context) => LoadingDialog(),
-                );
-                Future.delayed(const Duration(milliseconds: 1500), () {
+                // showDialog(
+                //   context: context,
+                //   barrierDismissible:
+                //       false, // 사용자가 다이얼로그 바깥을 터치해도 닫히지 않도록 설정합니다.
+                //   builder: (context) => LoadingDialog(),
+                // );
+                // Future.delayed(const Duration(milliseconds: 1500), () {
+                // });
                   Get.back();
                   Get.to(() => AiResultView());
-                });
               },
               child: const Text(
                 "검사시작",
