@@ -60,7 +60,7 @@ class RegisterationController extends GetxController {
     super.onInit();
   }
 
-  // 장애 설정
+  /// 장애 설정
   Future<void> showDisabilityPicker(BuildContext context) async {
     double pickerItemHeight = 40.0;
     int itemCount = 10;
@@ -94,7 +94,7 @@ class RegisterationController extends GetxController {
     );
   }
 
-  // 성별 선택
+  /// 성별 선택
   Future<void> showGenderPicker(BuildContext context) async {
     double pickerItemHeight = 100.0;
     int itemCount = 2;

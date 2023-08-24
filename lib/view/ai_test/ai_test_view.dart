@@ -8,10 +8,9 @@ import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_sex_widget.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
-import 'package:season3_team1_mainproject/view/ai_test_view_jobselect.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
-
-import '../vm/ai_address_controller.dart';
+import '../../vm/ai_address_controller.dart';
+import 'ai_test_view_jobselect.dart';
 
 class AiTestView extends StatefulWidget {
   const AiTestView({Key? key}) : super(key: key);
@@ -22,10 +21,6 @@ class AiTestView extends StatefulWidget {
 
 class _AiTestViewState extends State<AiTestView> {
   final AddressController _controller = Get.put(AddressController());
-
-  // late int selectedYear;
-  // late int selectedMonth;
-  // late int selectedDay;
   bool okChecked = false;
   bool noChecked = false;
 
@@ -208,7 +203,7 @@ class _AiTestViewState extends State<AiTestView> {
                     child: ElevatedButton(
                       onPressed: okChecked
                           ? () {
-                              Get.to(AiTestViewJobSelect());
+                              Get.to(const AiTestViewJobSelect());
                             }
                           : null,
                       child: const Text('희망 직업선택',

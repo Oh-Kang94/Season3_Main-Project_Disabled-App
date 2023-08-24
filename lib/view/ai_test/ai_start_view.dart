@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/view/ai_test_view.dart';
-import 'package:season3_team1_mainproject/view/ai_test_view_loaduser.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../util/asset_image.dart';
+import '../../util/asset_image.dart';
+import 'ai_test_view.dart';
+import 'ai_test_view_loaduser.dart';
+
 
 class AiFirstView extends StatelessWidget {
   const AiFirstView({super.key});

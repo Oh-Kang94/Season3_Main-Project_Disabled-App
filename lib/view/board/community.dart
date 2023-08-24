@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../model/board_model.dart';
+import '../../model/board_model.dart';
 import 'board_detail.dart';
 import 'board_insert.dart';
 
@@ -196,8 +195,8 @@ class _CommunityState extends State<Community> {
         "ERROR",
         "권한이 없습니다.",
         snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 2),
-        backgroundColor: Color.fromARGB(255, 206, 205, 205),
+        duration: const Duration(seconds: 2),
+        backgroundColor: const Color.fromARGB(255, 206, 205, 205),
       );
     }
   }

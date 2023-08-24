@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomTheme {
-  static const Color seedcolor = Color.fromARGB(255, 1, 157, 19);
+  static const Color seedcolor = Color(0XFF267365);
 
   static ThemeData lighttheme = ThemeData(
     fontFamily: 'NotoSansKR-Regular',

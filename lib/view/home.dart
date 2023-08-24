@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
-import 'package:season3_team1_mainproject/view/ai_start_view.dart';
-import 'package:season3_team1_mainproject/view/community.dart';
 import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
 import 'package:season3_team1_mainproject/view/mainview.dart';
 import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
 
+import 'ai_test/ai_start_view.dart';
 import 'appbar/myappbar.dart';
+import 'board/community.dart';
 import 'mapView.dart';
 
 class Home extends StatelessWidget {

@@ -5,13 +5,11 @@ import 'package:season3_team1_mainproject/components/agreement_view.dart';
 import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
 import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
-import 'package:season3_team1_mainproject/view/ai_test_view_jobselect.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
-
-import '../components/ai_location_result_text_widget.dart';
-import '../vm/ai_address_controller.dart';
-import '../vm/login_ctrl.dart';
+import '../../components/ai_location_result_text_widget.dart';
+import '../../vm/login_ctrl.dart';
+import 'ai_test_view_jobselect.dart';
 
 class AiTestViewLoadUser extends StatefulWidget {
   const AiTestViewLoadUser({Key? key}) : super(key: key);
@@ -22,7 +20,6 @@ class AiTestViewLoadUser extends StatefulWidget {
 
 class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
   final AiTestController tController = Get.put(AiTestController());
-  final AddressController _controller = Get.put(AddressController());
   final LoginController loginController = Get.find<LoginController>();
 
   bool okChecked = false;
@@ -247,7 +244,7 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
                                 tController.age.value = age();
                                 disabledSelect();
 
-                                Get.to(AiTestViewJobSelect());
+                                Get.to(const AiTestViewJobSelect());
                               }
                             : null,
                         child: const Text(
@@ -339,32 +336,6 @@ class _AiTestViewLoadUserState extends State<AiTestViewLoadUser> {
       return age;
     } else {
       return 0; // 혹은 다른 기본값 설정
-    }
-  }
-
-  // 연령 항목 선택시 장애유형 항목 등장
-  void _ageSelected(int year, int month, int day) {
-    if (year != 0 && month != 0 && day != 0) {
-      setState(() {
-        disableVisible = true;
-      });
-    } else {
-      setState(() {
-        disableVisible = false;
-      });
-    }
-  }
-
-  // 장애유형 항목 선택시 취업일자 항목 등장
-  void _disabledSelected(String selectedDropdown, int selected) {
-    if (selectedDropdown != "" && selected != 0) {
-      setState(() {
-        employVisible = true;
-      });
-    } else {
-      setState(() {
-        employVisible = false;
-      });
     }
   }
 

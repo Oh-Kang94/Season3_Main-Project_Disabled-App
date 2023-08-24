@@ -1,13 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../model/board_model.dart';
-import '../vm/home_ctrl.dart';
-import 'appbar/myappbar.dart';
+
+import '../../model/board_model.dart';
+import '../../vm/home_ctrl.dart';
+import '../appbar/myappbar.dart';
+import '../home.dart';
 import 'board_update.dart';
-import 'home.dart';
 
 class BoardDetail extends StatefulWidget {
   const BoardDetail({super.key});
@@ -98,7 +98,7 @@ class _BoardDetailState extends State<BoardDetail> {
                 const Divider(
                   thickness: 1.0,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                   height: 100,
                 ),

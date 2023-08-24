@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
-import '../vm/home_ctrl.dart';
-import 'appbar/myappbar.dart';
-import 'home.dart';
+import '../../model/board_model.dart';
+import '../../vm/home_ctrl.dart';
+import '../home.dart';
 
-class BoardInsert extends StatefulWidget {
-  const BoardInsert({Key? key}) : super(key: key);
+class BoardUpdate extends StatefulWidget {
+  const BoardUpdate({super.key});
 
   @override
-  State<BoardInsert> createState() => _BoardInsertState();
+  State<BoardUpdate> createState() => _BoardUpdateState();
 }
 
-class _BoardInsertState extends State<BoardInsert> {
+class _BoardUpdateState extends State<BoardUpdate> {
   late TextEditingController titleController;
   late TextEditingController contentController;
 
@@ -23,10 +23,16 @@ class _BoardInsertState extends State<BoardInsert> {
     super.initState();
     titleController = TextEditingController();
     contentController = TextEditingController();
+    var board = Get.arguments as Board?;
+    if (board != null) {
+      titleController.text = board.title;
+      contentController.text = board.content;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    var board = Get.arguments ?? "_";
     return Scaffold(
       appBar: const MyAppBar(),
       body: SingleChildScrollView(
@@ -36,7 +42,6 @@ class _BoardInsertState extends State<BoardInsert> {
               height: 50,
               width: 400,
               decoration: const BoxDecoration(
-                // color: Color.fromARGB(255, 186, 198, 241),
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               child: const Center(
@@ -78,7 +83,6 @@ class _BoardInsertState extends State<BoardInsert> {
               child: TextField(
                 controller: titleController,
                 decoration: const InputDecoration(
-                  hintText: '글의 제목을 입력하세요',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(),
                     borderRadius: BorderRadius.all(
@@ -102,7 +106,6 @@ class _BoardInsertState extends State<BoardInsert> {
               child: TextField(
                 controller: contentController,
                 decoration: const InputDecoration(
-                  hintText: '글의 내용을 입력하세요',
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(),
                     borderRadius: BorderRadius.all(
@@ -119,7 +122,7 @@ class _BoardInsertState extends State<BoardInsert> {
                 keyboardType: TextInputType.multiline,
                 maxLines: 15,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                 ),
               ),
             ),
@@ -128,19 +131,14 @@ class _BoardInsertState extends State<BoardInsert> {
             ),
             ElevatedButton.icon(
               onPressed: () {
-                // 현재 시간 얻기
-                DateTime now = DateTime.now();
-
-                // 원하는 날짜 형식으로 변환
-                String formattedDate = DateFormat('yyyy-MM-dd').format(now);
-
-                // Firestore에 저장
-                FirebaseFirestore.instance.collection('community').add({
-                  'title': titleController.text,
-                  'content': contentController.text,
-                  'date': formattedDate, // 현재 시간 문자열 저장
-                });
-                _showDialog(context);
+                if (board != null) {
+                  board?.ref.update({
+                    'title': titleController.text,
+                    'content': contentController.text
+                  }).then((_) {
+                    _showDialog(context);
+                  });
+                }
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(200, 50),
@@ -148,9 +146,9 @@ class _BoardInsertState extends State<BoardInsert> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              icon: const Icon(Icons.check),
+              icon: const Icon(Icons.edit_outlined),
               label: const Text(
-                '게시',
+                '수정',
                 style: TextStyle(fontSize: 20),
               ),
             )
@@ -163,23 +161,22 @@ class _BoardInsertState extends State<BoardInsert> {
   //Function----------------
   _showDialog(BuildContext context) {
     Get.defaultDialog(
-      title: '입력 결과',
-      middleText: '입력이 완료 되었습니다.',
-      backgroundColor: const Color.fromARGB(255, 145, 199, 167),
-      barrierDismissible: false,
-      actions: [
-        TextButton(
-          onPressed: () {
-            HomeController homeController = Get.find();
-            homeController.controller.animateTo(3);
-            Get.off(const Home());
-          },
-          child: const Text(
-            'OK',
-            style: TextStyle(fontWeight: FontWeight.bold),
+        title: '수정 결과',
+        middleText: '수정이 완료 되었습니다.',
+        backgroundColor: const Color.fromARGB(255, 180, 245, 207),
+        barrierDismissible: false,
+        actions: [
+          TextButton(
+            onPressed: () {
+              HomeController homeController = Get.find();
+              homeController.controller.animateTo(3);
+              Get.off(const Home());
+            },
+            child: const Text(
+              'OK',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-      ],
-    );
+        ]);
   }
 }
