@@ -1,13 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
 import 'package:season3_team1_mainproject/util/api_endpoint.dart';
-import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-import '../view/home.dart';
-import '../vm/ai_test_controller.dart';
+import '../../view/home.dart';
+import '../../vm/ai_test/ai_address_controller.dart';
+import '../../vm/ai_test/ai_test_controller.dart';
+
 
 class AiResultWidget extends StatefulWidget {
   const AiResultWidget({super.key});
@@ -16,7 +18,7 @@ class AiResultWidget extends StatefulWidget {
   State<AiResultWidget> createState() => _AiResultWidgetState();
 }
 
-final AiTestController Tcontroller =
+final AiTestController _tController =
     Get.put(AiTestController()); // 액션 없으면 어사인 부분만 안해주면됨
 final AiTestController aiController = Get.find();
 final AddressController addressController = Get.find();
@@ -77,17 +79,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
   String dec = "FALSE"; // 12월
 
   late Map<String, double> dataMap;
-  // "경영행정사무직": 18.47,
-  // "기타": 4.25,
-  // "서비스직": 17.70,
-  // "Cosmetics": 3.51,
-  // "Other": 2.83,
-  // "Other": 2.83,
-  // "Other": 2.83,
-  // "Other": 2.83,
-  // "Other": 2.83,
-  // "Other": 2.83,
-
   List<Color> colorsList = [
     const Color(0xffD95AF3),
     const Color.fromARGB(255, 55, 100, 64),
@@ -129,13 +120,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
       "서비스직": 17.70,
       "Cosmetics": 3.51,
       "Other": 2.83,
-      "Other": 2.83,
-      "Other": 2.83,
-      "Other": 2.83,
-      "Other": 2.83,
-      "Other": 2.83,
-      "Other": 2.83,
-      "Other": 2.83,
     };
     // 3초 동안 로딩 표시 후 데이터 로딩 시작
     Future.delayed(const Duration(seconds: 3), () async {
@@ -148,7 +132,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final LoginController loginController = Get.find();
 
     var resultText = resultPercentList.isEmpty
         ? resultPercent
@@ -157,15 +140,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     var resultJobText =
         resultJobList.isEmpty ? resultJob : resultJobList.join(", ");
 
-    String selectedJob = Tcontroller.selectJob;
-    print("넘어올 직업1 $selectedJob");
-    print("넘어올 직업2 ${Tcontroller.selectJob}");
-    print("넘어올 직업3 ${aiController.selectJob}");
-    print("넘어온 확률들1 $resultText");
-    print("넘어온 확률들 $resultPercentList");
-    // print("넘어온 확률들 ${resultTextList[0]}");
-
-    // if (resultTextList.length >= 3) {
+    String selectedJob = _tController.selectJob;
     List<String> resultTextList = resultText.toString().split(", ");
 
     if (selectedJob == "경영·행정·사무직" && resultPercentList.length >= 3) {
@@ -213,15 +188,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         "음식 서비스직": double.parse(resultTextList[2]),
       };
     }
-    // Text('당신이 합격할 확률은 ${selectedSex == 1 ? '남성' : '여성'} %입니다.'),
-    // Text("당신의 나이는 ${aiController.age.value.toString()}"),
-    // Text("당신의 장애유형은 ${aiController.disabledSelect}"),
-    // Text('${aiController.radioDisabledSelect == 1 ? '경증' : '중증'}'),
-    // Text('당신의 희망 취업일은 ${aiController.employMonth} 월'),
-    // Text('당신이 고른 직업은 ${aiController.selectJob}'),
-    // Text('당신이 선택한 주소는$address'),
-    // Text("$age_20 $may $intellectual_disability_mild $incheon"),
-
     return GetBuilder<AiTestController>(
   builder: (controller) {
     return Column(
@@ -294,7 +260,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
                               colorList: colorsList,
                               chartRadius:
                                   MediaQuery.of(context).size.width / 1.5,
-                              centerText: Tcontroller.selectJob,
+                              centerText: _tController.selectJob,
                               chartType: ChartType.ring,
                               ringStrokeWidth: 80,
                               animationDuration: const Duration(seconds: 3),
@@ -373,9 +339,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
     } else {
       age_70 = "TRUE";
     }
-
-    print(
-        "변환된 경증 중증 ${aiController.radioDisabledSelect} 변환된 장애 ${aiController.disabledSelect}");
     switch (aiController.radioDisabledSelect) {
       case 1:
         switch (aiController.disabledSelect) {
@@ -417,7 +380,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         break;
     }
 
-    switch (addressController.address_result) {
+    switch (addressController.addressResult) {
       case "경상북도":
         gyeongbuk = "TRUE";
         break;
@@ -534,37 +497,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
       default:
         break;
     }
-    // switch (aiController.selectJob) {
-    //   case "경영·행정·사무직":
-    //     aiPhase = 1;
-    //     break;
-    //   case "간호·보건 및 돌봄 서비스 관련 직군" || "전문·생산 및 정비 관련 직군" || "제조 단순직":
-    //     aiPhase = 2;
-    //     break;
-    //   case "서비스 및 판매 관련 직군" || "청소 및 기타 개인서비스직":
-    //     aiPhase = 3;
-    //     break;
-    //   case "돌봄 서비스직(간병·육아)" || "보건·의료직" || "사회복지·종교직":
-    //     aiPhase = 4;
-    //     break;
-    //   case "건설·채굴직" ||
-    //         "관리직(임원·부서장)" ||
-    //         "교육직" ||
-    //         "기계 설치·정비·생산직" ||
-    //         "섬유·의복 생산직" ||
-    //         "식품 가공·생산직" ||
-    //         "예술·디자인·방송직" ||
-    //         "운전·운송직" ||
-    //         "인쇄·목재·공예 및 기타 설치·정비·생산직" ||
-    //         "전기·전자 설치·정비·생산직":
-    //     aiPhase = 5;
-    //     break;
-    //   case "경호·경비·스포츠·레크리에이션직" || "영업·미용·예식 서비스직" || "음식 서비스직":
-    //     aiPhase = 6;
-    //     break;
-    //   default:
-    //     break;
-    // }
 
     String requestUrl =
         "$baseUrl?ai=$aiPhase&age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
@@ -579,7 +511,6 @@ class _AiResultWidgetState extends State<AiResultWidget> {
         "Daegu=$daegu&Gyeongnam=$gyengnam&Jeju=$jeju&Sejong=$sejong&"
         "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec";
 
-    print(requestUrl);
 
     var response = await GetConnect().get(requestUrl);
     if (response.isOk) {
@@ -617,55 +548,7 @@ class _AiResultWidgetState extends State<AiResultWidget> {
 
       setState(() {});
     } else {
-      print("실패");
     }
   }
 }
 
-// }// End
-
-// var url = Uri.parse(
-//     "http://localhost:8080/Rserve/response_phase1.jsp?age_20=$age_20&age_30=$age_30&age_40=$age_40&age_50=$age_50&age_60=$age_60&age_70=$age_70&"
-//     "visualImpairment_Severe=$visual_impairmen_severe&visualImpairment_Mild=$visual_impairmen_mild&"
-//     "physicalImpairment_Mild=$physical_disability_mild&physicalImpairment_Severe=$physical_disability_severe&"
-//     "intellectualImpairment_Mild=$intellectual_disability_mild&intellectualImpairment_Severe=$intellectual_disability_severe&"
-//     "hearingImpairment_Mild=$auditory_disorder_mild&hearingImpairment_Severe=$auditory_disorder_severe&"
-//     "mentalDisorder_Mild=$mental_disorder_mild&mentalDisorder_Severe=$mental_disorder_severe&"
-//     "Gyeongbuk=$gyeongbuk&Gangwon=$gangwon&Jeonnam=$jeonnam&Chungbuk=$chungbuk&"
-//     "Gyeonggi=$gyenggi&Incheon=$incheon&Seoul=$seoul&Ulsan=$ulsan&Daejeon=$daejeon&"
-//     "Busan=$busan&Jeonbuk=$jeonbuk&Gwangju=$gwangju&Chungnam=$chungnam&"
-//     "Daegu=$daegu&Gyeongnam=$gyengnam&Jeju=$jeju&Sejong=$sejong&"
-//     "Jan=$jan&Feb=$feb&Mar=$mar&Apr=$apr&May=$may&Jun=$jun&Jul=$jul&Aug=$aug&Sep=$sep&Oct=$oct&Nov=$nov&Dec=$dec");
-// var response = await http.get(url);
-// print(response);
-// try {
-//   var response = await GetConnect().get(requestUrl);
-//   if (response.isOk) {
-//     result = response.body['message'][0];
-//     print(double.parse(result));
-//     resultPercent = double.parse(result) * 100;
-//     setState(() {});
-//     print("결과는 $result");
-//     return true;
-//   } else {
-//     print("좇됨");
-//     return false;
-//   }
-// } catch (e) {
-//   print(e);
-//   return false;
-// }
-
-// _showDialog();
-
-// _showDialog() {
-//   showDialog(
-//     context: context,
-//     builder: (context) {
-//       return AlertDialog(
-//         title: const Text('품종 예측 결과'),
-//         content: Text('입력하신 품종은 $result 입니다.'),
-//       );
-//     },
-//   );
-// }

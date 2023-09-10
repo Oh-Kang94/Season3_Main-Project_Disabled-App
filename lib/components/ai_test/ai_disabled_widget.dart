@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
-import '../../vm/ai_test_controller.dart';
+import '../../vm/ai_test/ai_test_controller.dart';
 import '../../vm/login_ctrl.dart';
 
 
@@ -45,17 +43,6 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
     ];
     selectedDropdown = '지적 장애';
     selected = 1;
-
-      int selectedValue = 0;
-
-    // loginController.isLogged.value
-    // if (loginController.isLogged.value) {
-    //   selectedValue = controller.userData!.gender == "남자" ? 1 : 2;
-    // } else {
-    //   selectedValue = 0; // 원하는 값으로 설정해주세요
-    // }
-
-
   }
 
   @override
@@ -75,15 +62,13 @@ class _AiDisableWidgetState extends State<AiDisableWidget> {
                       value: selectedDropdown,
                       items: disabled.map((String item) {
                         return DropdownMenuItem<String>(
-                          child: Text('$item'),
                           value: item,
+                          child: Text(item),
                         );
                       }).toList(),
                       onChanged: (value) {
                         selectedDropdown = value!;
                         controller.disabledSelect = selectedDropdown;
-                        // controller.selectedDisabled(selectedDropdown);
-                        // aiTestController.onDropdownSelected(value!);
                         widget.onDisabledSelected(selectedDropdown, selected);
                         setState(() {});
                       },

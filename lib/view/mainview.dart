@@ -59,12 +59,6 @@ class _MainviewState extends State<Mainview> {
       changeImage();
     });
   }
-
-  /*
-    _timer가 영원히 안꺼지는 상태이고, 우리가 multiview이기 때문에,
-    view가 사라지면 꺼지게 만듬.
-  */
-
   @override
   void dispose() {
     _timer.cancel();
@@ -87,14 +81,14 @@ class _MainviewState extends State<Mainview> {
           ),
           SingleChildScrollView(
             child: SizedBox(
-              height: 300.h,
+              height: 260.h,
               child: GridView.builder(
                 physics: const BouncingScrollPhysics(), // GridView의 스크롤 동작 비활성화
                 shrinkWrap: true, // 필요한 크기만큼만 공간을 차지하도록 설정
                 itemCount: siteTextList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 4.0, // 각 항목의 가로:세로 비율을 2:1로 지정 (직사각형 모양)
-                  crossAxisCount: 1,
+                  crossAxisCount:1,
                 ),
                 itemBuilder: (context, index) {
                   return GestureDetector(

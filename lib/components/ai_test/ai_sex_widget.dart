@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../vm/ai_test/ai_test_controller.dart';
 // import 'package:get/get_core/src/get_main.dart';
 
-import '../vm/ai_test_controller.dart';
 
 class AiSexWidget extends StatefulWidget {
+  const AiSexWidget({super.key});
+
   @override
   State<AiSexWidget> createState() => _AiSexWidgetState();
 }
 
 class _AiSexWidgetState extends State<AiSexWidget> {
   final AiTestController aiTestController = Get.put(AiTestController());
-
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -66,11 +67,4 @@ class _AiSexWidgetState extends State<AiSexWidget> {
     );
   }
   // --- Functions ---
-
-
-    
- 
-  
-
-
 }

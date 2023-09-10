@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
 
+import '../../vm/ai_test/ai_test_controller.dart';
 class AiJobSelectJenmunWidget extends StatefulWidget {
   const AiJobSelectJenmunWidget({super.key});
 
@@ -47,7 +47,6 @@ class _AiJobSelectJenmunWidgetState extends State<AiJobSelectJenmunWidget> {
                       child: GestureDetector(
                         onTap: () {
                           listCount = index; // 선택된 항목의 인덱스 저장
-                          // controller.selectJob = jobList[index];
                           setState(() {});
                         },
                         child: SizedBox(

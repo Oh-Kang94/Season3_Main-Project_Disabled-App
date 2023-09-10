@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/vm/ai_address_controller.dart';
 
+import '../../vm/ai_test/ai_address_controller.dart';
 class AiLocationTextWidget extends StatelessWidget {
   const AiLocationTextWidget({super.key});
 
@@ -9,9 +9,9 @@ class AiLocationTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final AddressController controller = Get.find<AddressController>();
 
-    String address1 = controller.address_result111;
-    String address2 = controller.subAddress_result111;
-    String address3 = controller.subAddresses1_result;
+    String address1 = controller.addressResult111;
+    String address2 = controller.subAddressResult111;
+    String address3 = controller.subAddresses1Result;
 
     return GetBuilder<AddressController>(
       builder: (controller) {

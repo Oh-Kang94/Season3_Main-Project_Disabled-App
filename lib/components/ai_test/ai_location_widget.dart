@@ -3,12 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/ai_location_text_widget.dart';
-import 'package:season3_team1_mainproject/model/ai_address_server_model.dart';
 
-import '../vm/ai_address_controller.dart';
-// import 'model/address.dart';
-
+import '../../vm/ai_test/ai_address_controller.dart';
+import 'ai_location_text_widget.dart';
 class AiLocationWidget extends StatelessWidget {
   const AiLocationWidget({Key? key}) : super(key: key);
 
@@ -27,8 +24,7 @@ class AiLocationWidget extends StatelessWidget {
         builder: (controller) {
           return Column(
             children: [
-              // const 금지
-               Row(
+              Row(
                 children: [
                   AiLocationTextWidget(),
                 ],
@@ -72,9 +68,9 @@ class AiLocationWidget extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   controller.selectedAddress.value = address;
-                                  controller.address_result111 = "";
-                                  controller.subAddress_result111 = "";
-                                  controller.subAddresses1_result = "";
+                                  controller.addressResult111 = "";
+                                  controller.subAddressResult111 = "";
+                                  controller.subAddresses1Result = "";
                                   controller.loadSubAddresses(address.code);
                                   controller.address(address.name);
                                   controller.update();
@@ -110,7 +106,6 @@ class AiLocationWidget extends StatelessWidget {
                                   controller
                                       .loadSubAddressDetails(subAddress.code);
                                   controller.subAddressesR(subAddress.name);
-
                                   // 선택 상태 초기화 및 현재 타일 선택 상태 설정
                                   for (var item in controller.subAddresses) {
                                     item.isSelected = false;

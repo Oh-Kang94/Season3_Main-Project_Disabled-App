@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-import '../vm/ai_test_controller.dart';
+import '../../vm/ai_test/ai_test_controller.dart';
 
 class AiResultChartWidget extends StatefulWidget {
-  AiResultChartWidget({super.key});
+  const AiResultChartWidget({super.key});
 
   @override
   State<AiResultChartWidget> createState() => _AiResultChartWidgetState();
 }
 
 class _AiResultChartWidgetState extends State<AiResultChartWidget> {
-  final AiTestController Tcontroller =
+  final AiTestController _tController =
       Get.put(AiTestController()); 
  // 액션 없으면 어사인 부분만 안해주면됨
   List<Color> colorsList = [
@@ -25,16 +25,16 @@ class _AiResultChartWidgetState extends State<AiResultChartWidget> {
 
   final gradientList = <List<Color>>[
     [
-      Color.fromRGBO(223, 250, 92, 1),
-      Color.fromRGBO(129, 250, 112, 1),
+      const Color.fromRGBO(223, 250, 92, 1),
+      const Color.fromRGBO(129, 250, 112, 1),
     ],
     [
-      Color.fromRGBO(129, 182, 205, 1),
-      Color.fromRGBO(91, 253, 199, 1),
+      const Color.fromRGBO(129, 182, 205, 1),
+      const Color.fromRGBO(91, 253, 199, 1),
     ],
     [
-      Color.fromRGBO(175, 63, 62, 1),
-      Color.fromRGBO(254, 154, 92, 1),
+      const Color.fromRGBO(175, 63, 62, 1),
+      const Color.fromRGBO(254, 154, 92, 1),
     ],
   ];
   @override
@@ -45,11 +45,10 @@ class _AiResultChartWidgetState extends State<AiResultChartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("넘어온 결과들111 ${Tcontroller.resultPercent}");
     Map<String, double> dataMap = {
-      "경영행정사무직": Tcontroller.resultPercent[0],
-      "기타": Tcontroller.resultPercent[1],
-      "서비스직": Tcontroller.resultPercent[2],
+      "경영행정사무직": _tController.resultPercent[0],
+      "기타": _tController.resultPercent[1],
+      "서비스직": _tController.resultPercent[2],
     };
 
     return Center(
@@ -84,7 +83,7 @@ class _AiResultChartWidgetState extends State<AiResultChartWidget> {
   }
 
   void reuslt()async{
-  await Tcontroller.resultPercent;
+  _tController.resultPercent;
   setState(() {}); // 화면을 다시 그림
   }
 }
