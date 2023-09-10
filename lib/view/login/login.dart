@@ -6,8 +6,8 @@ import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/view/login/findid_login.dart';
 import 'package:season3_team1_mainproject/view/register/register_user.dart';
 
-import '../../components/login_form.dart';
-import '../../components/logo_pic.dart';
+import '../../components/home/logo_pic.dart';
+import '../../components/login/login_form.dart';
 import '../../vm/login_ctrl.dart';
 import 'findpassword_login.dart';
 

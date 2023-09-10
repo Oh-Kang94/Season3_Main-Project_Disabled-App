@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/agreement_view.dart';
-import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_disabled_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_sex_widget.dart';
+import 'package:season3_team1_mainproject/components/login/agreement_view.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
-import '../../vm/ai_address_controller.dart';
+import '../../components/ai_test/ai_age_widget.dart';
+import '../../components/ai_test/ai_disabled_widget.dart';
+import '../../components/ai_test/ai_employ_day_widget.dart';
+import '../../components/ai_test/ai_location_widget.dart';
+import '../../components/ai_test/ai_sex_widget.dart';
+import '../../vm/ai_test/ai_address_controller.dart';
 import 'ai_test_view_jobselect.dart';
 
 class AiTestView extends StatefulWidget {
@@ -127,7 +127,7 @@ class _AiTestViewState extends State<AiTestView> {
                             height: 20,
                           ),
                           Text(
-                              "${_controller.address_result} ${_controller.subAddress_result} ${_controller.subAddresses1_result}",
+                              "${_controller.addressResult} ${_controller.subAddressResult} ${_controller.subAddresses1Result}",
                               style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 16,

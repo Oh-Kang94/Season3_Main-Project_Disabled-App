@@ -5,13 +5,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/logo_pic.dart';
+import 'package:season3_team1_mainproject/components/home/logo_pic.dart';
 import 'package:kpostal/kpostal.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/util/asset_image.dart';
 import 'package:season3_team1_mainproject/util/regex.dart';
 
-import '../../components/agreement_view.dart';
+import '../../components/login/agreement_view.dart';
 import '../../vm/register_ctrl.dart';
 
 class RegisterUser extends StatelessWidget {

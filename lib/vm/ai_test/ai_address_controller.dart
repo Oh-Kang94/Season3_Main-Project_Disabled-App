@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../model/ai_address_access_model.dart';
+import '../../model/ai_address_server_model.dart';
+import '../../model/user_model.dart';
+import '../../util/api_endpoint.dart';
+
 // import 'address_access.dart';
 // import 'address_dept_server.dart';
-import '../model/ai_address_access_model.dart';
-import '../model/ai_address_server_model.dart';
-import '../model/user_model.dart';
-import '../util/api_endpoint.dart';
 
 class AddressController extends GetxController {
   String? userId;
@@ -23,11 +24,11 @@ class AddressController extends GetxController {
   final subAddresses = <AddressDepthServerModel>[].obs;
   final subAddresses1 = <AddressDepthServerModel>[].obs;
   final selectedAddress = AddressDepthServerModel(code: '', name: '').obs;
-  String address_result = "";
-  String subAddress_result = "";
-  String subAddresses1_result = "";
-  String address_result111 = "";
-  String subAddress_result111 = "";
+  String addressResult = "";
+  String subAddressResult = "";
+  String subAddresses1Result = "";
+  String addressResult111 = "";
+  String subAddressResult111 = "";
   // String subAddresses1_result111 = "";
   bool addressStatus = false;
 
@@ -42,21 +43,21 @@ class AddressController extends GetxController {
 
   /// 시 데이터 넘겨주기
   void address(String address) {
-    address_result = address;
-    address_result111 = "$address >";
+    addressResult = address;
+    addressResult111 = "$address >";
     update();
   }
 
   // 구 데이터 넘겨주기
   void subAddressesR(String subAddresses) {
-    subAddress_result = subAddresses;
-    subAddress_result111 = "$subAddresses >";
+    subAddressResult = subAddresses;
+    subAddressResult111 = "$subAddresses >";
     update();
   }
 
   // 동 데이터 넘겨주기
   void subAddresses1R(String subAddresses1) {
-    subAddresses1_result = subAddresses1;
+    subAddresses1Result = subAddresses1;
     update();
   }
 
@@ -65,11 +66,11 @@ class AddressController extends GetxController {
   // 처음 accessToken받기위함
   Future<String?> getSgisApiAccessToken() async {
     try {
-      const String _key = "ed5c614064114780be63";
-      const String _secret = "efd16460b63947808bcd";
+      const String key = "ed5c614064114780be63";
+      const String secret = "efd16460b63947808bcd";
       final response = await http.get(
         Uri.parse(
-            "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json?consumer_key=$_key&consumer_secret=$_secret"),
+            "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json?consumer_key=$key&consumer_secret=$secret"),
       );
 
       if (response.statusCode == 200) {
@@ -83,7 +84,6 @@ class AddressController extends GetxController {
         throw Exception('Failed to load addresses');
       }
     } catch (e) {
-      print("Error: $e");
       return null;
     }
   }
@@ -167,7 +167,6 @@ class AddressController extends GetxController {
         var response = await GetConnect().get(requestUri);
         if (response.isOk) {
           userData = UserData.fromJson(response.body);
-          print("이름은 이래: username: ${userData!.name}");
           update();
           return true;
         } else {
@@ -184,9 +183,8 @@ class AddressController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       userId = prefs.getString('userId');
     } catch (e) {
-      print(e);
+      return;
     }
-    print("LOAD SHAREDPREFERENCE: userid: $userId");
   }
 
 }

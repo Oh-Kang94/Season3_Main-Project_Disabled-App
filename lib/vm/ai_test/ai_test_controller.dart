@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/ai_age_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../model/user_model.dart';
-import '../util/api_endpoint.dart';
+import '../../model/user_model.dart';
+import '../../util/api_endpoint.dart';
 
 class AiTestController extends GetxController {
   String? userId;
@@ -63,16 +62,7 @@ class AiTestController extends GetxController {
     age.value = calculatedAge;
     update();
   }
-
-  // void disabledData(){
-  //   radioDisabledSelect == 1 ? disabledData1 =  "경증" : disabledData1 =  "중증";
-  //   print(disabledData1);
-  //   update();
-  // }
-
-  /// user id 불러내는 것.
-  ///
-
+  
   loadUser() async {
     await getSharedPreferences();
     if (userId != null) {
@@ -82,7 +72,6 @@ class AiTestController extends GetxController {
         var response = await GetConnect().get(requestUri);
         if (response.isOk) {
           userData = UserData.fromJson(response.body);
-          print("이름은 이래: username: ${userData!.name}");
           update();
           return true;
         } else {
@@ -99,8 +88,7 @@ class AiTestController extends GetxController {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       userId = prefs.getString('userId');
     } catch (e) {
-      print(e);
+      return;
     }
-    print("LOAD SHAREDPREFERENCE: userid: $userId");
   }
 }

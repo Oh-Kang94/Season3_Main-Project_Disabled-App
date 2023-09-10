@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-import '../vm/ai_test_controller.dart';
-import '../vm/login_ctrl.dart';
+import '../../vm/ai_test_controller.dart';
+import '../../vm/login_ctrl.dart';
+
 
 typedef OnAgeSelectedCallback = void Function(
     String selectedDropdown, int selected);

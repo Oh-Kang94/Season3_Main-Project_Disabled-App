@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../util/asset_image.dart';
-import '../view/home.dart';
+import '../../util/asset_image.dart';
+import '../../view/home.dart';
 
 class LogoPic extends StatelessWidget {
   const LogoPic({

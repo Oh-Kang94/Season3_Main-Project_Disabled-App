@@ -9,8 +9,8 @@ import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
 
 import 'ai_test/ai_start_view.dart';
 import 'appbar/myappbar.dart';
-import 'board/community.dart';
-import 'mapView.dart';
+import 'board/board_community.dart';
+import 'map/map_view.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

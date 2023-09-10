@@ -10,7 +10,7 @@ class MapController extends GetxController {
   List<MapModel> mapModel = <MapModel>[].obs;
   var markers = RxSet<Marker>();
   RxBool isLoading = false.obs;
-  var Url = Uri.parse('http://www.oh-kang.kro.kr:7288/maps/');
+  var url = Uri.parse('http://www.oh-kang.kro.kr:7288/maps/');
 
   @override
   void onInit() {
@@ -22,7 +22,7 @@ class MapController extends GetxController {
   fetchAndCreateMarkers() async {
     try {
       isLoading(true);
-      http.Response response = await http.get(Url);
+      http.Response response = await http.get(url);
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         List<dynamic> result = jsonData['result'];
@@ -34,10 +34,9 @@ class MapController extends GetxController {
         // await createMarkersWithData(parsedData); // 지오코딩을 적용하여 마커를 생성.
       }
     } catch (e) {
-      print('데이터를 가져오는 도중 오류 발생: $e');
+      return;
     } finally {
       isLoading(false);
-      print('최종적으로 데이터 가져옴: ${mapModel[0].name}');
     }
   }
 
@@ -62,7 +61,7 @@ class MapController extends GetxController {
           ));
         }
       } catch (e) {
-        print('주소를 좌표로 변환하는 도중 오류 발생: $e');
+        return;
       }
     }
   }

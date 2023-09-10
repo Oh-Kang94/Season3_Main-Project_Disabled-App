@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
 
-import '../../components/agreement_view.dart';
+import '../../components/login/agreement_view.dart';
 import '../../util/agreement.dart';
 
 class AgreementView extends StatelessWidget {

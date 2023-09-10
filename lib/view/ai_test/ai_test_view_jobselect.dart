@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/ai_job_select_widget.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
+import '../../components/ai_test/ai_job_select_widget.dart';
 import 'ai_result_view.dart';
 
 class AiTestViewJobSelect extends StatelessWidget {

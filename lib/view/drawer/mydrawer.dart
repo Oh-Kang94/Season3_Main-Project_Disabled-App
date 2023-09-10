@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:season3_team1_mainproject/view/login/login.dart';
 import 'package:season3_team1_mainproject/view/register/register_user.dart';
 
-import '../../components/firebase_image.dart';
+import '../../components/home/firebase_image.dart';
 import '../../util/theme.dart';
 import '../../vm/login_ctrl.dart';
 import '../register/change_user.dart';

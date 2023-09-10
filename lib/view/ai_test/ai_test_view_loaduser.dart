@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:season3_team1_mainproject/components/agreement_view.dart';
-import 'package:season3_team1_mainproject/components/ai_employ_day_widget.dart';
-import 'package:season3_team1_mainproject/components/ai_location_widget.dart';
+import 'package:season3_team1_mainproject/components/login/agreement_view.dart';
 import 'package:season3_team1_mainproject/util/agreement.dart';
 import 'package:season3_team1_mainproject/view/appbar/myappbar.dart';
-import 'package:season3_team1_mainproject/vm/ai_test_controller.dart';
-import '../../components/ai_location_result_text_widget.dart';
+import '../../components/ai_test/ai_employ_day_widget.dart';
+import '../../components/ai_test/ai_location_result_text_widget.dart';
+import '../../components/ai_test/ai_location_widget.dart';
+import '../../vm/ai_test/ai_test_controller.dart';
 import '../../vm/login_ctrl.dart';
 import 'ai_test_view_jobselect.dart';
 

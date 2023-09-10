@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-import '../vm/ai_test_controller.dart';
+import '../../vm/ai_test_controller.dart';
+
 
 typedef OnAgeSelectedCallback = void Function(
     int selectedYear, int selectedMonth, int selectedDay);
