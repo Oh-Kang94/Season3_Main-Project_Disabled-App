@@ -1,13 +1,13 @@
 # 포용누리
-장애인들의 취업 문제와 AI 기반 직업 추천을 하기 위한 App
-Flutter의 GETX 라이브러리를 이용한 상태관리
-MVVM 패턴으로 작성
-2023-07-28 ~ 2023-08-14
+장애인들의 취업 문제와 AI 기반 직업 추천을 하기 위한 App          
+Flutter의 GETX 라이브러리를 이용한 상태관리             
+MVVM 패턴으로 작성               
+2023-07-28 ~ 2023-08-14                      
 
 ------
-<a href="http://www.oh-kang.kro.kr:14331/" title="PDF로 이동">배포된 사이트로 이동하기 </a> 
+<a href="https://github.com/Oh-Kang94/Season3_Main-Project_Disabled-Server">배포된 사이트로 이동하기 </a> 
 -----
-<a href="[https://drive.google.com/file/d/12uAAQJZRKFMwtNNqIZEAAXQS_lZILKH0/view?usp=share_link](https://docs.google.com/presentation/d/19dW8CeIwx2XBhR6jzVImYRIjAhB1qyhuw5vmQS5hPLY/edit?usp=share_link)" title="PDF로 이동">![[cover](https://github.com/Okrie/NutriDelight_Spring/blob/main/Nutridelight_Spring.png)](https://drive.google.com/file/d/1sfCHvsbU0HemaW_zjlN_hwOKTUF9UqkA/view?usp=share_link)</a> 
+<a href="https://docs.google.com/presentation/d/19dW8CeIwx2XBhR6jzVImYRIjAhB1qyhuw5vmQS5hPLY/edit?usp=share_link" title="PDF로 이동">![[cover](https://drive.google.com/file/d/1sfCHvsbU0HemaW_zjlN_hwOKTUF9UqkA/view?usp=share_link)]</a> 
 
 ### 시연 영상
 <a href="https://drive.google.com/file/d/111S38Nuo9Y983r3Ge9TuFxOf5vdCDOJp/view?usp=share_link" title="시연영상으로 이동">![image](https://github.com/Okrie/NutriDelight_Spring/blob/main/Thumbnail.png)</a>
