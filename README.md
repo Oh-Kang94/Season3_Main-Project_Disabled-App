@@ -7,7 +7,7 @@ MVVM 패턴으로 작성
 ------
 ### 연관 Github 이동하기
 <a href="https://github.com/Oh-Kang94/Season3_Main-Project_Disabled-Server">
-  <img src="https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/Swagger-UI.png" alt="image" ,height="30%", width="30%"><br/>             
+  <img src="https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/Swagger-UI.png" alt="image" ,height="50%", width="50%"><br/>             
   서버 Github으로 이동하기 
 </a>         
 <br/>        
@@ -16,13 +16,18 @@ AIModel 분석 Github으로 이동하기 </a>
 
 --------
 ### 관련 PDF 설명
-<a href="https://docs.google.com/presentation/d/19dW8CeIwx2XBhR6jzVImYRIjAhB1qyhuw5vmQS5hPLY/edit?usp=share_link" title="PDF로 이동">![[cover](https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/DisabledApp_PDF.png)]</a> 
+<a href="https://docs.google.com/presentation/d/19dW8CeIwx2XBhR6jzVImYRIjAhB1qyhuw5vmQS5hPLY/edit?usp=share_link" title="PDF로 이동">
+  <img src= "https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/DisabledApp_PDF.png"  alt="image" ,height="50%", width="50%">
+</a> 
+
+------
 
 ### 시연 영상
 <a href="https://drive.google.com/file/d/1nndZibrbXJfcGPsRMD9gW21Tt6-mjXsw/view?usp=share_link" title="시연영상으로 이동">
   <img src="https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/SplashImage.jpg" alt="image" ,height="30%", width="30%">
 </a>
----
+
+------
 
 ### 기능 설명
 - R Serve를 이용한 AI model을 활용한 직종 추천
