@@ -37,8 +37,8 @@ AIModel 분석 Github으로 이동하기 </a>
 - Google, KAKAO OAath 로그인
 ---
 #### Database    
-    : MySQL
-    : Firebase    
+    MySQL
+    Firebase    
 #### 기술 스택
 <p align="left">
     <img src="https://skillicons.dev/icons?i=flutter,aws,mysql,js,express,figma,github,git,firebase"/>
