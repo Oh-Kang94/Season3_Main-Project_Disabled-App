@@ -36,15 +36,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // 기본 플러터로 테마 관리할때 쓰는것.
-  // ThemeMode _themeMode = ThemeMode.system;
-
-  // _changeThemeMode(ThemeMode themeMode) {
-  //   setState(() {
-  //     _themeMode = themeMode;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -53,6 +44,7 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           themeMode: ThemeMode.light,
           theme: CustomTheme.lighttheme,
