@@ -6,11 +6,14 @@ MVVM 패턴으로 작성
 <img src = https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/App%20mockup.png> </img>
 ------
 ### 연관 Github 이동하기
-<a href="https://github.com/Oh-Kang94/Season3_Main-Project_Disabled-Server"><img src="https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/Swagger-UI.png" alt="image" ,height="30%", width="30%">
-서버 Github으로 이동하기 </a> 
+<a href="https://github.com/Oh-Kang94/Season3_Main-Project_Disabled-Server">
+  <img src="https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/Swagger-UI.png" alt="image" ,height="30%", width="30%">
+  서버 Github으로 이동하기 
+</a>               
 <a href="https://github.com/Oh-Kang94/Season3_Main-Project_Disabled-Analyze">
-AIModel 분석 Github으로 이동하기 </a> 
-----
+AIModel 분석 Github으로 이동하기 </a>        
+
+--------
 ### 관련 PDF 설명
 <a href="https://docs.google.com/presentation/d/19dW8CeIwx2XBhR6jzVImYRIjAhB1qyhuw5vmQS5hPLY/edit?usp=share_link" title="PDF로 이동">![[cover](https://github.com/Oh-Kang94/season3_team1_disabled_app/blob/main/DisabledApp_PDF.png)]</a> 
 
