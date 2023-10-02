@@ -1,15 +1,28 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:season3_team1_mainproject/util/theme.dart';
+import 'package:season3_team1_mainproject/view/register/change_user.dart';
+import 'package:season3_team1_mainproject/view/splash.dart';
+import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
+import 'package:season3_team1_mainproject/vm/login_ctrl.dart';
 
 import 'firebase_options.dart';
-import 'view/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(); // .env 파일 로드
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  Get.put(HomeController());
+  Get.put(LoginController());
+  KakaoSdk.init(
+    nativeAppKey: dotenv.env["KAKAO_NATIVE_APP_KEY"],
+  );
   runApp(const MyApp());
 }
 
@@ -23,17 +36,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // 기본 플러터로 테마 관리할때 쓰는것.
-  // ThemeMode _themeMode = ThemeMode.system;
-
-  // _changeThemeMode(ThemeMode themeMode) {
-  //   setState(() {
-  //     _themeMode = themeMode;
-  //   });
-  // }
-
-  static const Color seedcolor = Color(0xFF01479D);
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -42,13 +44,32 @@ class _MyAppState extends State<MyApp> {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: ThemeData(brightness: Brightness.light, useMaterial3: true, colorSchemeSeed: seedcolor),
-          darkTheme: ThemeData(brightness: Brightness.dark, useMaterial3: true, colorSchemeSeed: seedcolor),
+          themeMode: ThemeMode.light,
+          theme: CustomTheme.lighttheme,
+          darkTheme: CustomTheme.darktheme,
+          // 언어 지원
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('ko', ''),
+            Locale('en', ''),
+          ],
+          // 초기 시작 값
           initialRoute: '/',
-          routes: {
-            '/': (context) => const Home(),
-          },
+          getPages: [
+            GetPage(
+              name: '/',
+              page: () => const SplashScreen(),
+            ),
+            GetPage(
+              name: '/Editing',
+              page: () => const ChangeUser(),
+            ),
+          ],
         );
       },
     );

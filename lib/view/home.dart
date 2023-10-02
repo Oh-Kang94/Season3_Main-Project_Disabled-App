@@ -1,60 +1,64 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
+import 'package:season3_team1_mainproject/view/drawer/mydrawer.dart';
+import 'package:season3_team1_mainproject/view/mainview.dart';
+import 'package:season3_team1_mainproject/vm/home_ctrl.dart';
 
-class Home extends StatefulWidget {
+import 'ai_test/ai_start_view.dart';
+import 'appbar/myappbar.dart';
+import 'board/board_community.dart';
+import 'map/map_view.dart';
+
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  // Prioperties
-  late TabController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(length: 0, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final List<String> tabLabels = ["홈", "일자리 추천", "일자리 지도", "공지사항"];
+    final HomeController homeController = Get.find<HomeController>();
     return Scaffold(
-        appBar: AppBar(),
-        body: TabBarView(controller: controller, children: const [
-          // 각자 페이지 넣기
-        ]),
-        bottomNavigationBar: Container(
-          color: Colors.white,
-          child: TabBar(
-              controller: controller,
-              labelColor: const ColorScheme.light().tertiary, // 선택 되어 있는 아이콘의 색깔 보여주기
-              unselectedLabelColor: Colors.red, // 선택 되어있지 않은 아이콘의 색깔 보여주기
-              indicatorColor: Colors.blue, // 아래 선택되어 있는 바 보여주기
-              indicatorWeight: 10, // 바의 크기 키우기
-              tabs: const [
-                // 각자 탭바 채워 넣기
-                //  3rd Jty
-                //  4th Oh_Kang94
-              ]),
-        ),
-        drawer: Drawer(
-          child: Container(
-            color: Theme.of(context).colorScheme.secondary,
-            child: MaterialButton(
-              onPressed: () {
-                Get.changeThemeMode(
-                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-              },
-            ),
-          ),
-        ));
+      appBar: const MyAppBar(),
+      body: TabBarView(
+          controller: homeController.controller,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            // 각자 페이지 넣기
+            const Mainview(),
+            // main 자리
+            const AiFirstView(),
+            // map 자리
+            MapViewPage(),
+            // community 자리
+            const Community()
+          ]),
+      bottomNavigationBar: MotionTabBar(
+        controller: homeController.controller,
+        initialSelectedTab: tabLabels[homeController.initialSelectedTab],
+        labels: tabLabels,
+        icons: const [
+          Icons.home,
+          Icons.recommend,
+          Icons.map,
+          Icons.notifications
+        ],
+        tabSize: 50,
+        tabBarHeight: 55,
+        textStyle: const TextStyle(fontFamily: "NotoSansKR-Bold"),
+        tabIconColor: Theme.of(context).colorScheme.secondary,
+        tabIconSize: 28.0,
+        tabIconSelectedSize: 26.0,
+        tabSelectedColor: Theme.of(context).colorScheme.onSecondary,
+        tabIconSelectedColor: Theme.of(context).colorScheme.onSurface,
+        tabBarColor: Theme.of(context).colorScheme.surface,
+        onTabItemSelected: (int value) {
+          homeController.controller.index = value;
+          homeController.onTabItemSelected(value);
+        },
+      ),
+      drawer: const Mydrawer(),
+    );
   }
 }
