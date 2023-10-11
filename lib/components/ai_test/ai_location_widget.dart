@@ -11,7 +11,7 @@ class AiLocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddressController controller = Get.find<AddressController>();
+    final AddressController controller = Get.put(AddressController());
 
     return AlertDialog(
       title: const Text(
