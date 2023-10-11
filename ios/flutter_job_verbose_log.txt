@@ -1,0 +1,554 @@
+[   +3 ms] executing: sw_vers -productName
+[  +14 ms] Exit code 0 from: sw_vers -productName
+[        ] macOS
+[        ] executing: sw_vers -productVersion
+[   +7 ms] Exit code 0 from: sw_vers -productVersion
+[        ] 14.0
+[        ] executing: sw_vers -buildVersion
+[   +8 ms] Exit code 0 from: sw_vers -buildVersion
+[        ] 23A344
+[        ] executing: uname -m
+[   +2 ms] Exit code 0 from: uname -m
+[        ] arm64
+[   +2 ms] executing: sysctl hw.optional.arm64
+[   +3 ms] Exit code 0 from: sysctl hw.optional.arm64
+[        ] hw.optional.arm64: 1
+[  +42 ms] executing: sysctl hw.optional.arm64
+[   +2 ms] Exit code 0 from: sysctl hw.optional.arm64
+[        ] hw.optional.arm64: 1
+[        ] executing: /usr/bin/arch -arm64e xcrun xcodebuild -version
+[ +333 ms] Exit code 0 from: /usr/bin/arch -arm64e xcrun xcodebuild -version
+[        ] Xcode 15.0
+           Build version 15A240d
+[   +1 ms] executing: /usr/bin/arch -arm64e xcrun xcdevice list --timeout 5
+[   +3 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +19 ms] executing: /Users/ohkang/Library/Android/sdk/platform-tools/adb devices -l
+[        ] executing: /usr/bin/arch -arm64e xcrun xcdevice list --timeout 2
+[        ] /usr/bin/arch -arm64e xcrun simctl list devices booted iOS --json
+[        ] executing: /usr/bin/arch -arm64e xcrun simctl list devices booted iOS --json
+[        ] executing: /usr/bin/arch -arm64e xcrun simctl list devices booted
+[  +67 ms] Exit code 0 from: /usr/bin/arch -arm64e xcrun simctl list devices booted
+[        ] == Devices ==
+           -- iOS 17.0 --
+               iPhone 15 Pro Max (E7BE9CFC-5AC6-4DF6-9B39-549F258E456C) (Booted)
+[  +20 ms] List of devices attached
+[  +63 ms] {
+             "devices" : {
+               "com.apple.CoreSimulator.SimRuntime.iOS-17-0" : [
+                 {
+                   "lastBootedAt" : "2023-10-10T12:24:13Z",
+                   "dataPath" : "\/Users\/ohkang\/Library\/Developer\/CoreSimulator\/Devices\/E7BE9CFC-5AC6-4DF6-9B39-549F258E456C\/data",
+                   "dataPathSize" : 2660667392,
+                   "logPath" : "\/Users\/ohkang\/Library\/Logs\/CoreSimulator\/E7BE9CFC-5AC6-4DF6-9B39-549F258E456C",
+                   "udid" : "E7BE9CFC-5AC6-4DF6-9B39-549F258E456C",
+                   "isAvailable" : true,
+                   "logPathSize" : 663552,
+                   "deviceTypeIdentifier" : "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro-Max",
+                   "state" : "Booted",
+                   "name" : "iPhone 15 Pro Max"
+                 }
+               ]
+             }
+           }
+[+2658 ms] [
+             {
+               "ignored" : false,
+               "modelCode" : "Watch6,2",
+               "simulator" : false,
+               "modelName" : "Apple Watch Series 6",
+               "operatingSystemVersion" : "10.0.1 (21R360)",
+               "identifier" : "00008301-B08B31161A78402E",
+               "platform" : "com.apple.platform.watchos",
+               "architecture" : "arm64_32",
+               "interface" : "usb",
+               "available" : true,
+               "name" : "Kang Hyeon의 Apple Watch",
+               "modelUTI" : "com.apple.watch-series6-1"
+             },
+             {
+               "ignored" : false,
+               "modelCode" : "iPad13,17",
+               "simulator" : false,
+               "modelName" : "iPad Air (5th generation)",
+               "operatingSystemVersion" : "17.0.3 (21A360)",
+               "identifier" : "00008103-0012543114D3C01E",
+               "platform" : "com.apple.platform.iphoneos",
+               "architecture" : "arm64e",
+               "interface" : "usb",
+               "available" : true,
+               "name" : "Kang Hyeon, Oh's iPad",
+               "modelUTI" : "com.apple.ipad-air5-1"
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPad13,18",
+               "identifier" : "873C4C36-42F5-42C9-96C9-CEAA7720AFF2",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.ipad-10-1",
+               "modelName" : "iPad (10th generation)",
+               "name" : "iPad (10th generation)",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPad14,3",
+               "identifier" : "7A3B8861-4AC7-4D3F-B41B-035FF6294D11",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.ipad-pro-11-4th-1",
+               "modelName" : "iPad Pro (11-inch) (4th generation)",
+               "name" : "iPad Pro (11-inch) (4th generation)",
+               "ignored" : false
+             },
+             {
+               "ignored" : false,
+               "modelCode" : "Mac14,10",
+               "simulator" : false,
+               "modelName" : "MacBook Pro",
+               "operatingSystemVersion" : "14.0 (23A344)",
+               "identifier" : "00006020-0012708611C0C01E",
+               "platform" : "com.apple.platform.macosx",
+               "architecture" : "arm64e",
+               "interface" : "usb",
+               "available" : true,
+               "name" : "My Mac",
+               "modelUTI" : "com.apple.macbookpro-16-2023"
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPad14,5",
+               "identifier" : "175D7CC4-B5CF-47C4-A3C3-CB77069C0C41",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.ipad-pro-12point9-6th-1",
+               "modelName" : "iPad Pro (12.9-inch) (6th generation)",
+               "name" : "iPad Pro (12.9-inch) (6th generation)",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPhone14,6",
+               "identifier" : "BFA3E2C7-915B-4B97-80FE-59E0D7909CAE",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.iphone-se3-1",
+               "modelName" : "iPhone SE (3rd generation)",
+               "name" : "iPhone SE (3rd generation)",
+               "ignored" : false
+             },
+             {
+               "ignored" : false,
+               "modelCode" : "iPhone14,5",
+               "simulator" : false,
+               "modelName" : "iPhone 13",
+               "error" : {
+                 "code" : -27,
+                 "failureReason" : "",
+                 "description" : "Browsing on the local area network for Kang Hyeon, Oh's iPhone",
+                 "recoverySuggestion" : "Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.\nThe device must be opted into Developer Mode to connect wirelessly.",
+                 "domain" : "com.apple.dt.deviceprep"
+               },
+               "operatingSystemVersion" : "17.0.3 (21A360)",
+               "identifier" : "00008110-000A1D5826FA801E",
+               "platform" : "com.apple.platform.iphoneos",
+               "architecture" : "arm64e",
+               "interface" : "usb",
+               "available" : false,
+               "name" : "Kang Hyeon, Oh's iPhone",
+               "modelUTI" : "com.apple.iphone-13-1"
+             },
+             {
+               "ignored" : false,
+               "modelCode" : "iPhone14,5",
+               "simulator" : false,
+               "modelName" : "iPhone 13",
+               "error" : {
+                 "code" : -13,
+                 "failureReason" : "",
+                 "description" : "Kang Hyeon, Oh's iPhone is not connected",
+                 "recoverySuggestion" : "Xcode will continue when Kang Hyeon, Oh's iPhone is connected and unlocked.",
+                 "domain" : "com.apple.platform.iphoneos"
+               },
+               "operatingSystemVersion" : "16.6.1 (20G81)",
+               "identifier" : "00008110-000A1D5826FA801E",
+               "platform" : "com.apple.platform.iphoneos",
+               "architecture" : "arm64e",
+               "interface" : "usb",
+               "available" : false,
+               "name" : "Kang Hyeon, Oh's iPhone",
+               "modelUTI" : "com.apple.iphone-13-2"
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPhone15,4",
+               "identifier" : "D2058EC0-712B-4B09-B2FE-F57AD1C71752",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.iphone-15-1",
+               "modelName" : "iPhone 15",
+               "name" : "iPhone 15",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPad14,1",
+               "identifier" : "17A2F03F-F9D7-4AC6-A7E5-C708A956A629",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.ipad-mini6-1",
+               "modelName" : "iPad mini (6th generation)",
+               "name" : "iPad mini (6th generation)",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPhone15,5",
+               "identifier" : "C8474F96-F130-4C7C-8AD6-33CA8FC0ACA0",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.iphone-15-plus-1",
+               "modelName" : "iPhone 15 Plus",
+               "name" : "iPhone 15 Plus",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPhone16,1",
+               "identifier" : "E9FE7BC0-758A-44D6-90DB-C05DB9BD951E",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.iphone-15-pro-1",
+               "modelName" : "iPhone 15 Pro",
+               "name" : "iPhone 15 Pro",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPhone16,2",
+               "identifier" : "E7BE9CFC-5AC6-4DF6-9B39-549F258E456C",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.iphone-15-pro-max-1",
+               "modelName" : "iPhone 15 Pro Max",
+               "name" : "iPhone 15 Pro Max",
+               "ignored" : false
+             },
+             {
+               "simulator" : true,
+               "operatingSystemVersion" : "17.0 (21A328)",
+               "available" : true,
+               "platform" : "com.apple.platform.iphonesimulator",
+               "modelCode" : "iPad13,17",
+               "identifier" : "5F7E587F-3C3A-47CC-8EFE-F0064C58B9A0",
+               "architecture" : "arm64",
+               "modelUTI" : "com.apple.ipad-air5-1",
+               "modelName" : "iPad Air (5th generation)",
+               "name" : "iPad Air (5th generation)",
+               "ignored" : false
+             }
+           ]
+
+           2023-10-10 21:42:49.457 xcdevice[6422:4140360]  DVTDeviceOperation: 00008301-B08B31161A78402E: skipping implicit preparation because autoConnectStyle == onDemand
+           2023-10-10 21:42:49.457 xcdevice[6422:4140363]  DVTDeviceOperation: 00008103-0012543114D3C01E: skipping implicit preparation because autoConnectStyle == onDemand
+           2023-10-10 21:42:49.457 xcdevice[6422:4140367]  DVTDeviceOperation: 00008110-000A1D5826FA801E: skipping implicit preparation because autoConnectStyle == ignored
+           2023-10-10 21:42:49.459 xcdevice[6422:4140363]  DVTDeviceOperation: 00008103-0012543114D3C01E: skipping implicit preparation because autoConnectStyle == onDemand
+           2023-10-10 21:42:49.459 xcdevice[6422:4140367]  DVTDeviceOperation: 00008110-000A1D5826FA801E: skipping implicit preparation because autoConnectStyle == ignored
+           2023-10-10 21:42:49.459 xcdevice[6422:4140360]  DVTDeviceOperation: 00008301-B08B31161A78402E: skipping implicit preparation because autoConnectStyle == onDemand
+[   +2 ms] executing: /usr/bin/arch -arm64e xcrun devicectl --version
+[  +67 ms] Exit code 0 from: /usr/bin/arch -arm64e xcrun devicectl --version
+[        ] 348.1
+[   +1 ms] executing: /usr/bin/arch -arm64e xcrun devicectl list devices --timeout 5 --json-output /var/folders/0g/fmgypdrs6fb0z67gvb2vp7ym0000gn/T/flutter_tools.mPXhQH/core_devices.oMs5OB/core_device_list.json
+[  +51 ms] Devices:
+           Name                      Hostname                                     Identifier                             State                Model                                
+           -----------------------   ------------------------------------------   ------------------------------------   ------------------   -------------------------------------
+           Kang Hyeon, Oh's iPad     00008103-0012543114D3C01E.coredevice.local   2DAB42CB-3968-4ECF-A3BE-6E9647203992   available (paired)   iPad Air (5th generation) (iPad13,17)
+           Kang Hyeon, Oh's iPhone   00008110-000A1D5826FA801E.coredevice.local   D86EDAB9-AC71-4EC0-A7DF-9158C94B794B   unavailable          iPhone 13 (iPhone14,5)               
+           Kang Hyeon의 Apple Watch   00008301-B08B31161A78402E.coredevice.local   456F1FA1-2461-4A23-915C-9EC7D1577368   available (paired)   Apple Watch Series 6 (Watch6,2)
+[        ] {
+             "info" : {
+               "arguments" : [
+                 "devicectl",
+                 "list",
+                 "devices",
+                 "--timeout",
+                 "5",
+                 "--json-output",
+                 "/var/folders/0g/fmgypdrs6fb0z67gvb2vp7ym0000gn/T/flutter_tools.mPXhQH/core_devices.oMs5OB/core_device_list.json"
+               ],
+               "commandType" : "devicectl.list.devices",
+               "environment" : {
+                 "TERM" : "xterm-256color"
+               },
+               "jsonVersion" : 2,
+               "outcome" : "success",
+               "version" : "348.1"
+             },
+             "result" : {
+               "devices" : [
+                 {
+                   "capabilities" : [
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.unpairdevice",
+                       "name" : "Unpair Device"
+                     },
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.acquireusageassertion",
+                       "name" : "Acquire Usage Assertion"
+                     },
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.connectdevice",
+                       "name" : "Connect to Device"
+                     }
+                   ],
+                   "connectionProperties" : {
+                     "authenticationType" : "manualPairing",
+                     "isMobileDeviceOnly" : false,
+                     "lastConnectionDate" : "2023-10-10T01:08:15.834Z",
+                     "pairingState" : "paired",
+                     "potentialHostnames" : [
+                       "00008103-0012543114D3C01E.coredevice.local",
+                       "2DAB42CB-3968-4ECF-A3BE-6E9647203992.coredevice.local"
+                     ],
+                     "transportType" : "wired",
+                     "tunnelState" : "disconnected",
+                     "tunnelTransportProtocol" : "tcp"
+                   },
+                   "deviceProperties" : {
+                     "bootedFromSnapshot" : true,
+                     "bootedSnapshotName" : "com.apple.os.update-91A14BC0B10A0A200F747FD164A6CAF9007D3086CC4389498781A1373C79C182C94DC15CE67F158114EC2E35AEB99BA1",
+                     "ddiServicesAvailable" : false,
+                     "developerModeStatus" : "enabled",
+                     "hasInternalOSBuild" : false,
+                     "name" : "Kang Hyeon, Oh's iPad",
+                     "osBuildUpdate" : "21A360",
+                     "osVersionNumber" : "17.0.3",
+                     "rootFileSystemIsWritable" : false
+                   },
+                   "hardwareProperties" : {
+                     "cpuType" : {
+                       "name" : "arm64e",
+                       "subType" : 2,
+                       "type" : 16777228
+                     },
+                     "deviceType" : "iPad",
+                     "ecid" : 5159119360344094,
+                     "hardwareModel" : "J408AP",
+                     "internalStorageCapacity" : 64000000000,
+                     "isProductionFused" : true,
+                     "marketingName" : "iPad Air (5th generation)",
+                     "platform" : "iOS",
+                     "productType" : "iPad13,17",
+                     "reality" : "physical",
+                     "serialNumber" : "GK66TQW5Y9",
+                     "supportedCPUTypes" : [
+                       {
+                         "name" : "arm64e",
+                         "subType" : 2,
+                         "type" : 16777228
+                       },
+                       {
+                         "name" : "arm64",
+                         "subType" : 0,
+                         "type" : 16777228
+                       },
+                       {
+                         "name" : "arm64",
+                         "subType" : 1,
+                         "type" : 16777228
+                       },
+                       {
+                         "name" : "arm64_32",
+                         "subType" : 1,
+                         "type" : 33554444
+                       }
+                     ],
+                     "supportedDeviceFamilies" : [
+                       1,
+                       2
+                     ],
+                     "thinningProductType" : "iPad13,17",
+                     "udid" : "00008103-0012543114D3C01E"
+                   },
+                   "identifier" : "2DAB42CB-3968-4ECF-A3BE-6E9647203992",
+                   "visibilityClass" : "default"
+                 },
+                 {
+                   "capabilities" : [
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.unpairdevice",
+                       "name" : "Unpair Device"
+                     }
+                   ],
+                   "connectionProperties" : {
+                     "authenticationType" : "manualPairing",
+                     "isMobileDeviceOnly" : false,
+                     "lastConnectionDate" : "2023-10-06T07:57:51.780Z",
+                     "pairingState" : "paired",
+                     "potentialHostnames" : [
+                       "00008110-000A1D5826FA801E.coredevice.local",
+                       "D86EDAB9-AC71-4EC0-A7DF-9158C94B794B.coredevice.local"
+                     ],
+                     "tunnelState" : "unavailable"
+                   },
+                   "deviceProperties" : {
+                     "bootedFromSnapshot" : true,
+                     "bootedSnapshotName" : "com.apple.os.update-7CE71C3F403BAD7F955DEA35C7281C4096C707C85BE047268DFAB53A365EAD4E0A8CB0BC92EEC3CE7AE89404B8653BFA",
+                     "ddiServicesAvailable" : false,
+                     "developerModeStatus" : "enabled",
+                     "hasInternalOSBuild" : false,
+                     "name" : "Kang Hyeon, Oh's iPhone",
+                     "osBuildUpdate" : "21A360",
+                     "osVersionNumber" : "17.0.3",
+                     "rootFileSystemIsWritable" : false
+                   },
+                   "hardwareProperties" : {
+                     "cpuType" : {
+                       "name" : "arm64e",
+                       "subType" : 2,
+                       "type" : 16777228
+                     },
+                     "deviceType" : "iPhone",
+                     "ecid" : 2847014215385118,
+                     "hardwareModel" : "D17AP",
+                     "internalStorageCapacity" : 128000000000,
+                     "isProductionFused" : true,
+                     "marketingName" : "iPhone 13",
+                     "platform" : "iOS",
+                     "productType" : "iPhone14,5",
+                     "reality" : "physical",
+                     "serialNumber" : "HD9YM296P4",
+                     "supportedCPUTypes" : [
+                       {
+                         "name" : "arm64e",
+                         "subType" : 2,
+                         "type" : 16777228
+                       },
+                       {
+                         "name" : "arm64",
+                         "subType" : 0,
+                         "type" : 16777228
+                       },
+                       {
+                         "name" : "arm64",
+                         "subType" : 1,
+                         "type" : 16777228
+                       },
+                       {
+                         "name" : "arm64_32",
+                         "subType" : 1,
+                         "type" : 33554444
+                       }
+                     ],
+                     "supportedDeviceFamilies" : [
+                       1
+                     ],
+                     "thinningProductType" : "iPhone14,5",
+                     "udid" : "00008110-000A1D5826FA801E"
+                   },
+                   "identifier" : "D86EDAB9-AC71-4EC0-A7DF-9158C94B794B",
+                   "visibilityClass" : "default"
+                 },
+                 {
+                   "capabilities" : [
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.unpairdevice",
+                       "name" : "Unpair Device"
+                     },
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.acquireusageassertion",
+                       "name" : "Acquire Usage Assertion"
+                     },
+                     {
+                       "featureIdentifier" : "com.apple.coredevice.feature.connectdevice",
+                       "name" : "Connect to Device"
+                     }
+                   ],
+                   "connectionProperties" : {
+                     "authenticationType" : "manualPairing",
+                     "isMobileDeviceOnly" : false,
+                     "lastConnectionDate" : "2023-10-01T12:14:06.087Z",
+                     "pairingState" : "paired",
+                     "potentialHostnames" : [
+                       "00008301-B08B31161A78402E.coredevice.local",
+                       "456F1FA1-2461-4A23-915C-9EC7D1577368.coredevice.local"
+                     ],
+                     "transportType" : "localNetwork",
+                     "tunnelState" : "disconnected",
+                     "tunnelTransportProtocol" : "tcp"
+                   },
+                   "deviceProperties" : {
+                     "ddiServicesAvailable" : false,
+                     "developerModeStatus" : "disabled",
+                     "hasInternalOSBuild" : false,
+                     "name" : "Kang Hyeon의 Apple Watch",
+                     "osBuildUpdate" : "21R360",
+                     "osVersionNumber" : "10.0.1"
+                   },
+                   "hardwareProperties" : {
+                     "cpuType" : {
+                       "name" : "arm64_32",
+                       "subType" : 1,
+                       "type" : 33554444
+                     },
+                     "deviceType" : "appleWatch",
+                     "ecid" : 12721315543441227822,
+                     "hardwareModel" : "N157bAP",
+                     "isProductionFused" : true,
+                     "marketingName" : "Apple Watch Series 6",
+                     "platform" : "watchOS",
+                     "productType" : "Watch6,2",
+                     "reality" : "physical",
+                     "serialNumber" : "GY7DLC8YQ1RP",
+                     "thinningProductType" : "Watch6,2",
+                     "udid" : "00008301-B08B31161A78402E"
+                   },
+                   "identifier" : "456F1FA1-2461-4A23-915C-9EC7D1577368",
+                   "visibilityClass" : "default"
+                 }
+               ]
+             }
+           }
+
+[   +4 ms] Error: Browsing on the local area network for Kang Hyeon, Oh's iPhone. Ensure the device is unlocked and attached with a cable or associated with the same local area network as this Mac.
+           The device must be opted into Developer Mode to connect wirelessly. (code -27)
+[        ] Error: Kang Hyeon, Oh's iPhone is not connected. Xcode will continue when Kang Hyeon, Oh's iPhone is connected and unlocked. (code -13)
+[   +2 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[   +5 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[   +2 ms] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[   +7 ms] Changing current working directory to: /Users/ohkang/StudioProjects/Project/Season3_Main/Season3_Disabled_App
+[  +22 ms] Checking for wireless devices...
