@@ -42,11 +42,11 @@ dependencies:
   # 주소 검색 기능
   kpostal: ^0.5.1
   # 그래프 및 차트 그리기
-  fl_chart: ^0.63.0
+  fl_chart: ^0.64.0
   # firebase
   firebase_storage: ^11.2.5
   cloud_firestore: ^4.8.4
-  firebase_core: ^2.15.0
+  firebase_core: ^2.17.0
   # gesture 기능 풍부하게
   simple_gesture_detector: ^0.2.0
   # modal 기능
@@ -71,7 +71,7 @@ dependencies:
   # web view 쓰기
   webview_flutter: ^4.2.2
   # 권한 허락 도움
-  permission_handler: ^10.4.3
+  permission_handler: ^11.0.1
   # 로딩 애니메이션
   flutter_spinkit: ^5.2.0
   # Flutter용 Google 지도 위젯을 제공하는 Flutter 플러그인
@@ -83,7 +83,7 @@ dependencies:
   geocoding: ^2.1.0
   #date 변환 하기 위해
   #gps를 사용하기 위한 패키지
-  geolocator: ^9.0.2
+  geolocator: ^10.1.0
   # 현지화
   intl: ^0.18.0
   # KAKAO 로그인
